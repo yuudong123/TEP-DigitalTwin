@@ -1,0 +1,59 @@
+﻿column,dtype,role,tep_variable,model_a_feature,model_b_feature,note
+Id,int64,identifier,,False,False,trajectory 식별자. 모델 입력 제외
+Time,float64,time,,False,False,경과시간 정보. 모델 입력 제외
+D feed,float64,manipulated_variable,XMV(1),False,True,공정 조작/제어 변수. Model B에서만 사용
+E Feed,float64,manipulated_variable,XMV(2),False,True,공정 조작/제어 변수. Model B에서만 사용
+A Feed,float64,manipulated_variable,XMV(3),False,True,공정 조작/제어 변수. Model B에서만 사용
+A and C Feed,float64,manipulated_variable,XMV(4),False,True,공정 조작/제어 변수. Model B에서만 사용
+Recycle,float64,manipulated_variable,XMV(5),False,True,공정 조작/제어 변수. Model B에서만 사용
+Purge,float64,manipulated_variable,XMV(6),False,True,공정 조작/제어 변수. Model B에서만 사용
+Separator,float64,manipulated_variable,XMV(7),False,True,공정 조작/제어 변수. Model B에서만 사용
+Stripper,float64,manipulated_variable,XMV(8),False,True,공정 조작/제어 변수. Model B에서만 사용
+Steam,int64,manipulated_variable,XMV(9),False,True,공정 조작/제어 변수. Model B에서만 사용
+Reactor Coolant,float64,manipulated_variable,XMV(10),False,True,공정 조작/제어 변수. Model B에서만 사용
+Condenser Coolant,float64,manipulated_variable,XMV(11),False,True,공정 조작/제어 변수. Model B에서만 사용
+Agitator,int64,manipulated_variable,XMV(12),False,False,XMV 변수이나 전체 공식 데이터에서 100으로 고정된 상수이므로 제외
+msv A Feed,float64,measured_variable,XMEAS(1),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+msv D Feed,float64,measured_variable,XMEAS(2),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+msv E Feed,float64,measured_variable,XMEAS(3),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+msv A and C Feed,float64,measured_variable,XMEAS(4),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Recycle Flow,float64,measured_variable,XMEAS(5),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Reactor Feed Rate,float64,measured_variable,XMEAS(6),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Reactor Pressure,float64,measured_variable,XMEAS(7),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Reactor Level,float64,measured_variable,XMEAS(8),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Reactor Temperature,float64,measured_variable,XMEAS(9),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Purge Rate,float64,measured_variable,XMEAS(10),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Product Sep Temp,float64,measured_variable,XMEAS(11),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Product Sep Level,float64,measured_variable,XMEAS(12),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Product Sep Pressure,float64,measured_variable,XMEAS(13),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Product Sep Underflow,float64,measured_variable,XMEAS(14),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Stripper Level,float64,measured_variable,XMEAS(15),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Stripper Pressure,float64,measured_variable,XMEAS(16),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Stripper Underflow,float64,measured_variable,XMEAS(17),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Stripper Temp,float64,measured_variable,XMEAS(18),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Stripper Steam Flow,float64,measured_variable,XMEAS(19),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Compressor Work,float64,measured_variable,XMEAS(20),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Reactor Coolant Temp,float64,measured_variable,XMEAS(21),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Separator Coolant Temp,float64,measured_variable,XMEAS(22),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component A to Reactor,float64,measured_variable,XMEAS(23),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component B to Reactor,float64,measured_variable,XMEAS(24),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component C to Reactor,float64,measured_variable,XMEAS(25),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component D to Reactor,float64,measured_variable,XMEAS(26),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component E to Reactor,float64,measured_variable,XMEAS(27),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component F to Reactor,float64,measured_variable,XMEAS(28),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component A to Purge,float64,measured_variable,XMEAS(29),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component B to Purge,float64,measured_variable,XMEAS(30),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component C to Purge,float64,measured_variable,XMEAS(31),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component D to Purge,float64,measured_variable,XMEAS(32),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component E to Purge,float64,measured_variable,XMEAS(33),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component F to Purge,float64,measured_variable,XMEAS(34),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component G to Purge,float64,measured_variable,XMEAS(35),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component H to Purge,float64,measured_variable,XMEAS(36),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component D to Product,float64,measured_variable,XMEAS(37),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component E to Product,float64,measured_variable,XMEAS(38),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component F to Product,float64,measured_variable,XMEAS(39),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component G to Product,float64,measured_variable,XMEAS(40),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Component H to Product,float64,measured_variable,XMEAS(41),True,True,공정 측정 변수. Model A와 Model B 모두 사용
+Liquid Input Stripper,int64,degradation_state_candidate,,False,False,RTF 데이터셋의 추가 변수. 열화 정보 누수 가능성이 있으므로 Baseline feature에서 제외
+Liquid Input Separator,int64,degradation_state_candidate,,False,False,RTF 데이터셋의 추가 변수. 열화 정보 누수 가능성이 있으므로 Baseline feature에서 제외
+Liquid Input Reactor,int64,degradation_state_candidate,,False,False,RTF 데이터셋의 추가 변수. 열화 정보 누수 가능성이 있으므로 Baseline feature에서 제외

@@ -59,20 +59,20 @@
 
 ## 3. 모델 검증용 데이터셋 구축
 
-- [ ] trajectory 단위 데이터 분리 방식 확정
-- [ ] Train / Validation / Test 분리
-- [ ] 동일 trajectory의 train/test 중복 방지
-- [ ] Leave-One-Case-Out 평가 구조 유지
-- [ ] RUL target 생성
-- [ ] 고장 위험 target 생성
-  - [ ] 4시간 이내
-  - [ ] 2시간 이내
-  - [ ] 1시간 이내
-- [ ] 결측치 검사
-- [ ] 중복 timestamp 검사
-- [ ] sampling interval 검사
-- [ ] 이상값 검사
-- [ ] 학습 feature schema 확정
+- [x] trajectory 단위 데이터 분리 방식 확정
+- [x] Train / Validation / Test 분리
+- [x] 동일 trajectory의 train/test 중복 방지
+- [x] Leave-One-Case-Out 평가 구조 유지
+- [x] RUL target 생성
+- [x] 고장 위험 target 생성
+  - [x] 4시간 이내
+  - [x] 2시간 이내
+  - [x] 1시간 이내
+- [x] 결측치 검사
+- [x] 중복 timestamp 검사
+- [x] sampling interval 검사
+- [x] 이상값 검사
+- [x] 학습 feature schema 확정
 
 **완료 기준**
 - [ ] 데이터 누수 없이 재현 가능한 학습/평가 데이터 생성 가능
