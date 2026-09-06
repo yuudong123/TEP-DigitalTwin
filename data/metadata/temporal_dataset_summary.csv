@@ -1,0 +1,4 @@
+﻿split,trajectory_count,input_rows,removed_warmup_rows,output_rows,feature_count,file_size_mb
+train,420,1126193,8400,1117793,728,3079.9105167388916
+validation,90,240672,1800,238872,728,658.4982948303223
+test,90,241345,1800,239545,728,660.2860660552979
