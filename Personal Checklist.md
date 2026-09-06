@@ -81,27 +81,27 @@
 
 ## 4. AI Baseline 모델 개발
 
-- [ ] NVIDIA CUDA / XGBoost GPU 환경 확인
-- [ ] RUL 회귀 Baseline 구현
-- [ ] 고장 위험 분류 Baseline 구현
-  - [ ] 4시간 모델
-  - [ ] 2시간 모델
-  - [ ] 1시간 모델
-- [ ] Validation 기반 threshold 결정 방식 구현
-- [ ] 모델 평가 지표 계산
-  - [ ] MAE
-  - [ ] R²
-  - [ ] Average Precision
-  - [ ] ROC-AUC
-  - [ ] Recall
-  - [ ] False Positive Rate
-- [ ] Event 단위 탐지율 계산
-- [ ] 최초 경고 lead time 계산
-- [ ] case별 성능 비교
+- [x] NVIDIA CUDA / XGBoost GPU 환경 확인
+- [x] RUL 회귀 Baseline 구현
+- [x] 고장 위험 분류 Baseline 구현
+  - [x] 4시간 모델
+  - [x] 2시간 모델
+  - [x] 1시간 모델
+- [x] Validation 기반 threshold 결정 방식 구현
+- [x] 모델 평가 지표 계산
+  - [x] MAE
+  - [x] R²
+  - [x] Average Precision
+  - [x] ROC-AUC
+  - [x] Recall
+  - [x] False Positive Rate
+- [x] Event 단위 탐지율 계산
+- [x] 최초 경고 lead time 계산
+- [x] case별 성능 비교
 
 **완료 기준**
-- [ ] unseen trajectory에서 모델 성능 확인
-- [ ] unseen case에서도 모델 일반화 성능 확인
+- [x] unseen trajectory에서 모델 성능 확인
+- [x] unseen case에서도 모델 일반화 성능 확인
 
 ---
 
