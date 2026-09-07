@@ -1,19 +1,107 @@
+# ============================================================
+# Python
+# ============================================================
+
 .venv/
+venv/
+
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyd
+*.so
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+
+# ============================================================
+# Environment / Secrets
+# ============================================================
 
 .env
+.env.*
+!.env.example
 
+
+# ============================================================
+# Dataset
+# ============================================================
+
+# 원본/가공 데이터는 용량이 크고 재생성 가능하므로 Git 제외
 data/raw/
 data/processed/
-data/unzip/
 
-models/*.json
-models/*.pkl
-models/*.joblib
-models/*.ubj
 
-.ipynb_checkpoints/
+# ============================================================
+# Logs
+# ============================================================
+
+logs/*
+!logs/.gitkeep
+
+*.log
+
+
+# ============================================================
+# IDE / OS
+# ============================================================
 
 .vscode/
 .idea/
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ============================================================
+# Web
+# ============================================================
+
+web/node_modules/
+web/dist/
+web/build/
+web/.next/
+web/.vite/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# ============================================================
+# Unity
+# ============================================================
+
+unity/[Ll]ibrary/
+unity/[Tt]emp/
+unity/[Oo]bj/
+unity/[Ll]ogs/
+unity/[Uu]ser[Ss]ettings/
+unity/[Mm]emoryCaptures/
+unity/[Rr]ecordings/
+
+unity/[Bb]uild/
+unity/[Bb]uilds/
+
+# Unity / Visual Studio generated files
+unity/*.csproj
+unity/*.sln
+unity/*.suo
+unity/*.user
+unity/*.userprefs
+unity/*.tmp
+unity/*.pidb
+unity/*.booproj
+unity/*.svd
+unity/*.pdb
+unity/*.mdb
+unity/*.opendb
+unity/*.VC.db

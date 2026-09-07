@@ -149,37 +149,18 @@
 
 ## 7. 프로젝트 기본 구조 생성
 
-- [ ] 새 GitHub 저장소 생성
-- [ ] 기본 branch 전략 결정
-- [ ] 프로젝트 디렉터리 구조 생성
-- [ ] `.gitignore` 작성
-- [ ] `.env` 구조 정의
-- [ ] Python requirements 정리
-- [ ] 공통 config 구조 작성
-- [ ] 로그 저장 구조 정의
-- [ ] README 기본 골격 작성
-
-예상 구조:
-
-```text
-tep-predictive-maintenance/
-├─ data/
-├─ models/
-├─ src/
-│  ├─ producer/
-│  ├─ inference/
-│  ├─ monitor/
-│  ├─ retraining/
-│  └─ api/
-├─ tests/
-├─ unity/
-├─ docs/
-├─ docker-compose.yml
-└─ README.md
-```
+- [x] 새 GitHub 저장소 생성
+- [x] 기본 branch 전략 결정
+- [x] 프로젝트 디렉터리 구조 생성
+- [x] `.gitignore` 작성
+- [x] `.env` 구조 정의
+- [x] Python requirements 정리
+- [x] 공통 config 구조 작성
+- [x] 로그 저장 구조 정의
+- [x] README 기본 골격 작성
 
 **완료 기준**
-- [ ] 새 저장소를 clone한 뒤 기본 개발환경을 재현 가능
+- [x] 새 저장소를 clone한 뒤 기본 개발환경을 재현 가능
 
 ---
 
