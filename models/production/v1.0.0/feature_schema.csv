@@ -1,0 +1,729 @@
+﻿feature,source_feature,transform,window,model_feature
+D feed,D feed,current,current,True
+D feed__delta_5m,D feed,delta,5m,True
+D feed__rate_5m_per_h,D feed,rate,5m,True
+D feed__mean_15m,D feed,mean,15m,True
+D feed__std_15m,D feed,std,15m,True
+D feed__delta_15m,D feed,delta,15m,True
+D feed__rate_15m_per_h,D feed,rate,15m,True
+D feed__mean_30m,D feed,mean,30m,True
+D feed__std_30m,D feed,std,30m,True
+D feed__max_30m,D feed,max,30m,True
+D feed__min_30m,D feed,min,30m,True
+D feed__delta_60m,D feed,delta,60m,True
+D feed__rate_60m_per_h,D feed,rate,60m,True
+D feed__slope_60m_per_h,D feed,slope,60m,True
+E Feed,E Feed,current,current,True
+E Feed__delta_5m,E Feed,delta,5m,True
+E Feed__rate_5m_per_h,E Feed,rate,5m,True
+E Feed__mean_15m,E Feed,mean,15m,True
+E Feed__std_15m,E Feed,std,15m,True
+E Feed__delta_15m,E Feed,delta,15m,True
+E Feed__rate_15m_per_h,E Feed,rate,15m,True
+E Feed__mean_30m,E Feed,mean,30m,True
+E Feed__std_30m,E Feed,std,30m,True
+E Feed__max_30m,E Feed,max,30m,True
+E Feed__min_30m,E Feed,min,30m,True
+E Feed__delta_60m,E Feed,delta,60m,True
+E Feed__rate_60m_per_h,E Feed,rate,60m,True
+E Feed__slope_60m_per_h,E Feed,slope,60m,True
+A Feed,A Feed,current,current,True
+A Feed__delta_5m,A Feed,delta,5m,True
+A Feed__rate_5m_per_h,A Feed,rate,5m,True
+A Feed__mean_15m,A Feed,mean,15m,True
+A Feed__std_15m,A Feed,std,15m,True
+A Feed__delta_15m,A Feed,delta,15m,True
+A Feed__rate_15m_per_h,A Feed,rate,15m,True
+A Feed__mean_30m,A Feed,mean,30m,True
+A Feed__std_30m,A Feed,std,30m,True
+A Feed__max_30m,A Feed,max,30m,True
+A Feed__min_30m,A Feed,min,30m,True
+A Feed__delta_60m,A Feed,delta,60m,True
+A Feed__rate_60m_per_h,A Feed,rate,60m,True
+A Feed__slope_60m_per_h,A Feed,slope,60m,True
+A and C Feed,A and C Feed,current,current,True
+A and C Feed__delta_5m,A and C Feed,delta,5m,True
+A and C Feed__rate_5m_per_h,A and C Feed,rate,5m,True
+A and C Feed__mean_15m,A and C Feed,mean,15m,True
+A and C Feed__std_15m,A and C Feed,std,15m,True
+A and C Feed__delta_15m,A and C Feed,delta,15m,True
+A and C Feed__rate_15m_per_h,A and C Feed,rate,15m,True
+A and C Feed__mean_30m,A and C Feed,mean,30m,True
+A and C Feed__std_30m,A and C Feed,std,30m,True
+A and C Feed__max_30m,A and C Feed,max,30m,True
+A and C Feed__min_30m,A and C Feed,min,30m,True
+A and C Feed__delta_60m,A and C Feed,delta,60m,True
+A and C Feed__rate_60m_per_h,A and C Feed,rate,60m,True
+A and C Feed__slope_60m_per_h,A and C Feed,slope,60m,True
+Recycle,Recycle,current,current,True
+Recycle__delta_5m,Recycle,delta,5m,True
+Recycle__rate_5m_per_h,Recycle,rate,5m,True
+Recycle__mean_15m,Recycle,mean,15m,True
+Recycle__std_15m,Recycle,std,15m,True
+Recycle__delta_15m,Recycle,delta,15m,True
+Recycle__rate_15m_per_h,Recycle,rate,15m,True
+Recycle__mean_30m,Recycle,mean,30m,True
+Recycle__std_30m,Recycle,std,30m,True
+Recycle__max_30m,Recycle,max,30m,True
+Recycle__min_30m,Recycle,min,30m,True
+Recycle__delta_60m,Recycle,delta,60m,True
+Recycle__rate_60m_per_h,Recycle,rate,60m,True
+Recycle__slope_60m_per_h,Recycle,slope,60m,True
+Purge,Purge,current,current,True
+Purge__delta_5m,Purge,delta,5m,True
+Purge__rate_5m_per_h,Purge,rate,5m,True
+Purge__mean_15m,Purge,mean,15m,True
+Purge__std_15m,Purge,std,15m,True
+Purge__delta_15m,Purge,delta,15m,True
+Purge__rate_15m_per_h,Purge,rate,15m,True
+Purge__mean_30m,Purge,mean,30m,True
+Purge__std_30m,Purge,std,30m,True
+Purge__max_30m,Purge,max,30m,True
+Purge__min_30m,Purge,min,30m,True
+Purge__delta_60m,Purge,delta,60m,True
+Purge__rate_60m_per_h,Purge,rate,60m,True
+Purge__slope_60m_per_h,Purge,slope,60m,True
+Separator,Separator,current,current,True
+Separator__delta_5m,Separator,delta,5m,True
+Separator__rate_5m_per_h,Separator,rate,5m,True
+Separator__mean_15m,Separator,mean,15m,True
+Separator__std_15m,Separator,std,15m,True
+Separator__delta_15m,Separator,delta,15m,True
+Separator__rate_15m_per_h,Separator,rate,15m,True
+Separator__mean_30m,Separator,mean,30m,True
+Separator__std_30m,Separator,std,30m,True
+Separator__max_30m,Separator,max,30m,True
+Separator__min_30m,Separator,min,30m,True
+Separator__delta_60m,Separator,delta,60m,True
+Separator__rate_60m_per_h,Separator,rate,60m,True
+Separator__slope_60m_per_h,Separator,slope,60m,True
+Stripper,Stripper,current,current,True
+Stripper__delta_5m,Stripper,delta,5m,True
+Stripper__rate_5m_per_h,Stripper,rate,5m,True
+Stripper__mean_15m,Stripper,mean,15m,True
+Stripper__std_15m,Stripper,std,15m,True
+Stripper__delta_15m,Stripper,delta,15m,True
+Stripper__rate_15m_per_h,Stripper,rate,15m,True
+Stripper__mean_30m,Stripper,mean,30m,True
+Stripper__std_30m,Stripper,std,30m,True
+Stripper__max_30m,Stripper,max,30m,True
+Stripper__min_30m,Stripper,min,30m,True
+Stripper__delta_60m,Stripper,delta,60m,True
+Stripper__rate_60m_per_h,Stripper,rate,60m,True
+Stripper__slope_60m_per_h,Stripper,slope,60m,True
+Steam,Steam,current,current,True
+Steam__delta_5m,Steam,delta,5m,True
+Steam__rate_5m_per_h,Steam,rate,5m,True
+Steam__mean_15m,Steam,mean,15m,True
+Steam__std_15m,Steam,std,15m,True
+Steam__delta_15m,Steam,delta,15m,True
+Steam__rate_15m_per_h,Steam,rate,15m,True
+Steam__mean_30m,Steam,mean,30m,True
+Steam__std_30m,Steam,std,30m,True
+Steam__max_30m,Steam,max,30m,True
+Steam__min_30m,Steam,min,30m,True
+Steam__delta_60m,Steam,delta,60m,True
+Steam__rate_60m_per_h,Steam,rate,60m,True
+Steam__slope_60m_per_h,Steam,slope,60m,True
+Reactor Coolant,Reactor Coolant,current,current,True
+Reactor Coolant__delta_5m,Reactor Coolant,delta,5m,True
+Reactor Coolant__rate_5m_per_h,Reactor Coolant,rate,5m,True
+Reactor Coolant__mean_15m,Reactor Coolant,mean,15m,True
+Reactor Coolant__std_15m,Reactor Coolant,std,15m,True
+Reactor Coolant__delta_15m,Reactor Coolant,delta,15m,True
+Reactor Coolant__rate_15m_per_h,Reactor Coolant,rate,15m,True
+Reactor Coolant__mean_30m,Reactor Coolant,mean,30m,True
+Reactor Coolant__std_30m,Reactor Coolant,std,30m,True
+Reactor Coolant__max_30m,Reactor Coolant,max,30m,True
+Reactor Coolant__min_30m,Reactor Coolant,min,30m,True
+Reactor Coolant__delta_60m,Reactor Coolant,delta,60m,True
+Reactor Coolant__rate_60m_per_h,Reactor Coolant,rate,60m,True
+Reactor Coolant__slope_60m_per_h,Reactor Coolant,slope,60m,True
+Condenser Coolant,Condenser Coolant,current,current,True
+Condenser Coolant__delta_5m,Condenser Coolant,delta,5m,True
+Condenser Coolant__rate_5m_per_h,Condenser Coolant,rate,5m,True
+Condenser Coolant__mean_15m,Condenser Coolant,mean,15m,True
+Condenser Coolant__std_15m,Condenser Coolant,std,15m,True
+Condenser Coolant__delta_15m,Condenser Coolant,delta,15m,True
+Condenser Coolant__rate_15m_per_h,Condenser Coolant,rate,15m,True
+Condenser Coolant__mean_30m,Condenser Coolant,mean,30m,True
+Condenser Coolant__std_30m,Condenser Coolant,std,30m,True
+Condenser Coolant__max_30m,Condenser Coolant,max,30m,True
+Condenser Coolant__min_30m,Condenser Coolant,min,30m,True
+Condenser Coolant__delta_60m,Condenser Coolant,delta,60m,True
+Condenser Coolant__rate_60m_per_h,Condenser Coolant,rate,60m,True
+Condenser Coolant__slope_60m_per_h,Condenser Coolant,slope,60m,True
+msv A Feed,msv A Feed,current,current,True
+msv A Feed__delta_5m,msv A Feed,delta,5m,True
+msv A Feed__rate_5m_per_h,msv A Feed,rate,5m,True
+msv A Feed__mean_15m,msv A Feed,mean,15m,True
+msv A Feed__std_15m,msv A Feed,std,15m,True
+msv A Feed__delta_15m,msv A Feed,delta,15m,True
+msv A Feed__rate_15m_per_h,msv A Feed,rate,15m,True
+msv A Feed__mean_30m,msv A Feed,mean,30m,True
+msv A Feed__std_30m,msv A Feed,std,30m,True
+msv A Feed__max_30m,msv A Feed,max,30m,True
+msv A Feed__min_30m,msv A Feed,min,30m,True
+msv A Feed__delta_60m,msv A Feed,delta,60m,True
+msv A Feed__rate_60m_per_h,msv A Feed,rate,60m,True
+msv A Feed__slope_60m_per_h,msv A Feed,slope,60m,True
+msv D Feed,msv D Feed,current,current,True
+msv D Feed__delta_5m,msv D Feed,delta,5m,True
+msv D Feed__rate_5m_per_h,msv D Feed,rate,5m,True
+msv D Feed__mean_15m,msv D Feed,mean,15m,True
+msv D Feed__std_15m,msv D Feed,std,15m,True
+msv D Feed__delta_15m,msv D Feed,delta,15m,True
+msv D Feed__rate_15m_per_h,msv D Feed,rate,15m,True
+msv D Feed__mean_30m,msv D Feed,mean,30m,True
+msv D Feed__std_30m,msv D Feed,std,30m,True
+msv D Feed__max_30m,msv D Feed,max,30m,True
+msv D Feed__min_30m,msv D Feed,min,30m,True
+msv D Feed__delta_60m,msv D Feed,delta,60m,True
+msv D Feed__rate_60m_per_h,msv D Feed,rate,60m,True
+msv D Feed__slope_60m_per_h,msv D Feed,slope,60m,True
+msv E Feed,msv E Feed,current,current,True
+msv E Feed__delta_5m,msv E Feed,delta,5m,True
+msv E Feed__rate_5m_per_h,msv E Feed,rate,5m,True
+msv E Feed__mean_15m,msv E Feed,mean,15m,True
+msv E Feed__std_15m,msv E Feed,std,15m,True
+msv E Feed__delta_15m,msv E Feed,delta,15m,True
+msv E Feed__rate_15m_per_h,msv E Feed,rate,15m,True
+msv E Feed__mean_30m,msv E Feed,mean,30m,True
+msv E Feed__std_30m,msv E Feed,std,30m,True
+msv E Feed__max_30m,msv E Feed,max,30m,True
+msv E Feed__min_30m,msv E Feed,min,30m,True
+msv E Feed__delta_60m,msv E Feed,delta,60m,True
+msv E Feed__rate_60m_per_h,msv E Feed,rate,60m,True
+msv E Feed__slope_60m_per_h,msv E Feed,slope,60m,True
+msv A and C Feed,msv A and C Feed,current,current,True
+msv A and C Feed__delta_5m,msv A and C Feed,delta,5m,True
+msv A and C Feed__rate_5m_per_h,msv A and C Feed,rate,5m,True
+msv A and C Feed__mean_15m,msv A and C Feed,mean,15m,True
+msv A and C Feed__std_15m,msv A and C Feed,std,15m,True
+msv A and C Feed__delta_15m,msv A and C Feed,delta,15m,True
+msv A and C Feed__rate_15m_per_h,msv A and C Feed,rate,15m,True
+msv A and C Feed__mean_30m,msv A and C Feed,mean,30m,True
+msv A and C Feed__std_30m,msv A and C Feed,std,30m,True
+msv A and C Feed__max_30m,msv A and C Feed,max,30m,True
+msv A and C Feed__min_30m,msv A and C Feed,min,30m,True
+msv A and C Feed__delta_60m,msv A and C Feed,delta,60m,True
+msv A and C Feed__rate_60m_per_h,msv A and C Feed,rate,60m,True
+msv A and C Feed__slope_60m_per_h,msv A and C Feed,slope,60m,True
+Recycle Flow,Recycle Flow,current,current,True
+Recycle Flow__delta_5m,Recycle Flow,delta,5m,True
+Recycle Flow__rate_5m_per_h,Recycle Flow,rate,5m,True
+Recycle Flow__mean_15m,Recycle Flow,mean,15m,True
+Recycle Flow__std_15m,Recycle Flow,std,15m,True
+Recycle Flow__delta_15m,Recycle Flow,delta,15m,True
+Recycle Flow__rate_15m_per_h,Recycle Flow,rate,15m,True
+Recycle Flow__mean_30m,Recycle Flow,mean,30m,True
+Recycle Flow__std_30m,Recycle Flow,std,30m,True
+Recycle Flow__max_30m,Recycle Flow,max,30m,True
+Recycle Flow__min_30m,Recycle Flow,min,30m,True
+Recycle Flow__delta_60m,Recycle Flow,delta,60m,True
+Recycle Flow__rate_60m_per_h,Recycle Flow,rate,60m,True
+Recycle Flow__slope_60m_per_h,Recycle Flow,slope,60m,True
+Reactor Feed Rate,Reactor Feed Rate,current,current,True
+Reactor Feed Rate__delta_5m,Reactor Feed Rate,delta,5m,True
+Reactor Feed Rate__rate_5m_per_h,Reactor Feed Rate,rate,5m,True
+Reactor Feed Rate__mean_15m,Reactor Feed Rate,mean,15m,True
+Reactor Feed Rate__std_15m,Reactor Feed Rate,std,15m,True
+Reactor Feed Rate__delta_15m,Reactor Feed Rate,delta,15m,True
+Reactor Feed Rate__rate_15m_per_h,Reactor Feed Rate,rate,15m,True
+Reactor Feed Rate__mean_30m,Reactor Feed Rate,mean,30m,True
+Reactor Feed Rate__std_30m,Reactor Feed Rate,std,30m,True
+Reactor Feed Rate__max_30m,Reactor Feed Rate,max,30m,True
+Reactor Feed Rate__min_30m,Reactor Feed Rate,min,30m,True
+Reactor Feed Rate__delta_60m,Reactor Feed Rate,delta,60m,True
+Reactor Feed Rate__rate_60m_per_h,Reactor Feed Rate,rate,60m,True
+Reactor Feed Rate__slope_60m_per_h,Reactor Feed Rate,slope,60m,True
+Reactor Pressure,Reactor Pressure,current,current,True
+Reactor Pressure__delta_5m,Reactor Pressure,delta,5m,True
+Reactor Pressure__rate_5m_per_h,Reactor Pressure,rate,5m,True
+Reactor Pressure__mean_15m,Reactor Pressure,mean,15m,True
+Reactor Pressure__std_15m,Reactor Pressure,std,15m,True
+Reactor Pressure__delta_15m,Reactor Pressure,delta,15m,True
+Reactor Pressure__rate_15m_per_h,Reactor Pressure,rate,15m,True
+Reactor Pressure__mean_30m,Reactor Pressure,mean,30m,True
+Reactor Pressure__std_30m,Reactor Pressure,std,30m,True
+Reactor Pressure__max_30m,Reactor Pressure,max,30m,True
+Reactor Pressure__min_30m,Reactor Pressure,min,30m,True
+Reactor Pressure__delta_60m,Reactor Pressure,delta,60m,True
+Reactor Pressure__rate_60m_per_h,Reactor Pressure,rate,60m,True
+Reactor Pressure__slope_60m_per_h,Reactor Pressure,slope,60m,True
+Reactor Level,Reactor Level,current,current,True
+Reactor Level__delta_5m,Reactor Level,delta,5m,True
+Reactor Level__rate_5m_per_h,Reactor Level,rate,5m,True
+Reactor Level__mean_15m,Reactor Level,mean,15m,True
+Reactor Level__std_15m,Reactor Level,std,15m,True
+Reactor Level__delta_15m,Reactor Level,delta,15m,True
+Reactor Level__rate_15m_per_h,Reactor Level,rate,15m,True
+Reactor Level__mean_30m,Reactor Level,mean,30m,True
+Reactor Level__std_30m,Reactor Level,std,30m,True
+Reactor Level__max_30m,Reactor Level,max,30m,True
+Reactor Level__min_30m,Reactor Level,min,30m,True
+Reactor Level__delta_60m,Reactor Level,delta,60m,True
+Reactor Level__rate_60m_per_h,Reactor Level,rate,60m,True
+Reactor Level__slope_60m_per_h,Reactor Level,slope,60m,True
+Reactor Temperature,Reactor Temperature,current,current,True
+Reactor Temperature__delta_5m,Reactor Temperature,delta,5m,True
+Reactor Temperature__rate_5m_per_h,Reactor Temperature,rate,5m,True
+Reactor Temperature__mean_15m,Reactor Temperature,mean,15m,True
+Reactor Temperature__std_15m,Reactor Temperature,std,15m,True
+Reactor Temperature__delta_15m,Reactor Temperature,delta,15m,True
+Reactor Temperature__rate_15m_per_h,Reactor Temperature,rate,15m,True
+Reactor Temperature__mean_30m,Reactor Temperature,mean,30m,True
+Reactor Temperature__std_30m,Reactor Temperature,std,30m,True
+Reactor Temperature__max_30m,Reactor Temperature,max,30m,True
+Reactor Temperature__min_30m,Reactor Temperature,min,30m,True
+Reactor Temperature__delta_60m,Reactor Temperature,delta,60m,True
+Reactor Temperature__rate_60m_per_h,Reactor Temperature,rate,60m,True
+Reactor Temperature__slope_60m_per_h,Reactor Temperature,slope,60m,True
+Purge Rate,Purge Rate,current,current,True
+Purge Rate__delta_5m,Purge Rate,delta,5m,True
+Purge Rate__rate_5m_per_h,Purge Rate,rate,5m,True
+Purge Rate__mean_15m,Purge Rate,mean,15m,True
+Purge Rate__std_15m,Purge Rate,std,15m,True
+Purge Rate__delta_15m,Purge Rate,delta,15m,True
+Purge Rate__rate_15m_per_h,Purge Rate,rate,15m,True
+Purge Rate__mean_30m,Purge Rate,mean,30m,True
+Purge Rate__std_30m,Purge Rate,std,30m,True
+Purge Rate__max_30m,Purge Rate,max,30m,True
+Purge Rate__min_30m,Purge Rate,min,30m,True
+Purge Rate__delta_60m,Purge Rate,delta,60m,True
+Purge Rate__rate_60m_per_h,Purge Rate,rate,60m,True
+Purge Rate__slope_60m_per_h,Purge Rate,slope,60m,True
+Product Sep Temp,Product Sep Temp,current,current,True
+Product Sep Temp__delta_5m,Product Sep Temp,delta,5m,True
+Product Sep Temp__rate_5m_per_h,Product Sep Temp,rate,5m,True
+Product Sep Temp__mean_15m,Product Sep Temp,mean,15m,True
+Product Sep Temp__std_15m,Product Sep Temp,std,15m,True
+Product Sep Temp__delta_15m,Product Sep Temp,delta,15m,True
+Product Sep Temp__rate_15m_per_h,Product Sep Temp,rate,15m,True
+Product Sep Temp__mean_30m,Product Sep Temp,mean,30m,True
+Product Sep Temp__std_30m,Product Sep Temp,std,30m,True
+Product Sep Temp__max_30m,Product Sep Temp,max,30m,True
+Product Sep Temp__min_30m,Product Sep Temp,min,30m,True
+Product Sep Temp__delta_60m,Product Sep Temp,delta,60m,True
+Product Sep Temp__rate_60m_per_h,Product Sep Temp,rate,60m,True
+Product Sep Temp__slope_60m_per_h,Product Sep Temp,slope,60m,True
+Product Sep Level,Product Sep Level,current,current,True
+Product Sep Level__delta_5m,Product Sep Level,delta,5m,True
+Product Sep Level__rate_5m_per_h,Product Sep Level,rate,5m,True
+Product Sep Level__mean_15m,Product Sep Level,mean,15m,True
+Product Sep Level__std_15m,Product Sep Level,std,15m,True
+Product Sep Level__delta_15m,Product Sep Level,delta,15m,True
+Product Sep Level__rate_15m_per_h,Product Sep Level,rate,15m,True
+Product Sep Level__mean_30m,Product Sep Level,mean,30m,True
+Product Sep Level__std_30m,Product Sep Level,std,30m,True
+Product Sep Level__max_30m,Product Sep Level,max,30m,True
+Product Sep Level__min_30m,Product Sep Level,min,30m,True
+Product Sep Level__delta_60m,Product Sep Level,delta,60m,True
+Product Sep Level__rate_60m_per_h,Product Sep Level,rate,60m,True
+Product Sep Level__slope_60m_per_h,Product Sep Level,slope,60m,True
+Product Sep Pressure,Product Sep Pressure,current,current,True
+Product Sep Pressure__delta_5m,Product Sep Pressure,delta,5m,True
+Product Sep Pressure__rate_5m_per_h,Product Sep Pressure,rate,5m,True
+Product Sep Pressure__mean_15m,Product Sep Pressure,mean,15m,True
+Product Sep Pressure__std_15m,Product Sep Pressure,std,15m,True
+Product Sep Pressure__delta_15m,Product Sep Pressure,delta,15m,True
+Product Sep Pressure__rate_15m_per_h,Product Sep Pressure,rate,15m,True
+Product Sep Pressure__mean_30m,Product Sep Pressure,mean,30m,True
+Product Sep Pressure__std_30m,Product Sep Pressure,std,30m,True
+Product Sep Pressure__max_30m,Product Sep Pressure,max,30m,True
+Product Sep Pressure__min_30m,Product Sep Pressure,min,30m,True
+Product Sep Pressure__delta_60m,Product Sep Pressure,delta,60m,True
+Product Sep Pressure__rate_60m_per_h,Product Sep Pressure,rate,60m,True
+Product Sep Pressure__slope_60m_per_h,Product Sep Pressure,slope,60m,True
+Product Sep Underflow,Product Sep Underflow,current,current,True
+Product Sep Underflow__delta_5m,Product Sep Underflow,delta,5m,True
+Product Sep Underflow__rate_5m_per_h,Product Sep Underflow,rate,5m,True
+Product Sep Underflow__mean_15m,Product Sep Underflow,mean,15m,True
+Product Sep Underflow__std_15m,Product Sep Underflow,std,15m,True
+Product Sep Underflow__delta_15m,Product Sep Underflow,delta,15m,True
+Product Sep Underflow__rate_15m_per_h,Product Sep Underflow,rate,15m,True
+Product Sep Underflow__mean_30m,Product Sep Underflow,mean,30m,True
+Product Sep Underflow__std_30m,Product Sep Underflow,std,30m,True
+Product Sep Underflow__max_30m,Product Sep Underflow,max,30m,True
+Product Sep Underflow__min_30m,Product Sep Underflow,min,30m,True
+Product Sep Underflow__delta_60m,Product Sep Underflow,delta,60m,True
+Product Sep Underflow__rate_60m_per_h,Product Sep Underflow,rate,60m,True
+Product Sep Underflow__slope_60m_per_h,Product Sep Underflow,slope,60m,True
+Stripper Level,Stripper Level,current,current,True
+Stripper Level__delta_5m,Stripper Level,delta,5m,True
+Stripper Level__rate_5m_per_h,Stripper Level,rate,5m,True
+Stripper Level__mean_15m,Stripper Level,mean,15m,True
+Stripper Level__std_15m,Stripper Level,std,15m,True
+Stripper Level__delta_15m,Stripper Level,delta,15m,True
+Stripper Level__rate_15m_per_h,Stripper Level,rate,15m,True
+Stripper Level__mean_30m,Stripper Level,mean,30m,True
+Stripper Level__std_30m,Stripper Level,std,30m,True
+Stripper Level__max_30m,Stripper Level,max,30m,True
+Stripper Level__min_30m,Stripper Level,min,30m,True
+Stripper Level__delta_60m,Stripper Level,delta,60m,True
+Stripper Level__rate_60m_per_h,Stripper Level,rate,60m,True
+Stripper Level__slope_60m_per_h,Stripper Level,slope,60m,True
+Stripper Pressure,Stripper Pressure,current,current,True
+Stripper Pressure__delta_5m,Stripper Pressure,delta,5m,True
+Stripper Pressure__rate_5m_per_h,Stripper Pressure,rate,5m,True
+Stripper Pressure__mean_15m,Stripper Pressure,mean,15m,True
+Stripper Pressure__std_15m,Stripper Pressure,std,15m,True
+Stripper Pressure__delta_15m,Stripper Pressure,delta,15m,True
+Stripper Pressure__rate_15m_per_h,Stripper Pressure,rate,15m,True
+Stripper Pressure__mean_30m,Stripper Pressure,mean,30m,True
+Stripper Pressure__std_30m,Stripper Pressure,std,30m,True
+Stripper Pressure__max_30m,Stripper Pressure,max,30m,True
+Stripper Pressure__min_30m,Stripper Pressure,min,30m,True
+Stripper Pressure__delta_60m,Stripper Pressure,delta,60m,True
+Stripper Pressure__rate_60m_per_h,Stripper Pressure,rate,60m,True
+Stripper Pressure__slope_60m_per_h,Stripper Pressure,slope,60m,True
+Stripper Underflow,Stripper Underflow,current,current,True
+Stripper Underflow__delta_5m,Stripper Underflow,delta,5m,True
+Stripper Underflow__rate_5m_per_h,Stripper Underflow,rate,5m,True
+Stripper Underflow__mean_15m,Stripper Underflow,mean,15m,True
+Stripper Underflow__std_15m,Stripper Underflow,std,15m,True
+Stripper Underflow__delta_15m,Stripper Underflow,delta,15m,True
+Stripper Underflow__rate_15m_per_h,Stripper Underflow,rate,15m,True
+Stripper Underflow__mean_30m,Stripper Underflow,mean,30m,True
+Stripper Underflow__std_30m,Stripper Underflow,std,30m,True
+Stripper Underflow__max_30m,Stripper Underflow,max,30m,True
+Stripper Underflow__min_30m,Stripper Underflow,min,30m,True
+Stripper Underflow__delta_60m,Stripper Underflow,delta,60m,True
+Stripper Underflow__rate_60m_per_h,Stripper Underflow,rate,60m,True
+Stripper Underflow__slope_60m_per_h,Stripper Underflow,slope,60m,True
+Stripper Temp,Stripper Temp,current,current,True
+Stripper Temp__delta_5m,Stripper Temp,delta,5m,True
+Stripper Temp__rate_5m_per_h,Stripper Temp,rate,5m,True
+Stripper Temp__mean_15m,Stripper Temp,mean,15m,True
+Stripper Temp__std_15m,Stripper Temp,std,15m,True
+Stripper Temp__delta_15m,Stripper Temp,delta,15m,True
+Stripper Temp__rate_15m_per_h,Stripper Temp,rate,15m,True
+Stripper Temp__mean_30m,Stripper Temp,mean,30m,True
+Stripper Temp__std_30m,Stripper Temp,std,30m,True
+Stripper Temp__max_30m,Stripper Temp,max,30m,True
+Stripper Temp__min_30m,Stripper Temp,min,30m,True
+Stripper Temp__delta_60m,Stripper Temp,delta,60m,True
+Stripper Temp__rate_60m_per_h,Stripper Temp,rate,60m,True
+Stripper Temp__slope_60m_per_h,Stripper Temp,slope,60m,True
+Stripper Steam Flow,Stripper Steam Flow,current,current,True
+Stripper Steam Flow__delta_5m,Stripper Steam Flow,delta,5m,True
+Stripper Steam Flow__rate_5m_per_h,Stripper Steam Flow,rate,5m,True
+Stripper Steam Flow__mean_15m,Stripper Steam Flow,mean,15m,True
+Stripper Steam Flow__std_15m,Stripper Steam Flow,std,15m,True
+Stripper Steam Flow__delta_15m,Stripper Steam Flow,delta,15m,True
+Stripper Steam Flow__rate_15m_per_h,Stripper Steam Flow,rate,15m,True
+Stripper Steam Flow__mean_30m,Stripper Steam Flow,mean,30m,True
+Stripper Steam Flow__std_30m,Stripper Steam Flow,std,30m,True
+Stripper Steam Flow__max_30m,Stripper Steam Flow,max,30m,True
+Stripper Steam Flow__min_30m,Stripper Steam Flow,min,30m,True
+Stripper Steam Flow__delta_60m,Stripper Steam Flow,delta,60m,True
+Stripper Steam Flow__rate_60m_per_h,Stripper Steam Flow,rate,60m,True
+Stripper Steam Flow__slope_60m_per_h,Stripper Steam Flow,slope,60m,True
+Compressor Work,Compressor Work,current,current,True
+Compressor Work__delta_5m,Compressor Work,delta,5m,True
+Compressor Work__rate_5m_per_h,Compressor Work,rate,5m,True
+Compressor Work__mean_15m,Compressor Work,mean,15m,True
+Compressor Work__std_15m,Compressor Work,std,15m,True
+Compressor Work__delta_15m,Compressor Work,delta,15m,True
+Compressor Work__rate_15m_per_h,Compressor Work,rate,15m,True
+Compressor Work__mean_30m,Compressor Work,mean,30m,True
+Compressor Work__std_30m,Compressor Work,std,30m,True
+Compressor Work__max_30m,Compressor Work,max,30m,True
+Compressor Work__min_30m,Compressor Work,min,30m,True
+Compressor Work__delta_60m,Compressor Work,delta,60m,True
+Compressor Work__rate_60m_per_h,Compressor Work,rate,60m,True
+Compressor Work__slope_60m_per_h,Compressor Work,slope,60m,True
+Reactor Coolant Temp,Reactor Coolant Temp,current,current,True
+Reactor Coolant Temp__delta_5m,Reactor Coolant Temp,delta,5m,True
+Reactor Coolant Temp__rate_5m_per_h,Reactor Coolant Temp,rate,5m,True
+Reactor Coolant Temp__mean_15m,Reactor Coolant Temp,mean,15m,True
+Reactor Coolant Temp__std_15m,Reactor Coolant Temp,std,15m,True
+Reactor Coolant Temp__delta_15m,Reactor Coolant Temp,delta,15m,True
+Reactor Coolant Temp__rate_15m_per_h,Reactor Coolant Temp,rate,15m,True
+Reactor Coolant Temp__mean_30m,Reactor Coolant Temp,mean,30m,True
+Reactor Coolant Temp__std_30m,Reactor Coolant Temp,std,30m,True
+Reactor Coolant Temp__max_30m,Reactor Coolant Temp,max,30m,True
+Reactor Coolant Temp__min_30m,Reactor Coolant Temp,min,30m,True
+Reactor Coolant Temp__delta_60m,Reactor Coolant Temp,delta,60m,True
+Reactor Coolant Temp__rate_60m_per_h,Reactor Coolant Temp,rate,60m,True
+Reactor Coolant Temp__slope_60m_per_h,Reactor Coolant Temp,slope,60m,True
+Separator Coolant Temp,Separator Coolant Temp,current,current,True
+Separator Coolant Temp__delta_5m,Separator Coolant Temp,delta,5m,True
+Separator Coolant Temp__rate_5m_per_h,Separator Coolant Temp,rate,5m,True
+Separator Coolant Temp__mean_15m,Separator Coolant Temp,mean,15m,True
+Separator Coolant Temp__std_15m,Separator Coolant Temp,std,15m,True
+Separator Coolant Temp__delta_15m,Separator Coolant Temp,delta,15m,True
+Separator Coolant Temp__rate_15m_per_h,Separator Coolant Temp,rate,15m,True
+Separator Coolant Temp__mean_30m,Separator Coolant Temp,mean,30m,True
+Separator Coolant Temp__std_30m,Separator Coolant Temp,std,30m,True
+Separator Coolant Temp__max_30m,Separator Coolant Temp,max,30m,True
+Separator Coolant Temp__min_30m,Separator Coolant Temp,min,30m,True
+Separator Coolant Temp__delta_60m,Separator Coolant Temp,delta,60m,True
+Separator Coolant Temp__rate_60m_per_h,Separator Coolant Temp,rate,60m,True
+Separator Coolant Temp__slope_60m_per_h,Separator Coolant Temp,slope,60m,True
+Component A to Reactor,Component A to Reactor,current,current,True
+Component A to Reactor__delta_5m,Component A to Reactor,delta,5m,True
+Component A to Reactor__rate_5m_per_h,Component A to Reactor,rate,5m,True
+Component A to Reactor__mean_15m,Component A to Reactor,mean,15m,True
+Component A to Reactor__std_15m,Component A to Reactor,std,15m,True
+Component A to Reactor__delta_15m,Component A to Reactor,delta,15m,True
+Component A to Reactor__rate_15m_per_h,Component A to Reactor,rate,15m,True
+Component A to Reactor__mean_30m,Component A to Reactor,mean,30m,True
+Component A to Reactor__std_30m,Component A to Reactor,std,30m,True
+Component A to Reactor__max_30m,Component A to Reactor,max,30m,True
+Component A to Reactor__min_30m,Component A to Reactor,min,30m,True
+Component A to Reactor__delta_60m,Component A to Reactor,delta,60m,True
+Component A to Reactor__rate_60m_per_h,Component A to Reactor,rate,60m,True
+Component A to Reactor__slope_60m_per_h,Component A to Reactor,slope,60m,True
+Component B to Reactor,Component B to Reactor,current,current,True
+Component B to Reactor__delta_5m,Component B to Reactor,delta,5m,True
+Component B to Reactor__rate_5m_per_h,Component B to Reactor,rate,5m,True
+Component B to Reactor__mean_15m,Component B to Reactor,mean,15m,True
+Component B to Reactor__std_15m,Component B to Reactor,std,15m,True
+Component B to Reactor__delta_15m,Component B to Reactor,delta,15m,True
+Component B to Reactor__rate_15m_per_h,Component B to Reactor,rate,15m,True
+Component B to Reactor__mean_30m,Component B to Reactor,mean,30m,True
+Component B to Reactor__std_30m,Component B to Reactor,std,30m,True
+Component B to Reactor__max_30m,Component B to Reactor,max,30m,True
+Component B to Reactor__min_30m,Component B to Reactor,min,30m,True
+Component B to Reactor__delta_60m,Component B to Reactor,delta,60m,True
+Component B to Reactor__rate_60m_per_h,Component B to Reactor,rate,60m,True
+Component B to Reactor__slope_60m_per_h,Component B to Reactor,slope,60m,True
+Component C to Reactor,Component C to Reactor,current,current,True
+Component C to Reactor__delta_5m,Component C to Reactor,delta,5m,True
+Component C to Reactor__rate_5m_per_h,Component C to Reactor,rate,5m,True
+Component C to Reactor__mean_15m,Component C to Reactor,mean,15m,True
+Component C to Reactor__std_15m,Component C to Reactor,std,15m,True
+Component C to Reactor__delta_15m,Component C to Reactor,delta,15m,True
+Component C to Reactor__rate_15m_per_h,Component C to Reactor,rate,15m,True
+Component C to Reactor__mean_30m,Component C to Reactor,mean,30m,True
+Component C to Reactor__std_30m,Component C to Reactor,std,30m,True
+Component C to Reactor__max_30m,Component C to Reactor,max,30m,True
+Component C to Reactor__min_30m,Component C to Reactor,min,30m,True
+Component C to Reactor__delta_60m,Component C to Reactor,delta,60m,True
+Component C to Reactor__rate_60m_per_h,Component C to Reactor,rate,60m,True
+Component C to Reactor__slope_60m_per_h,Component C to Reactor,slope,60m,True
+Component D to Reactor,Component D to Reactor,current,current,True
+Component D to Reactor__delta_5m,Component D to Reactor,delta,5m,True
+Component D to Reactor__rate_5m_per_h,Component D to Reactor,rate,5m,True
+Component D to Reactor__mean_15m,Component D to Reactor,mean,15m,True
+Component D to Reactor__std_15m,Component D to Reactor,std,15m,True
+Component D to Reactor__delta_15m,Component D to Reactor,delta,15m,True
+Component D to Reactor__rate_15m_per_h,Component D to Reactor,rate,15m,True
+Component D to Reactor__mean_30m,Component D to Reactor,mean,30m,True
+Component D to Reactor__std_30m,Component D to Reactor,std,30m,True
+Component D to Reactor__max_30m,Component D to Reactor,max,30m,True
+Component D to Reactor__min_30m,Component D to Reactor,min,30m,True
+Component D to Reactor__delta_60m,Component D to Reactor,delta,60m,True
+Component D to Reactor__rate_60m_per_h,Component D to Reactor,rate,60m,True
+Component D to Reactor__slope_60m_per_h,Component D to Reactor,slope,60m,True
+Component E to Reactor,Component E to Reactor,current,current,True
+Component E to Reactor__delta_5m,Component E to Reactor,delta,5m,True
+Component E to Reactor__rate_5m_per_h,Component E to Reactor,rate,5m,True
+Component E to Reactor__mean_15m,Component E to Reactor,mean,15m,True
+Component E to Reactor__std_15m,Component E to Reactor,std,15m,True
+Component E to Reactor__delta_15m,Component E to Reactor,delta,15m,True
+Component E to Reactor__rate_15m_per_h,Component E to Reactor,rate,15m,True
+Component E to Reactor__mean_30m,Component E to Reactor,mean,30m,True
+Component E to Reactor__std_30m,Component E to Reactor,std,30m,True
+Component E to Reactor__max_30m,Component E to Reactor,max,30m,True
+Component E to Reactor__min_30m,Component E to Reactor,min,30m,True
+Component E to Reactor__delta_60m,Component E to Reactor,delta,60m,True
+Component E to Reactor__rate_60m_per_h,Component E to Reactor,rate,60m,True
+Component E to Reactor__slope_60m_per_h,Component E to Reactor,slope,60m,True
+Component F to Reactor,Component F to Reactor,current,current,True
+Component F to Reactor__delta_5m,Component F to Reactor,delta,5m,True
+Component F to Reactor__rate_5m_per_h,Component F to Reactor,rate,5m,True
+Component F to Reactor__mean_15m,Component F to Reactor,mean,15m,True
+Component F to Reactor__std_15m,Component F to Reactor,std,15m,True
+Component F to Reactor__delta_15m,Component F to Reactor,delta,15m,True
+Component F to Reactor__rate_15m_per_h,Component F to Reactor,rate,15m,True
+Component F to Reactor__mean_30m,Component F to Reactor,mean,30m,True
+Component F to Reactor__std_30m,Component F to Reactor,std,30m,True
+Component F to Reactor__max_30m,Component F to Reactor,max,30m,True
+Component F to Reactor__min_30m,Component F to Reactor,min,30m,True
+Component F to Reactor__delta_60m,Component F to Reactor,delta,60m,True
+Component F to Reactor__rate_60m_per_h,Component F to Reactor,rate,60m,True
+Component F to Reactor__slope_60m_per_h,Component F to Reactor,slope,60m,True
+Component A to Purge,Component A to Purge,current,current,True
+Component A to Purge__delta_5m,Component A to Purge,delta,5m,True
+Component A to Purge__rate_5m_per_h,Component A to Purge,rate,5m,True
+Component A to Purge__mean_15m,Component A to Purge,mean,15m,True
+Component A to Purge__std_15m,Component A to Purge,std,15m,True
+Component A to Purge__delta_15m,Component A to Purge,delta,15m,True
+Component A to Purge__rate_15m_per_h,Component A to Purge,rate,15m,True
+Component A to Purge__mean_30m,Component A to Purge,mean,30m,True
+Component A to Purge__std_30m,Component A to Purge,std,30m,True
+Component A to Purge__max_30m,Component A to Purge,max,30m,True
+Component A to Purge__min_30m,Component A to Purge,min,30m,True
+Component A to Purge__delta_60m,Component A to Purge,delta,60m,True
+Component A to Purge__rate_60m_per_h,Component A to Purge,rate,60m,True
+Component A to Purge__slope_60m_per_h,Component A to Purge,slope,60m,True
+Component B to Purge,Component B to Purge,current,current,True
+Component B to Purge__delta_5m,Component B to Purge,delta,5m,True
+Component B to Purge__rate_5m_per_h,Component B to Purge,rate,5m,True
+Component B to Purge__mean_15m,Component B to Purge,mean,15m,True
+Component B to Purge__std_15m,Component B to Purge,std,15m,True
+Component B to Purge__delta_15m,Component B to Purge,delta,15m,True
+Component B to Purge__rate_15m_per_h,Component B to Purge,rate,15m,True
+Component B to Purge__mean_30m,Component B to Purge,mean,30m,True
+Component B to Purge__std_30m,Component B to Purge,std,30m,True
+Component B to Purge__max_30m,Component B to Purge,max,30m,True
+Component B to Purge__min_30m,Component B to Purge,min,30m,True
+Component B to Purge__delta_60m,Component B to Purge,delta,60m,True
+Component B to Purge__rate_60m_per_h,Component B to Purge,rate,60m,True
+Component B to Purge__slope_60m_per_h,Component B to Purge,slope,60m,True
+Component C to Purge,Component C to Purge,current,current,True
+Component C to Purge__delta_5m,Component C to Purge,delta,5m,True
+Component C to Purge__rate_5m_per_h,Component C to Purge,rate,5m,True
+Component C to Purge__mean_15m,Component C to Purge,mean,15m,True
+Component C to Purge__std_15m,Component C to Purge,std,15m,True
+Component C to Purge__delta_15m,Component C to Purge,delta,15m,True
+Component C to Purge__rate_15m_per_h,Component C to Purge,rate,15m,True
+Component C to Purge__mean_30m,Component C to Purge,mean,30m,True
+Component C to Purge__std_30m,Component C to Purge,std,30m,True
+Component C to Purge__max_30m,Component C to Purge,max,30m,True
+Component C to Purge__min_30m,Component C to Purge,min,30m,True
+Component C to Purge__delta_60m,Component C to Purge,delta,60m,True
+Component C to Purge__rate_60m_per_h,Component C to Purge,rate,60m,True
+Component C to Purge__slope_60m_per_h,Component C to Purge,slope,60m,True
+Component D to Purge,Component D to Purge,current,current,True
+Component D to Purge__delta_5m,Component D to Purge,delta,5m,True
+Component D to Purge__rate_5m_per_h,Component D to Purge,rate,5m,True
+Component D to Purge__mean_15m,Component D to Purge,mean,15m,True
+Component D to Purge__std_15m,Component D to Purge,std,15m,True
+Component D to Purge__delta_15m,Component D to Purge,delta,15m,True
+Component D to Purge__rate_15m_per_h,Component D to Purge,rate,15m,True
+Component D to Purge__mean_30m,Component D to Purge,mean,30m,True
+Component D to Purge__std_30m,Component D to Purge,std,30m,True
+Component D to Purge__max_30m,Component D to Purge,max,30m,True
+Component D to Purge__min_30m,Component D to Purge,min,30m,True
+Component D to Purge__delta_60m,Component D to Purge,delta,60m,True
+Component D to Purge__rate_60m_per_h,Component D to Purge,rate,60m,True
+Component D to Purge__slope_60m_per_h,Component D to Purge,slope,60m,True
+Component E to Purge,Component E to Purge,current,current,True
+Component E to Purge__delta_5m,Component E to Purge,delta,5m,True
+Component E to Purge__rate_5m_per_h,Component E to Purge,rate,5m,True
+Component E to Purge__mean_15m,Component E to Purge,mean,15m,True
+Component E to Purge__std_15m,Component E to Purge,std,15m,True
+Component E to Purge__delta_15m,Component E to Purge,delta,15m,True
+Component E to Purge__rate_15m_per_h,Component E to Purge,rate,15m,True
+Component E to Purge__mean_30m,Component E to Purge,mean,30m,True
+Component E to Purge__std_30m,Component E to Purge,std,30m,True
+Component E to Purge__max_30m,Component E to Purge,max,30m,True
+Component E to Purge__min_30m,Component E to Purge,min,30m,True
+Component E to Purge__delta_60m,Component E to Purge,delta,60m,True
+Component E to Purge__rate_60m_per_h,Component E to Purge,rate,60m,True
+Component E to Purge__slope_60m_per_h,Component E to Purge,slope,60m,True
+Component F to Purge,Component F to Purge,current,current,True
+Component F to Purge__delta_5m,Component F to Purge,delta,5m,True
+Component F to Purge__rate_5m_per_h,Component F to Purge,rate,5m,True
+Component F to Purge__mean_15m,Component F to Purge,mean,15m,True
+Component F to Purge__std_15m,Component F to Purge,std,15m,True
+Component F to Purge__delta_15m,Component F to Purge,delta,15m,True
+Component F to Purge__rate_15m_per_h,Component F to Purge,rate,15m,True
+Component F to Purge__mean_30m,Component F to Purge,mean,30m,True
+Component F to Purge__std_30m,Component F to Purge,std,30m,True
+Component F to Purge__max_30m,Component F to Purge,max,30m,True
+Component F to Purge__min_30m,Component F to Purge,min,30m,True
+Component F to Purge__delta_60m,Component F to Purge,delta,60m,True
+Component F to Purge__rate_60m_per_h,Component F to Purge,rate,60m,True
+Component F to Purge__slope_60m_per_h,Component F to Purge,slope,60m,True
+Component G to Purge,Component G to Purge,current,current,True
+Component G to Purge__delta_5m,Component G to Purge,delta,5m,True
+Component G to Purge__rate_5m_per_h,Component G to Purge,rate,5m,True
+Component G to Purge__mean_15m,Component G to Purge,mean,15m,True
+Component G to Purge__std_15m,Component G to Purge,std,15m,True
+Component G to Purge__delta_15m,Component G to Purge,delta,15m,True
+Component G to Purge__rate_15m_per_h,Component G to Purge,rate,15m,True
+Component G to Purge__mean_30m,Component G to Purge,mean,30m,True
+Component G to Purge__std_30m,Component G to Purge,std,30m,True
+Component G to Purge__max_30m,Component G to Purge,max,30m,True
+Component G to Purge__min_30m,Component G to Purge,min,30m,True
+Component G to Purge__delta_60m,Component G to Purge,delta,60m,True
+Component G to Purge__rate_60m_per_h,Component G to Purge,rate,60m,True
+Component G to Purge__slope_60m_per_h,Component G to Purge,slope,60m,True
+Component H to Purge,Component H to Purge,current,current,True
+Component H to Purge__delta_5m,Component H to Purge,delta,5m,True
+Component H to Purge__rate_5m_per_h,Component H to Purge,rate,5m,True
+Component H to Purge__mean_15m,Component H to Purge,mean,15m,True
+Component H to Purge__std_15m,Component H to Purge,std,15m,True
+Component H to Purge__delta_15m,Component H to Purge,delta,15m,True
+Component H to Purge__rate_15m_per_h,Component H to Purge,rate,15m,True
+Component H to Purge__mean_30m,Component H to Purge,mean,30m,True
+Component H to Purge__std_30m,Component H to Purge,std,30m,True
+Component H to Purge__max_30m,Component H to Purge,max,30m,True
+Component H to Purge__min_30m,Component H to Purge,min,30m,True
+Component H to Purge__delta_60m,Component H to Purge,delta,60m,True
+Component H to Purge__rate_60m_per_h,Component H to Purge,rate,60m,True
+Component H to Purge__slope_60m_per_h,Component H to Purge,slope,60m,True
+Component D to Product,Component D to Product,current,current,True
+Component D to Product__delta_5m,Component D to Product,delta,5m,True
+Component D to Product__rate_5m_per_h,Component D to Product,rate,5m,True
+Component D to Product__mean_15m,Component D to Product,mean,15m,True
+Component D to Product__std_15m,Component D to Product,std,15m,True
+Component D to Product__delta_15m,Component D to Product,delta,15m,True
+Component D to Product__rate_15m_per_h,Component D to Product,rate,15m,True
+Component D to Product__mean_30m,Component D to Product,mean,30m,True
+Component D to Product__std_30m,Component D to Product,std,30m,True
+Component D to Product__max_30m,Component D to Product,max,30m,True
+Component D to Product__min_30m,Component D to Product,min,30m,True
+Component D to Product__delta_60m,Component D to Product,delta,60m,True
+Component D to Product__rate_60m_per_h,Component D to Product,rate,60m,True
+Component D to Product__slope_60m_per_h,Component D to Product,slope,60m,True
+Component E to Product,Component E to Product,current,current,True
+Component E to Product__delta_5m,Component E to Product,delta,5m,True
+Component E to Product__rate_5m_per_h,Component E to Product,rate,5m,True
+Component E to Product__mean_15m,Component E to Product,mean,15m,True
+Component E to Product__std_15m,Component E to Product,std,15m,True
+Component E to Product__delta_15m,Component E to Product,delta,15m,True
+Component E to Product__rate_15m_per_h,Component E to Product,rate,15m,True
+Component E to Product__mean_30m,Component E to Product,mean,30m,True
+Component E to Product__std_30m,Component E to Product,std,30m,True
+Component E to Product__max_30m,Component E to Product,max,30m,True
+Component E to Product__min_30m,Component E to Product,min,30m,True
+Component E to Product__delta_60m,Component E to Product,delta,60m,True
+Component E to Product__rate_60m_per_h,Component E to Product,rate,60m,True
+Component E to Product__slope_60m_per_h,Component E to Product,slope,60m,True
+Component F to Product,Component F to Product,current,current,True
+Component F to Product__delta_5m,Component F to Product,delta,5m,True
+Component F to Product__rate_5m_per_h,Component F to Product,rate,5m,True
+Component F to Product__mean_15m,Component F to Product,mean,15m,True
+Component F to Product__std_15m,Component F to Product,std,15m,True
+Component F to Product__delta_15m,Component F to Product,delta,15m,True
+Component F to Product__rate_15m_per_h,Component F to Product,rate,15m,True
+Component F to Product__mean_30m,Component F to Product,mean,30m,True
+Component F to Product__std_30m,Component F to Product,std,30m,True
+Component F to Product__max_30m,Component F to Product,max,30m,True
+Component F to Product__min_30m,Component F to Product,min,30m,True
+Component F to Product__delta_60m,Component F to Product,delta,60m,True
+Component F to Product__rate_60m_per_h,Component F to Product,rate,60m,True
+Component F to Product__slope_60m_per_h,Component F to Product,slope,60m,True
+Component G to Product,Component G to Product,current,current,True
+Component G to Product__delta_5m,Component G to Product,delta,5m,True
+Component G to Product__rate_5m_per_h,Component G to Product,rate,5m,True
+Component G to Product__mean_15m,Component G to Product,mean,15m,True
+Component G to Product__std_15m,Component G to Product,std,15m,True
+Component G to Product__delta_15m,Component G to Product,delta,15m,True
+Component G to Product__rate_15m_per_h,Component G to Product,rate,15m,True
+Component G to Product__mean_30m,Component G to Product,mean,30m,True
+Component G to Product__std_30m,Component G to Product,std,30m,True
+Component G to Product__max_30m,Component G to Product,max,30m,True
+Component G to Product__min_30m,Component G to Product,min,30m,True
+Component G to Product__delta_60m,Component G to Product,delta,60m,True
+Component G to Product__rate_60m_per_h,Component G to Product,rate,60m,True
+Component G to Product__slope_60m_per_h,Component G to Product,slope,60m,True
+Component H to Product,Component H to Product,current,current,True
+Component H to Product__delta_5m,Component H to Product,delta,5m,True
+Component H to Product__rate_5m_per_h,Component H to Product,rate,5m,True
+Component H to Product__mean_15m,Component H to Product,mean,15m,True
+Component H to Product__std_15m,Component H to Product,std,15m,True
+Component H to Product__delta_15m,Component H to Product,delta,15m,True
+Component H to Product__rate_15m_per_h,Component H to Product,rate,15m,True
+Component H to Product__mean_30m,Component H to Product,mean,30m,True
+Component H to Product__std_30m,Component H to Product,std,30m,True
+Component H to Product__max_30m,Component H to Product,max,30m,True
+Component H to Product__min_30m,Component H to Product,min,30m,True
+Component H to Product__delta_60m,Component H to Product,delta,60m,True
+Component H to Product__rate_60m_per_h,Component H to Product,rate,60m,True
+Component H to Product__slope_60m_per_h,Component H to Product,slope,60m,True

@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "model_version": "string",
+  "trajectory_key": "string",
+  "timestamp_hours": "number",
+  "rul": {
+    "hours": "number"
+  },
+  "risk": {
+    "failure_within_4h": {
+      "score": "number",
+      "threshold": "number",
+      "alert": "boolean"
+    },
+    "failure_within_2h": {
+      "score": "number",
+      "threshold": "number",
+      "alert": "boolean"
+    },
+    "failure_within_1h": {
+      "score": "number",
+      "threshold": "number",
+      "alert": "boolean"
+    }
+  },
+  "status": "NORMAL | CAUTION | WARNING | CRITICAL",
+  "explanation_model": "failure_within_4h | failure_within_2h | failure_within_1h",
+  "top_risk_factors": [
+    {
+      "rank": "integer",
+      "feature": "string",
+      "source_feature": "string",
+      "transform": "string",
+      "window_minutes": "integer | null",
+      "shap_value": "number"
+    }
+  ]
+}

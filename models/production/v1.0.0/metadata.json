@@ -1,0 +1,57 @@
+{
+  "version": "v1.0.0",
+  "created_at_utc": "2026-09-07T12:04:07.277084+00:00",
+  "git_commit": "b109db1ca055f69463944444171dcc76fc02c695",
+  "model_family": "XGBoost",
+  "feature_set": "temporal",
+  "feature_count": 728,
+  "sampling_interval_minutes": 3,
+  "warmup_minutes": 60,
+  "training_cases": [
+    "case1",
+    "case2",
+    "case3",
+    "case4",
+    "case5",
+    "case6"
+  ],
+  "models": {
+    "rul": "rul_hours.json",
+    "failure_within_4h": "failure_within_4h.json",
+    "failure_within_2h": "failure_within_2h.json",
+    "failure_within_1h": "failure_within_1h.json"
+  },
+  "thresholds": {
+    "failure_within_4h": 0.6227655410766602,
+    "failure_within_2h": 0.6104410290718079,
+    "failure_within_1h": 0.7830277681350708
+  },
+  "test_metrics": {
+    "rul_hours": {
+      "test_mae": 2.1876509189605717,
+      "test_rmse": 3.248124094748797,
+      "test_r2": 0.9930388331413268
+    },
+    "failure_within_4h": {
+      "test_average_precision": 0.9947744395236096,
+      "test_roc_auc": 0.9998346421006136,
+      "test_f1": 0.9619073348642442,
+      "event_detection_rate": 1.0
+    },
+    "failure_within_2h": {
+      "test_average_precision": 0.9832703097364448,
+      "test_roc_auc": 0.999739168307588,
+      "test_f1": 0.9275888917726448,
+      "event_detection_rate": 1.0
+    },
+    "failure_within_1h": {
+      "test_average_precision": 0.9647654284608465,
+      "test_roc_auc": 0.999732350213379,
+      "test_f1": 0.8992950654582075,
+      "event_detection_rate": 1.0
+    }
+  },
+  "source_candidate": "models/candidates/05-temporal",
+  "feature_list_file": "feature_list.json",
+  "feature_schema_file": "feature_schema.csv"
+}
