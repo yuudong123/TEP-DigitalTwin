@@ -166,12 +166,12 @@
 
 ## 8. Docker 개발환경 구축
 
-- [ ] FastAPI Dockerfile 작성
-- [ ] Kafka Docker 구성
-- [ ] inference Dockerfile 작성
-- [ ] monitor Dockerfile 작성
-- [ ] Docker Compose 작성
-- [ ] 서비스 간 네트워크 설정
+- [x] FastAPI Dockerfile 작성
+- [x] Kafka Docker 구성
+- [x] inference Dockerfile 작성
+- [x] monitor Dockerfile 작성
+- [x] Docker Compose 작성
+- [x] 서비스 간 네트워크 설정
 - [ ] 환경변수 관리
 - [ ] 볼륨 구조 설정
 - [ ] 모델 파일 공유 방식 결정
