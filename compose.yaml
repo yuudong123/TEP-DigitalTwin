@@ -43,6 +43,10 @@ services:
       kafka:
         condition: service_healthy
 
+    volumes:
+      - ./models:/app/models:ro
+      - ./logs:/app/logs
+
     restart: unless-stopped
 
     networks:
@@ -66,6 +70,10 @@ services:
       kafka:
         condition: service_healthy
 
+    volumes:
+      - ./models:/app/models:ro
+      - ./logs:/app/logs
+
     restart: unless-stopped
 
     networks:
@@ -88,6 +96,10 @@ services:
     depends_on:
       kafka:
         condition: service_healthy
+
+    volumes:
+      - ./models:/app/models:ro
+      - ./logs:/app/logs
 
     restart: unless-stopped
 
