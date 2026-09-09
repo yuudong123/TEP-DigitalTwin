@@ -110,7 +110,6 @@ Python 기반 자체 MLOps 로직에서 처리한다.
 - Jenkins
 - Unity
 - Git / GitHub
-- Oracle Cloud
 
 ---
 
