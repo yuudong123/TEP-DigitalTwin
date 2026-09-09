@@ -294,6 +294,7 @@ docs/
 04-baseline-model.md
 05-temporal-features.md
 06-final-model.md
+10-jenkins-cicd.md
 ```
 
 ---
