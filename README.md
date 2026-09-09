@@ -288,6 +288,7 @@ docs/
 현재 주요 문서:
 
 ```text
+00-team-roles.md
 01-project-plan.md
 02-tep-data-overview.md
 03-dataset-design.md
