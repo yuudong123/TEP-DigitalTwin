@@ -288,12 +288,17 @@ docs/
 현재 주요 문서:
 
 ```text
+00-team-roles.md
 01-project-plan.md
 02-tep-data-overview.md
 03-dataset-design.md
 04-baseline-model.md
 05-temporal-features.md
 06-final-model.md
+07-project-structure.md
+08-docker-development.md
+09-manual-deployment.md
+10-jenkins-cicd.md
 ```
 
 ---
@@ -312,5 +317,13 @@ docs/
 07. 프로젝트 기본 구조
 ```
 
-이후 Kafka, 실시간 추론, API, Docker, Web/Unity,
-Drift Detection 및 자동 재학습 기능을 순차적으로 통합한다.
+준비 완료:
+
+```text
+08. Docker 개발환경 구성
+09. 수동 배포 절차 문서·스크립트
+10. Jenkins 파이프라인 파일·설정 문서
+```
+
+08~10번의 실제 운영 완료 기준은 아직 통과하지 않았다. API·inference·monitor
+구현과 배포 대상 컴퓨터에서의 검증이 필요하다.

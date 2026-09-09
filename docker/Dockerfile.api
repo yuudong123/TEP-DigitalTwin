@@ -1,0 +1,18 @@
+# docker build -f docker\Dockerfile.api -t tep-api:dev .
+# docker images tep-api
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src ./src
+COPY models ./models
+COPY data/metadata ./data/metadata
+
+ENV PYTHONPATH=/app
+
+CMD ["python", "-m", "src.api.main"]
