@@ -69,6 +69,10 @@ web/dist/
 web/build/
 web/.next/
 web/.vite/
+web/public/unity/Build/
+web/public/unity/StreamingAssets/
+web/public/unity/TemplateData/
+web/public/unity/index.html
 
 npm-debug.log*
 yarn-debug.log*

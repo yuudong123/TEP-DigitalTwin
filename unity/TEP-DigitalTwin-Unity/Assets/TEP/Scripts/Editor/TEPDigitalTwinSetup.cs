@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using TEP.DigitalTwin;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,6 +39,39 @@ namespace TEP.Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log("TEP Digital Twin demo generated: Assets/TEP/Scenes/TEPDigitalTwinDemo.unity");
+        }
+
+        [MenuItem("TEP Digital Twin/Build WebGL for Web Dashboard")]
+        public static void BuildWebGL()
+        {
+            var scenePath = $"{Scenes}/TEPDigitalTwinDemo.unity";
+            if (!File.Exists(scenePath))
+                throw new FileNotFoundException("Generate the demo scene before building WebGL.", scenePath);
+
+            var outputPath = Path.GetFullPath(Path.Combine(
+                Application.dataPath, "..", "..", "..", "web", "public", "unity"));
+            Directory.CreateDirectory(outputPath);
+
+            var previousCompression = PlayerSettings.WebGL.compressionFormat;
+            try
+            {
+                // Plain files work in Vite and simple static servers without custom encoding headers.
+                PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
+                var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+                {
+                    scenes = new[] { scenePath },
+                    locationPathName = outputPath,
+                    target = BuildTarget.WebGL,
+                    options = BuildOptions.None,
+                });
+                if (report.summary.result != BuildResult.Succeeded)
+                    throw new InvalidDataException($"WebGL build failed: {report.summary.result}");
+                Debug.Log($"TEP WebGL build ready for Vite: {outputPath}");
+            }
+            finally
+            {
+                PlayerSettings.WebGL.compressionFormat = previousCompression;
+            }
         }
 
         private static void EnsureFolders()
@@ -268,6 +302,7 @@ namespace TEP.Editor
             camera.transform.LookAt(new Vector3(1.5f, 1.7f, 0));
             camera.GetComponent<Camera>().fieldOfView = 52f;
             camera.GetComponent<Camera>().backgroundColor = new Color(0.018f, 0.028f, 0.045f);
+            camera.AddComponent<FlyCameraController>();
             var light = new GameObject("Key Light", typeof(Light));
             light.transform.SetParent(root.transform);
             light.transform.rotation = Quaternion.Euler(45, -35, 0);
@@ -323,6 +358,8 @@ namespace TEP.Editor
                 throw new InvalidDataException("Dashboard is not connected.");
             if (serialized.FindProperty("equipment").arraySize != 4)
                 throw new InvalidDataException("Exactly four equipment views are required.");
+            if (Object.FindAnyObjectByType<FlyCameraController>() == null)
+                throw new InvalidDataException("Fly camera controller is missing.");
 
             var mock = AssetDatabase.LoadAssetAtPath<TextAsset>($"{Root}/Mock/prediction_sequence.json");
             var sequence = mock == null ? null : JsonUtility.FromJson<PredictionSequence>(mock.text);
