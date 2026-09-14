@@ -43,16 +43,29 @@ npm run build
 ```text
 Step 0. feat/web-monitoring 브랜치 생성
 Step 1. Vite + React + TypeScript 스캐폴딩, dev 서버 정상 기동 확인
+Step 2. prediction schema를 TS 타입으로 이식하고 sample_prediction.json 값을 정적으로 렌더링
 ```
 
 진행 예정:
 
 ```text
-Step 2. prediction schema를 TS 타입으로 이식하고 sample_prediction.json 값을 정적으로 렌더링
 Step 3. 모의 실시간 스트림(mock stream)으로 대시보드를 움직이게 연결
 Step 4. (선택) RUL·risk score 시계열 그래프
 Step 5. 본 문서 최신화
 ```
+
+Step 2 구현 내용:
+
+- `web/src/types/prediction.ts` — `models/production/v1.0.0/prediction_schema.json`을 그대로
+  옮긴 TypeScript 인터페이스(`Prediction`, `RiskEntry`, `RiskFactor`, `Status`, `RiskHorizon`).
+- `web/src/mock/samplePrediction.ts` — `reports/06-final-model/sample_prediction.json`의 실제
+  값을 하드코딩한 고정 스냅샷.
+- `web/src/components/` — `Header`, `StatusBadge`, `RulCard`, `RiskPanel`, `RiskFactorList` 5개
+  컴포넌트. 색상 규칙은 `docs/06-final-model.md` §9의 상태 우선순위(`CRITICAL > WARNING >
+  CAUTION > NORMAL`)를 따른다.
+- Playwright로 렌더링 결과를 스크린샷 검증: RUL 0.36h, 3개 horizon 모두 100.0%로 threshold를
+  초과해 ALERT 표시, `Product Sep Level` 계열 5개 위험 요인이 `sample_prediction.json`과 정확히
+  일치하는 것을 확인했다.
 
 ## 7. 현재 제한 사항
 
