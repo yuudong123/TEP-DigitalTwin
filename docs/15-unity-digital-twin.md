@@ -59,6 +59,20 @@ Unity 메뉴에서 `TEP Digital Twin > Generate Demo (Prefabs + Scene)`를 한 �
 
 생성 메뉴는 프리팹과 씬을 같은 경로에 다시 만들어 반복 실행할 수 있다.
 
+카메라 조작:
+
+- `W/A/S/D`: 전후좌우 이동
+- `Q/E`: 아래/위 이동
+- `Shift`: 빠르게 이동
+- 마우스 오른쪽 버튼을 누른 채 이동: 시점 회전
+
+Web 대시보드에 포함하려면 Unity 메뉴에서
+`TEP Digital Twin > Build WebGL for Web Dashboard`를 실행한다. 빌드 결과는 자동으로
+`web/public/unity/`에 생성되며 React 대시보드가 `/unity/Build/unity.loader.js`를 로드한다.
+웹의 Unity 영역은 데스크톱에서 우측 아래 모서리로 가로·세로 크기를 조절할 수 있고 모바일에서는
+세로 크기를 조절할 수 있다. `ResizeObserver`와 Unity의 `matchWebGLToCanvasSize` 설정이 CSS 크기,
+WebGL 렌더 버퍼, 화면 DPR을 동기화한다.
+
 ## 6. 실제 API 연결 지점
 
 `PredictionSource`를 상속한 `FastApiPredictionSource`를 추가하고 `DigitalTwinRuntime` 프리팹의

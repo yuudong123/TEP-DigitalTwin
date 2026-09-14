@@ -1,7 +1,118 @@
 .dashboard {
-  max-width: 960px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 24px 20px 48px;
+}
+
+.unity-card {
+  margin-bottom: 16px;
+  padding: 16px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
+}
+
+.unity-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.unity-card__header h2,
+.unity-card__header p,
+.unity-controls {
+  margin: 0;
+}
+
+.unity-card__header p,
+.unity-controls {
+  font-size: 13px;
+  opacity: 0.65;
+}
+
+.unity-card__size {
+  flex: none;
+  font: 12px var(--mono);
+  opacity: 0.6;
+}
+
+.unity-viewport {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 52vw, 680px);
+  min-width: 320px;
+  min-height: 240px;
+  max-width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  resize: both;
+  border-radius: 8px;
+  background: #050a12;
+}
+
+.unity-viewport__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.unity-viewport__canvas:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.unity-viewport__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  padding: 24px;
+  color: #dce8f8;
+  text-align: center;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, #14243a, #050a12 70%);
+}
+
+.unity-viewport__overlay span {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.unity-progress {
+  width: min(320px, 60vw);
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 12%);
+}
+
+.unity-progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.unity-controls {
+  margin-top: 10px;
+}
+
+@media (max-width: 640px) {
+  .unity-viewport {
+    width: 100% !important;
+    min-width: 0;
+    height: 360px;
+    resize: vertical;
+  }
+
+  .unity-card__header p,
+  .unity-card__size {
+    display: none;
+  }
 }
 
 .dashboard-header {

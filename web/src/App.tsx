@@ -3,6 +3,7 @@ import { StatusBadge } from './components/StatusBadge'
 import { RulCard } from './components/RulCard'
 import { RiskPanel } from './components/RiskPanel'
 import { RiskFactorList } from './components/RiskFactorList'
+import { UnityDigitalTwin } from './components/UnityDigitalTwin'
 import { samplePrediction } from './mock/samplePrediction'
 import './App.css'
 
@@ -16,6 +17,8 @@ function App() {
       <div className="dashboard-status-row">
         <StatusBadge status={prediction.status} />
       </div>
+
+      <UnityDigitalTwin />
 
       <main className="dashboard-grid">
         <RulCard hours={prediction.rul.hours} />
