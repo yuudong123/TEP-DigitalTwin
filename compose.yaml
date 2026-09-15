@@ -38,9 +38,6 @@ services:
 
     restart: unless-stopped
 
-    volumes:
-      - kafka-data:/tmp/kraft-combined-logs
-
     networks:
       - tep-network
 
@@ -161,7 +158,3 @@ networks:
   tep-network:
     name: tep-network
     driver: bridge
-
-volumes:
-  kafka-data:
-    name: tep-kafka-data
