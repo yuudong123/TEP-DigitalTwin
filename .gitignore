@@ -96,28 +96,24 @@ unity/**/[Bb]uild/
 unity/**/[Bb]uilds/
 
 # Unity / Visual Studio generated files
-unity/**/*.csproj
-unity/**/*.sln
-unity/**/*.slnx
-unity/**/*.suo
-unity/**/*.user
-unity/**/*.userprefs
-unity/**/*.tmp
-unity/**/*.pidb
-unity/**/*.booproj
-unity/**/*.svd
-unity/**/*.pdb
-unity/**/*.mdb
-unity/**/*.opendb
-unity/**/*.VC.db
-
+unity/*.csproj
+unity/*.sln
+unity/*.suo
+unity/*.user
+unity/*.userprefs
+unity/*.tmp
+unity/*.pidb
+unity/*.booproj
+unity/*.svd
+unity/*.pdb
+unity/*.mdb
+unity/*.opendb
+unity/*.VC.db
+unity/
 # ============================================================
 # etc
 # ============================================================
 Personal_Checklist.md
 PROJECT_FULL_EXPORT.md
-<<<<<<< Updated upstream
 a-backend-timeline.md
 a-backend-web-handoff.md
-=======
->>>>>>> Stashed changes
