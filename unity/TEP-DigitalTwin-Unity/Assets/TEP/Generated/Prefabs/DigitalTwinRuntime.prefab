@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 76795369370460175}
   - component: {fileID: 4173382444872255411}
   - component: {fileID: 6757342322662087781}
+  - component: {fileID: 7174861991511636864}
   m_Layer: 0
   m_Name: DigitalTwinRuntime
   m_TagString: Untagged
@@ -63,3 +64,16 @@ MonoBehaviour:
   source: {fileID: 0}
   dashboard: {fileID: 0}
   equipment: []
+--- !u!114 &7174861991511636864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657544079433865932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a415fc12f6cb22c428f7ccfb1b199a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TEP.DigitalTwin.WebPredictionBridge
+  controller: {fileID: 6757342322662087781}

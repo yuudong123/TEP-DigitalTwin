@@ -44,12 +44,12 @@ npm run build
 Step 0. feat/web-monitoring 브랜치 생성
 Step 1. Vite + React + TypeScript 스캐폴딩, dev 서버 정상 기동 확인
 Step 2. prediction schema를 TS 타입으로 이식하고 sample_prediction.json 값을 정적으로 렌더링
+Step 3. 모의 실시간 스트림과 재생 제어를 연결하고 Unity WebGL에 같은 예측 전달
 ```
 
 진행 예정:
 
 ```text
-Step 3. 모의 실시간 스트림(mock stream)으로 대시보드를 움직이게 연결
 Step 4. (선택) RUL·risk score 시계열 그래프
 Step 5. 본 문서 최신화
 ```
@@ -67,10 +67,16 @@ Step 2 구현 내용:
   초과해 ALERT 표시, `Product Sep Level` 계열 5개 위험 요인이 `sample_prediction.json`과 정확히
   일치하는 것을 확인했다.
 
-> 이 단계는 아직 커밋·push하지 않은 상태다(작업 트리 변경사항으로만 존재).
+Step 3 구현 내용:
+
+- `web/src/hooks/usePredictionStream.ts` — 2초 간격으로 네 예측 스냅샷을 순환하는 데이터 훅.
+- `web/src/components/StreamControls.tsx` — 재생·일시정지·처음부터 및 마지막 갱신 시각 표시.
+- `web/src/mock/predictionSequence.ts` — NORMAL, CAUTION, WARNING, CRITICAL 상태 시퀀스.
+- Web 카드와 Unity WebGL에 같은 `Prediction` 객체를 전달한다. Unity가 준비되면
+  `DigitalTwinRuntime.ApplyPredictionJson`을 호출하며 Unity 자체 모의 스트림은 자동으로 중지된다.
 
 ## 7. 현재 제한 사항
 
 13번 FastAPI, 12번 Inference, 11번 Kafka가 구현되기 전까지는 실제 실시간 데이터 연동이
-불가능하다. 화면은 전부 모의 데이터로 검증하며, 실제 API 연동 시점은 `web/src/hooks/`에 만들
-예정인 데이터 소스 훅(`usePredictionStream` 등)의 내부 구현만 교체하는 것으로 한정한다.
+불가능하다. 화면은 전부 모의 데이터로 검증하며, 실제 API 연동 시점은
+`web/src/hooks/usePredictionStream.ts`의 데이터 공급 부분만 교체하는 것으로 한정한다.

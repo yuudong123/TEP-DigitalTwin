@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import type { Prediction } from '../types/prediction'
 
 type UnityInstance = {
   Quit: () => Promise<void>
   SetFullscreen: (fullscreen: number) => void
+  SendMessage: (gameObject: string, method: string, value: string) => void
 }
 
 type UnityConfig = {
@@ -49,7 +51,11 @@ function loadUnityLoader() {
   return loaderPromise
 }
 
-export function UnityDigitalTwin() {
+interface UnityDigitalTwinProps {
+  prediction: Prediction
+}
+
+export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const unityRef = useRef<UnityInstance>(null)
@@ -124,6 +130,15 @@ export function UnityDigitalTwin() {
       if (instance) void instance.Quit()
     }
   }, [])
+
+  useEffect(() => {
+    if (state !== 'ready' || !unityRef.current) return
+    unityRef.current.SendMessage(
+      'DigitalTwinRuntime',
+      'ApplyPredictionJson',
+      JSON.stringify(prediction),
+    )
+  }, [prediction, state])
 
   return (
     <section className="unity-card" aria-labelledby="unity-title">

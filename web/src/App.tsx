@@ -4,11 +4,13 @@ import { RulCard } from './components/RulCard'
 import { RiskPanel } from './components/RiskPanel'
 import { RiskFactorList } from './components/RiskFactorList'
 import { UnityDigitalTwin } from './components/UnityDigitalTwin'
-import { samplePrediction } from './mock/samplePrediction'
+import { StreamControls } from './components/StreamControls'
+import { usePredictionStream } from './hooks/usePredictionStream'
 import './App.css'
 
 function App() {
-  const prediction = samplePrediction
+  const stream = usePredictionStream()
+  const { prediction } = stream
 
   return (
     <div className="dashboard">
@@ -18,7 +20,16 @@ function App() {
         <StatusBadge status={prediction.status} />
       </div>
 
-      <UnityDigitalTwin />
+      <StreamControls
+        currentIndex={stream.currentIndex}
+        totalSnapshots={stream.totalSnapshots}
+        isPlaying={stream.isPlaying}
+        lastReceivedAt={stream.lastReceivedAt}
+        onToggle={stream.toggle}
+        onRestart={stream.restart}
+      />
+
+      <UnityDigitalTwin prediction={prediction} />
 
       <main className="dashboard-grid">
         <RulCard hours={prediction.rul.hours} />
