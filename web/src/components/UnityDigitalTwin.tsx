@@ -95,9 +95,9 @@ export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
           canvas,
           {
             arguments: [],
-            dataUrl: '/unity/Build/unity.data',
-            frameworkUrl: '/unity/Build/unity.framework.js',
-            codeUrl: '/unity/Build/unity.wasm',
+            dataUrl: '/unity/Build/unity.data.br',
+            frameworkUrl: '/unity/Build/unity.framework.js.br',
+            codeUrl: '/unity/Build/unity.wasm.br',
             streamingAssetsUrl: '/unity/StreamingAssets',
             companyName: 'TEP Digital Twin',
             productName: 'TEP Digital Twin',
@@ -154,6 +154,7 @@ export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
 
       <div ref={containerRef} className="unity-viewport">
         <canvas
+          id="unity-canvas"
           ref={canvasRef}
           className="unity-viewport__canvas"
           tabIndex={0}
