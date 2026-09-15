@@ -38,6 +38,37 @@ services:
 
     restart: unless-stopped
 
+    volumes:
+      - kafka-data:/tmp/kraft-combined-logs
+
+    networks:
+      - tep-network
+
+
+  kafka-init:
+    image: apache/kafka:4.1.0
+
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+    command:
+      [
+        "/opt/kafka/bin/kafka-topics.sh",
+        "--bootstrap-server",
+        "kafka:19092",
+        "--create",
+        "--if-not-exists",
+        "--topic",
+        "tep-sensor-data",
+        "--partitions",
+        "1",
+        "--replication-factor",
+        "1"
+      ]
+
+    restart: "no"
+
     networks:
       - tep-network
 
@@ -130,3 +161,7 @@ networks:
   tep-network:
     name: tep-network
     driver: bridge
+
+volumes:
+  kafka-data:
+    name: tep-kafka-data
