@@ -79,6 +79,10 @@ WebGL 렌더 버퍼, 화면 DPR을 동기화한다.
 source 참조만 교체한다. 화면과 설비 코드는 변경하지 않는다. API 응답 필드와 상태 우선순위는
 Web 및 `models/production/v1.0.0/prediction_schema.json`과 동일해야 한다.
 
+WebGL로 실행할 때는 React가 `WebPredictionBridge.ApplyPredictionJson`에 현재 `Prediction` JSON을
+전달한다. 첫 Web 예측을 받은 Unity는 내부 `MockPredictionSource`를 중지하므로 Web 카드와 3D 설비가
+항상 같은 스냅샷을 표시한다.
+
 ## 7. 남은 통합 검증
 
 - A의 FastAPI endpoint와 전송 방식 확정

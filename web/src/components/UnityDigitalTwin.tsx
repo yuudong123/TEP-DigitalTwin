@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import type { Prediction } from '../types/prediction'
 
 type UnityInstance = {
   Quit: () => Promise<void>
   SetFullscreen: (fullscreen: number) => void
+  SendMessage: (gameObject: string, method: string, value: string) => void
 }
 
 type UnityConfig = {
@@ -49,7 +51,11 @@ function loadUnityLoader() {
   return loaderPromise
 }
 
-export function UnityDigitalTwin() {
+interface UnityDigitalTwinProps {
+  prediction: Prediction
+}
+
+export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const unityRef = useRef<UnityInstance>(null)
@@ -89,9 +95,9 @@ export function UnityDigitalTwin() {
           canvas,
           {
             arguments: [],
-            dataUrl: '/unity/Build/unity.data',
-            frameworkUrl: '/unity/Build/unity.framework.js',
-            codeUrl: '/unity/Build/unity.wasm',
+            dataUrl: '/unity/Build/unity.data.br',
+            frameworkUrl: '/unity/Build/unity.framework.js.br',
+            codeUrl: '/unity/Build/unity.wasm.br',
             streamingAssetsUrl: '/unity/StreamingAssets',
             companyName: 'TEP Digital Twin',
             productName: 'TEP Digital Twin',
@@ -125,6 +131,15 @@ export function UnityDigitalTwin() {
     }
   }, [])
 
+  useEffect(() => {
+    if (state !== 'ready' || !unityRef.current) return
+    unityRef.current.SendMessage(
+      'DigitalTwinRuntime',
+      'ApplyPredictionJson',
+      JSON.stringify(prediction),
+    )
+  }, [prediction, state])
+
   return (
     <section className="unity-card" aria-labelledby="unity-title">
       <div className="unity-card__header">
@@ -139,6 +154,7 @@ export function UnityDigitalTwin() {
 
       <div ref={containerRef} className="unity-viewport">
         <canvas
+          id="unity-canvas"
           ref={canvasRef}
           className="unity-viewport__canvas"
           tabIndex={0}

@@ -74,6 +74,29 @@ namespace TEP.Editor
             }
         }
 
+        [MenuItem("TEP Digital Twin/Install Web Prediction Bridge")]
+        public static void InstallWebPredictionBridge()
+        {
+            var path = $"{Prefabs}/DigitalTwinRuntime.prefab";
+            var root = PrefabUtility.LoadPrefabContents(path);
+            try
+            {
+                var controller = root.GetComponent<DigitalTwinController>();
+                if (controller == null) throw new InvalidDataException("DigitalTwinController is missing.");
+                var bridge = root.GetComponent<WebPredictionBridge>() ?? root.AddComponent<WebPredictionBridge>();
+                var serialized = new SerializedObject(bridge);
+                serialized.FindProperty("controller").objectReferenceValue = controller;
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+                PrefabUtility.SaveAsPrefabAsset(root, path);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
+            AssetDatabase.SaveAssets();
+            Debug.Log("Web prediction bridge installed on DigitalTwinRuntime prefab.");
+        }
+
         private static void EnsureFolders()
         {
             EnsureFolder("Assets", "TEP");
@@ -286,7 +309,11 @@ namespace TEP.Editor
             var sourceSerialized = new SerializedObject(source);
             sourceSerialized.FindProperty("mockSequence").objectReferenceValue = mock;
             sourceSerialized.ApplyModifiedPropertiesWithoutUndo();
-            root.AddComponent<DigitalTwinController>();
+            var controller = root.AddComponent<DigitalTwinController>();
+            var bridge = root.AddComponent<WebPredictionBridge>();
+            var bridgeSerialized = new SerializedObject(bridge);
+            bridgeSerialized.FindProperty("controller").objectReferenceValue = controller;
+            bridgeSerialized.ApplyModifiedPropertiesWithoutUndo();
             return SavePrefab(root, $"{Prefabs}/DigitalTwinRuntime.prefab");
         }
 
@@ -360,6 +387,8 @@ namespace TEP.Editor
                 throw new InvalidDataException("Exactly four equipment views are required.");
             if (Object.FindAnyObjectByType<FlyCameraController>() == null)
                 throw new InvalidDataException("Fly camera controller is missing.");
+            if (Object.FindAnyObjectByType<WebPredictionBridge>() == null)
+                throw new InvalidDataException("Web prediction bridge is missing.");
 
             var mock = AssetDatabase.LoadAssetAtPath<TextAsset>($"{Root}/Mock/prediction_sequence.json");
             var sequence = mock == null ? null : JsonUtility.FromJson<PredictionSequence>(mock.text);
