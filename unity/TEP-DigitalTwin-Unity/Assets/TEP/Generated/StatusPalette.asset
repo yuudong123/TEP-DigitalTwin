@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d59d1a44a475e5a4aafeed82c84c4ddd, type: 3}
+  m_Name: StatusPalette
+  m_EditorClassIdentifier: Assembly-CSharp::TEP.DigitalTwin.StatusPalette
+  normal: {fileID: 2100000, guid: a44304066ea0a074b8587861e7113f65, type: 2}
+  caution: {fileID: 2100000, guid: 5225aef38ffc1404ebc95574604986fb, type: 2}
+  warning: {fileID: 2100000, guid: 0ea81376fcdc69b48b2ecd8db2f46f95, type: 2}
+  critical: {fileID: 2100000, guid: 50431717303c01a4c8072b7f3e6490e2, type: 2}

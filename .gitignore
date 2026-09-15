@@ -69,6 +69,10 @@ web/dist/
 web/build/
 web/.next/
 web/.vite/
+web/public/unity/Build/
+web/public/unity/StreamingAssets/
+web/public/unity/TemplateData/
+web/public/unity/index.html
 
 npm-debug.log*
 yarn-debug.log*
@@ -80,16 +84,16 @@ pnpm-debug.log*
 # Unity
 # ============================================================
 
-unity/[Ll]ibrary/
-unity/[Tt]emp/
-unity/[Oo]bj/
-unity/[Ll]ogs/
-unity/[Uu]ser[Ss]ettings/
-unity/[Mm]emoryCaptures/
-unity/[Rr]ecordings/
+unity/**/[Ll]ibrary/
+unity/**/[Tt]emp/
+unity/**/[Oo]bj/
+unity/**/[Ll]ogs/
+unity/**/[Uu]ser[Ss]ettings/
+unity/**/[Mm]emoryCaptures/
+unity/**/[Rr]ecordings/
 
-unity/[Bb]uild/
-unity/[Bb]uilds/
+unity/**/[Bb]uild/
+unity/**/[Bb]uilds/
 
 # Unity / Visual Studio generated files
 unity/*.csproj
@@ -110,3 +114,6 @@ unity/
 # etc
 # ============================================================
 Personal_Checklist.md
+PROJECT_FULL_EXPORT.md
+a-backend-timeline.md
+a-backend-web-handoff.md

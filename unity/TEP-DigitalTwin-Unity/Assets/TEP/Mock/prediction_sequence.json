@@ -1,0 +1,8 @@
+{
+  "snapshots": [
+    {"schema_version":"1.0","model_version":"v1.0.0","trajectory_key":"case6::95","timestamp_hours":124.0,"rul":{"hours":7.80},"risk":{"failure_within_4h":{"score":0.12,"threshold":0.62276554,"alert":false},"failure_within_2h":{"score":0.08,"threshold":0.61044103,"alert":false},"failure_within_1h":{"score":0.03,"threshold":0.78302777,"alert":false}},"status":"NORMAL"},
+    {"schema_version":"1.0","model_version":"v1.0.0","trajectory_key":"case6::95","timestamp_hours":126.0,"rul":{"hours":4.10},"risk":{"failure_within_4h":{"score":0.48,"threshold":0.62276554,"alert":false},"failure_within_2h":{"score":0.36,"threshold":0.61044103,"alert":false},"failure_within_1h":{"score":0.24,"threshold":0.78302777,"alert":false}},"status":"CAUTION"},
+    {"schema_version":"1.0","model_version":"v1.0.0","trajectory_key":"case6::95","timestamp_hours":128.0,"rul":{"hours":1.85},"risk":{"failure_within_4h":{"score":0.74,"threshold":0.62276554,"alert":true},"failure_within_2h":{"score":0.52,"threshold":0.61044103,"alert":false},"failure_within_1h":{"score":0.45,"threshold":0.78302777,"alert":false}},"status":"WARNING"},
+    {"schema_version":"1.0","model_version":"v1.0.0","trajectory_key":"case6::95","timestamp_hours":128.8,"rul":{"hours":0.35779673},"risk":{"failure_within_4h":{"score":0.99999988,"threshold":0.62276554,"alert":true},"failure_within_2h":{"score":0.99999499,"threshold":0.61044103,"alert":true},"failure_within_1h":{"score":0.99984634,"threshold":0.78302777,"alert":true}},"status":"CRITICAL"}
+  ]
+}
