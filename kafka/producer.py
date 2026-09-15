@@ -5,6 +5,7 @@ import csv
 import json
 import os
 import time
+from functools import partial
 from pathlib import Path
 
 from confluent_kafka import Producer
@@ -100,15 +101,19 @@ def preview_messages(
 # 4. Kafka 전송 결과 처리
 # ============================================================
 
-def delivery_report(error, kafka_message):
+def delivery_report(error, kafka_message, delivery_counts):
     """
     Kafka가 메시지 전송 결과를 알려줄 때 실행된다.
 
+    성공·실패 횟수를 각각 기록하고,
     실패한 경우 오류를 화면에 출력한다.
     """
 
     if error is not None:
+        delivery_counts["failure"] += 1
         print(f"[전송 실패] {error}")
+    else:
+        delivery_counts["success"] += 1
 
 
 # ============================================================
@@ -149,6 +154,19 @@ def publish_trajectory(
     print(f"전송 예정: {len(rows)}개")
     print()
 
+    # produce() 호출 횟수가 아니라 Kafka broker가 확인한 실제 전송 결과를
+    # delivery callback에서 집계한다.
+    delivery_counts = {
+        "success": 0,
+        "failure": 0,
+    }
+
+    # confluent-kafka가 callback을 호출할 때 위 집계 객체도 함께 전달한다.
+    delivery_callback = partial(
+        delivery_report,
+        delivery_counts=delivery_counts,
+    )
+
     for sequence, row in enumerate(rows):
         message = build_sensor_message(
             case_name=case_name,
@@ -172,7 +190,7 @@ def publish_trajectory(
                     topic=topic,
                     key=message_key,
                     value=message_value,
-                    on_delivery=delivery_report,
+                    on_delivery=delivery_callback,
                 )
                 break
             except BufferError:
@@ -202,14 +220,37 @@ def publish_trajectory(
     # 전송 대기열의 메시지가 모두 처리될 때까지 기다린다.
     remaining_count = producer.flush(30)
 
-    if remaining_count > 0:
-        raise RuntimeError(
-            f"제한 시간 안에 전송되지 않은 메시지가 "
-            f"{remaining_count}개 있습니다."
-        )
+    requested_count = len(rows)
+    success_count = delivery_counts["success"]
+
+    # callback에서 실패한 메시지와 flush 제한 시간 안에 처리되지 않은
+    # 메시지를 모두 최종 실패 건수에 포함한다.
+    failure_count = delivery_counts["failure"] + remaining_count
 
     print()
-    print(f"[전송 완료] 총 {len(rows)}개 메시지")
+    print("========== Producer 전송 결과 ==========")
+    print(f"전송 요청: {requested_count}")
+    print(f"전송 성공: {success_count}")
+    print(f"전송 실패: {failure_count}")
+
+    if (
+        success_count == requested_count
+        and failure_count == 0
+    ):
+        print("최종 결과: 정상")
+        return
+
+    print("최종 결과: 실패")
+
+    if remaining_count > 0:
+        print(
+            f"제한 시간 안에 처리되지 않은 메시지: "
+            f"{remaining_count}"
+        )
+
+    raise RuntimeError(
+        "일부 Kafka 메시지가 정상적으로 전송되지 않았습니다."
+    )
 
 
 # ============================================================

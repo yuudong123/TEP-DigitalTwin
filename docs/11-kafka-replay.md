@@ -1,7 +1,7 @@
 # Kafka 실시간 데이터 재생
 
-> 업데이트 기준: 2026-09-14  
-> 현재 상태: Producer·Consumer 구현 및 로컬 실행 진입 확인 완료, 실제 Kafka 송수신 미검증
+> 업데이트 기준: 2026-09-15  
+> 현재 상태: Producer·Consumer 구현 및 Tailscale 원격 Kafka 2,929개 전체 송수신 검증 완료
 
 ## 1. 목적
 
@@ -81,10 +81,30 @@ kafka/
 기존 공통 환경변수를 사용한다.
 
 ```text
-KAFKA_BOOTSTRAP_SERVERS=localhost:9092
+KAFKA_BOOTSTRAP_SERVERS=100.127.7.26:9092
 KAFKA_SENSOR_TOPIC=tep-sensor-data
 TEP_REPLAY_INTERVAL_SECONDS=0.1
 ```
+
+Kafka는 별도의 Docker 컴퓨터 `DESKTOP-VNS4A9P`에서 실행하며, 개발 PC는
+Tailscale을 통해 Docker 컴퓨터의 `100.127.7.26:9092`로 접속한다.
+
+접속 위치별 주소는 다음과 같이 분리한다.
+
+| 실행 위치                               | Kafka 주소          |
+| --------------------------------------- | ------------------- |
+| 개발 PC의 Producer·Consumer             | `100.127.7.26:9092` |
+| Docker 내부 `api`·`inference`·`monitor` | `kafka:19092`       |
+
+Kafka broker에는 다음 advertised listener가 적용되어 있다.
+
+```text
+INTERNAL://kafka:19092
+EXTERNAL://100.127.7.26:9092
+```
+
+외부 Producer·Consumer가 최초 접속 후에도 접근 가능한 Tailscale 주소를
+Kafka metadata로 받을 수 있도록 내부·외부 listener를 분리하였다.
 
 Kafka message key는 `trajectory_key`를 사용한다. 동일 trajectory의 메시지가
 같은 partition에 배치되어 순서를 유지할 수 있도록 하기 위한 규칙이다.
@@ -107,9 +127,14 @@ confluent-kafka==2.15.0
 재현 가능한 설치를 위해 이 의존성은 프로젝트 `requirements.txt`에도 추가해야
 한다.
 
-개발 PC에서는 Kafka 코드를 작성하고, Docker Compose와 Kafka의 실제
-실행은 별도의 컴퓨터에서 진행한다. 따라서 실제 송수신 검증은
-Producer와 Consumer 구현 후 Docker 실행 컴퓨터에서 수행한다.
+개발 PC에서는 Kafka 코드를 작성하고 Producer·Consumer를 실행한다. Docker
+Compose와 Kafka broker는 별도의 컴퓨터에서 실행하며, 실제 송수신은
+Tailscale 네트워크를 통해 검증한다.
+
+Kafka는 원본 데이터의 장기 저장소가 아니라 실시간 재생·전달 통로로 사용한다.
+원본 데이터는 `data/raw/case1.csv`~`case6.csv`로 보관되므로 Kafka 메시지
+영구 볼륨은 필수 요구사항으로 두지 않는다. 컨테이너 재생성으로 토픽이
+사라지면 토픽을 다시 생성하고 Producer로 원본 CSV를 재전송한다.
 
 ## 6. Sensor 메시지 Schema v1.0
 
@@ -212,24 +237,28 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 
 ## 10. 검증 항목과 현재 결과
 
-| 검증 항목                           | 상태      | 결과                                                  |
-| ----------------------------------- | --------- | ----------------------------------------------------- |
-| 기본 case 파일 존재                 | 완료      | `case1.csv`~`case6.csv` 확인                          |
-| CSV 컬럼 구조                       | 완료      | 전체 58개, `Id`·`Time` 제외 공정 변수 56개            |
-| `message_schema.py` Python 문법     | 완료      | `python -m py_compile` 통과                           |
-| 실제 CSV 1행 메시지 변환            | 완료      | `case1::1`, `sequence=0`, `timestamp_hours=0.0`       |
-| `values` 공정 변수 개수             | 완료      | 56개 확인                                             |
-| `confluent-kafka` 설치              | 완료      | 가상환경에서 `2.15.0` import 확인                     |
-| Producer Python 문법                | 완료      | `python -m py_compile` 통과                           |
-| 선택한 Id 전체 필터링·정렬          | 완료      | `case1::1` 2,929행, Time `0`~`146.4`                  |
-| Producer 미리보기                   | 완료      | sequence `0, 1, 2`, Time `0, 0.05, 0.1`, values 56개  |
-| Producer 실제 발행 경로 진입        | 완료      | `--send` 실행 및 `localhost:9092` 연결 시도 확인      |
-| Consumer 실행 진입                  | 완료      | topic 구독 및 `localhost:9092` 연결 시도 확인         |
-| `sequence` 연속 증가                | 부분 완료 | 생성은 확인, 실제 수신 순서는 Kafka 송수신 후 확인    |
-| CSV 행 수와 Consumer 수신 개수 일치 | 미검증    | Kafka 송수신 후 확인                                  |
-| Kafka 연결 실패 로그                | 완료      | 브로커 미실행 상태에서 connection failure 확인        |
-| Kafka 실제 송수신                   | 미검증    | Docker 실행 컴퓨터에서 확인 필요                      |
-| Producer 성공·실패 최종 집계        | 보완 필요 | delivery callback 실패 건수를 최종 결과에 반영해야 함 |
+| 검증 항목                           | 상태 | 결과                                                          |
+| ----------------------------------- | ---- | ------------------------------------------------------------- |
+| 기본 case 파일 존재                 | 완료 | `case1.csv`~`case6.csv` 확인                                  |
+| CSV 컬럼 구조                       | 완료 | 전체 58개, `Id`·`Time` 제외 공정 변수 56개                    |
+| `message_schema.py` Python 문법     | 완료 | `python -m py_compile` 통과                                   |
+| 실제 CSV 1행 메시지 변환            | 완료 | `case1::1`, `sequence=0`, `timestamp_hours=0.0`               |
+| `values` 공정 변수 개수             | 완료 | 56개 확인                                                     |
+| `confluent-kafka` 설치              | 완료 | 가상환경에서 `2.15.0` import 확인                             |
+| Producer Python 문법                | 완료 | `python -m py_compile` 통과                                   |
+| 선택한 Id 전체 필터링·정렬          | 완료 | `case1::1` 2,929행, Time `0`~`146.4`                          |
+| Producer 미리보기                   | 완료 | sequence `0, 1, 2`, Time `0, 0.05, 0.1`, values 56개          |
+| Tailscale 포트 연결                 | 완료 | `100.127.7.26:9092`, `TcpTestSucceeded=True`                  |
+| Kafka 외부 listener                 | 완료 | `EXTERNAL://100.127.7.26:9092` 적용 확인                      |
+| Sensor topic                        | 완료 | `tep-sensor-data` 생성 및 목록 확인                           |
+| Producer 실제 발행                  | 완료 | `case1::1` 메시지 2,929개 전송                                |
+| Consumer 실제 수신                  | 완료 | `case1::1` 메시지 2,929개 수신                                |
+| Schema 검증                         | 완료 | 정상 2,929개, 메시지 오류 0개                                 |
+| `sequence` 연속 증가                | 완료 | `0`~`2928`, sequence 오류 0개                                 |
+| CSV 행 수와 Consumer 수신 개수 일치 | 완료 | 발행 2,929개 = 수신 2,929개                                   |
+| Kafka 실제 송수신                   | 완료 | 개발 PC ↔ Tailscale ↔ 원격 Docker Kafka                       |
+| 초기 Coordinator 재시도             | 완료 | `Coordinator load in progress` 후 자동 복구 및 전체 전송 성공 |
+| Producer 성공·실패 최종 집계        | 완료 | 전송 요청 2,929개, 성공 2,929개, 실패 0개, 최종 결과 `정상`   |
 
 ## 11. 현재 상태
 
@@ -268,32 +297,51 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 - 기존 `.env`의 `KAFKA_CONSUMER_GROUP=inference-service` 유지
 - 가상환경에 `confluent-kafka==2.15.0` 설치 및 import 확인
 - Producer와 Consumer 모두 실제 실행 경로 진입 확인
+- Docker 컴퓨터의 `tep-kafka` 컨테이너 `healthy` 상태 확인
+- Kafka 내부·외부 listener 분리 및 Tailscale 외부 주소 적용 확인
+- 개발 PC에서 Docker 컴퓨터의 `9092` 포트 연결 성공
+- `tep-sensor-data` topic 생성
+- `case1::1` 전체 2,929개 메시지 실제 발행 및 수신 성공
+- Sensor Schema v1.0 정상 2,929개, 메시지 오류 0개 확인
+- sequence `0`~`2928` 연속성 확인, sequence 오류 0개
+- Producer 기본 전송 간격 `0.1초` 적용 확인
+- Producer delivery callback 기반 성공·실패 최종 집계 구현 및 문법 검사 통과
+- Producer 전송 요청 2,929개, 성공 2,929개, 실패 0개, 최종 결과 `정상` 확인
+- `requirements.txt`에 `pytest==9.1.1`, `confluent-kafka==2.15.0` 반영
+- `kafka/README.md` 작성 및 실행·검증·장애 확인 방법 정리
 
 실제 실행 결과:
 
-- 개발 PC의 `.env` 기본값에 따라 `localhost:9092`로 연결을 시도함
-- 해당 PC에서 Kafka broker가 실행되지 않아 connection failure 발생
-- Producer 메시지는 broker에 전달되지 않고 `_MSG_TIMED_OUT` 처리됨
-- Consumer도 broker에 연결되지 않아 실제 메시지를 수신하지 못함
-- 이는 CSV 처리, Schema 또는 Python 문법 오류가 아니라 Kafka 미실행 상태에
-  따른 결과임
+- 개발 PC에서 `100.127.7.26:9092`로 Tailscale 원격 Kafka 연결 성공
+- Producer에서 `case1::1`의 `sequence=0`~`2928` 총 2,929개 발행 완료
+- Consumer에서 동일 trajectory 메시지 2,929개 수신 완료
+- 스키마 정상 2,929개, 메시지 오류 0개, sequence 오류 0개
+- 첫 시도에서 `Coordinator load in progress` 안내가 발생했으나 자동 재시도 후
+  중단 없이 전체 전송 완료
+- Producer delivery callback 최종 집계에서 전송 성공 2,929개, 실패 0개 확인
+- Producer 최종 결과 `정상` 확인
+- Consumer 최종 결과 `정상` 확인
 
-남은 작업:
+Kafka 저장 정책:
 
-- `confluent-kafka==2.15.0`을 `requirements.txt`에 추가
-- Producer delivery callback의 성공·실패 건수를 집계하여 최종 결과에 반영
-- 2026-09-15 Docker 실행 컴퓨터에서 Kafka broker 기동 상태 확인
-- 실제 Kafka 송수신 검증
-- Producer 발행 2,929개와 Consumer 수신 2,929개 일치 확인
-- Consumer sequence `0`~`2928` 연속성 확인
-- 장애 및 재시도 검증
-- `kafka/README.md` 작성
+- Kafka는 센서 메시지의 실시간 재생·전달 통로로 사용
+- 장기 보관 원본은 `data/raw/case1.csv`~`case6.csv`
+- Kafka 메시지 영구 보관은 필수 요구사항에서 제외
+- Kafka 컨테이너 재생성 후 토픽이 사라지면 `tep-sensor-data`를 다시 생성
+- 필요한 데이터는 Producer로 원본 CSV에서 다시 전송
 
-현재 11번 작업은 **Sensor 메시지 Schema, Producer, 확인용 Consumer 구현과
-로컬 데이터 검증까지 완료**된 상태다. Kafka broker가 없는 개발 PC에서 연결
-실패 동작까지 확인했지만, 실제 송수신은 완료되지 않았으므로 11번 전체를
-완료로 표시하지 않는다. Docker 기반 실제 송수신 검증은 2026-09-15에
-진행한다.
+11번 이후 작업:
+
+- 필요 시 `case2`~`case6`의 대표 trajectory 추가 검증(선택 사항)
+- 12번 실시간 추론 서비스에서 최근 60분 데이터를 메모리에 버퍼링하고
+  5·15·30·60분 Temporal Feature 728개 생성
+
+현재 11번 작업은 **Sensor 메시지 Schema, Producer, 확인용 Consumer 구현,
+Tailscale 원격 Kafka 전체 송수신 검증 및 문서화까지 완료**된 상태다.
+`case1::1`의 2,929개 메시지에 대해 Producer 전송 성공 2,929개·실패 0개,
+Consumer 수신 2,929개·메시지 오류 0개·sequence 오류 0개를 확인했다.
+따라서 11번 Kafka 실시간 데이터 재생 작업의 필수 범위는 완료되었으며,
+다음 단계는 12번 실시간 Feature 생성 및 AI 추론 구현이다.
 
 ## 12. 실행 명령
 
@@ -304,21 +352,33 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 python .\kafka\producer.py --case case1 --id 1 --limit 3
 ```
 
-### 12.2 Docker 실행 컴퓨터에서 실제 송수신
+### 12.2 Tailscale 원격 Kafka 실제 송수신
 
-첫 번째 PowerShell에서 Consumer를 먼저 실행한다.
+개발 PC의 첫 번째 PowerShell에서 Consumer를 먼저 실행한다.
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 python .\kafka\consumer.py --case case1 --id 1 --expected-count 2929
 ```
 
-Consumer가 수신 대기 상태가 된 뒤 두 번째 PowerShell에서 Producer를 실행한다.
+Consumer가 수신 대기 상태가 된 뒤 개발 PC의 두 번째 PowerShell에서
+Producer를 실행한다.
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
-python .\kafka\producer.py --case case1 --id 1 --interval 0.1 --send
+python .\kafka\producer.py --case case1 --id 1 --send
 ```
 
-두 PowerShell 모두 각각 가상환경을 활성화해야 한다. Kafka가 같은 컴퓨터의
-Docker에서 호스트 포트 `9092`로 노출되면 `localhost:9092`를 사용한다.
+두 PowerShell 모두 각각 가상환경을 활성화해야 한다. 개발 PC의 `.env`에는
+다음 원격 주소를 사용한다.
+
+```text
+KAFKA_BOOTSTRAP_SERVERS=100.127.7.26:9092
+```
+
+Kafka 컨테이너 재생성 후 `UNKNOWN_TOPIC_OR_PART`가 발생하면 Docker 컴퓨터에서
+topic을 다시 생성한다.
+
+```cmd
+docker exec tep-kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:19092 --create --topic tep-sensor-data --partitions 1 --replication-factor 1
+```
