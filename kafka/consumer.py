@@ -9,7 +9,12 @@ from pathlib import Path
 from confluent_kafka import Consumer, KafkaError, KafkaException
 from dotenv import load_dotenv
 
-from message_schema import validate_sensor_message
+try:
+    from .message_schema import validate_sensor_message
+    from .topic_admin import ensure_topic
+except ImportError:
+    from message_schema import validate_sensor_message
+    from topic_admin import ensure_topic
 
 
 # ============================================================
@@ -43,6 +48,8 @@ def consume_messages(
         "KAFKA_SENSOR_TOPIC",
         "tep-sensor-data",
     )
+
+    topic_created = ensure_topic(bootstrap_servers, topic)
 
     # 추론 서비스와 메시지를 나눠 갖지 않도록
     # 확인용 Consumer는 별도 그룹을 사용한다.
@@ -85,6 +92,10 @@ def consume_messages(
 
     print(f"Kafka 서버: {bootstrap_servers}")
     print(f"Kafka 토픽: {topic}")
+    print(
+        "Kafka 토픽 준비: "
+        f"{'새로 생성' if topic_created else '기존 토픽 사용'}"
+    )
     print(f"Consumer 그룹: {group_id}")
     print(f"확인 trajectory: {target_key}")
 
