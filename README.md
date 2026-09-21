@@ -320,11 +320,16 @@ docs/
 준비 완료:
 
 ```text
-08. Docker 개발환경 구성
-09. 수동 배포 절차 문서·스크립트
-10. Jenkins 파이프라인 파일·설정 문서
+08. Docker 개발환경 구성 (완료)
+09. 집 Windows PC 수동 배포 도구 및 기반 환경 검증
+10. Windows Jenkins dev Poll SCM 및 실제 빌드·기반 환경 배포 검증
 ```
 
-08~10번의 실제 운영 완료 기준은 아직 통과하지 않았다. API·inference·monitor
-구현과 배포 대상 컴퓨터에서의 검증이 필요하다.
+개발서버는 Oracle 대신 집 Windows PC의 `D:\TEP_DigitalTwin`을 사용한다.
+Jenkins는 별도 작업 폴더에서 GitHub `dev`를 받아 2분마다 변경을 확인한다.
+이미지 세 개 빌드와 Kafka healthy는 실제 Jenkins 실행으로 검증했다.
+API·inference·monitor는 12·13·17번 구현 대기이며, 이 상태는 `UNSTABLE`로 표시한다.
+전체 서비스 정상 기동과 재부팅 복구는 아직 검증하지 않았다.
+현재 운영 절차와 남은 항목은 `docs/09-manual-deployment.md`,
+`docs/10-jenkins-cicd.md`를 따른다.
  
