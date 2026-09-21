@@ -167,18 +167,31 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 
 완료:
 
+- 실제 train trajectory의 30시간 이상 60시간 미만 구간으로 case별 기준 분포 생성
+- 공식 case별 train trajectory 70개·42,000행, 감시 Feature 52개 확인
+- 기준 구간 전체 Feature 결측률 0 확인
+- 평균·표준편차·최솟값·최댓값·10분위 경계와 KS 기준 표본 저장
+- split manifest와 feature schema SHA-256을 기준 분포 파일에 기록
 - PSI와 KS statistic/p-value 계산
 - Benjamini-Hochberg 다중 검정 보정
 - Feature별 Drift 및 전체 상태 판정
 - 3회 연속 Drift 확인 상태 관리
 - Drift Event Schema v1.0 생성·검증
-- 정상, 분포 이동, 표본 부족, event schema 단위 테스트 7개 통과
+- 정상, 분포 이동, 표본 부족, event schema, 기준 분포 생성 단위 테스트 8개 통과
 - Python 문법 검사와 패키지 충돌 검사 통과
 
 남음:
 
-- 실제 train 데이터로 case별 기준 분포 생성
 - Kafka Consumer·Producer 연결
 - trajectory별 6시간 Sliding Window 관리
 - 재학습 cooldown 상태 저장과 trigger 연결
 - 실제 Kafka 송수신 및 정상 구간 오탐률 검증
+
+기준 분포 파일:
+
+```text
+models/monitoring/drift-reference-v1.0.0.json
+```
+
+- 파일 SHA-256: `954F22ACF9E2A08DB7A4F5860B120A91415EC5E22DB948CB03A89CF281D2C5B8`
+- 재생성: `python -m src.monitoring.reference_builder`
