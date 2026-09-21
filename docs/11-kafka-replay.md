@@ -1,7 +1,7 @@
 # Kafka 실시간 데이터 재생
 
-> 업데이트 기준: 2026-09-14  
-> 현재 상태: Producer·Consumer 구현 및 로컬 실행 진입 확인 완료, 실제 Kafka 송수신 미검증
+> 업데이트 기준: 2026-09-21
+> 현재 상태: 집컴 Kafka에서 `case1::1` 2,929건 실제 송수신 검증 완료
 
 ## 1. 목적
 
@@ -29,12 +29,12 @@ AI 추론, RUL 계산 및 고장 위험 판단은 12번 작업에서 구현한�
 기본 재생 데이터는 다음 파일을 사용한다.
 
 ```text
-data/raw/case1.csv
-data/raw/case2.csv
-data/raw/case3.csv
-data/raw/case4.csv
-data/raw/case5.csv
-data/raw/case6.csv
+data/raw/TEP/case1.csv
+data/raw/TEP/case2.csv
+data/raw/TEP/case3.csv
+data/raw/TEP/case4.csv
+data/raw/TEP/case5.csv
+data/raw/TEP/case6.csv
 ```
 
 `case5_1.csv`와 `case7.csv`는 공식 6개 시나리오에 포함되지 않는 추가 실험
@@ -104,8 +104,11 @@ Python Kafka client는 다음 버전을 로컬 가상환경에 설치해 확인�
 confluent-kafka==2.15.0
 ```
 
-재현 가능한 설치를 위해 이 의존성은 프로젝트 `requirements.txt`에도 추가해야
-한다.
+재현 가능한 설치를 위해 이 의존성을 프로젝트 `requirements.txt`에 고정했다.
+
+Producer와 Consumer는 실행 전에 sensor topic의 존재 여부를 확인하고, 없으면
+partition 1개·replication factor 1로 생성한다. 따라서 토픽을 수동으로 먼저
+만들 필요가 없다.
 
 개발 PC에서는 Kafka 코드를 작성하고, Docker Compose와 Kafka의 실제
 실행은 별도의 컴퓨터에서 진행한다. 따라서 실제 송수신 검증은
@@ -225,10 +228,10 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 | Producer 미리보기                   | 완료      | sequence `0, 1, 2`, Time `0, 0.05, 0.1`, values 56개  |
 | Producer 실제 발행 경로 진입        | 완료      | `--send` 실행 및 `localhost:9092` 연결 시도 확인      |
 | Consumer 실행 진입                  | 완료      | topic 구독 및 `localhost:9092` 연결 시도 확인         |
-| `sequence` 연속 증가                | 부분 완료 | 생성은 확인, 실제 수신 순서는 Kafka 송수신 후 확인    |
-| CSV 행 수와 Consumer 수신 개수 일치 | 미검증    | Kafka 송수신 후 확인                                  |
+| `sequence` 연속 증가                | 완료      | 실제 수신 `0`~`2928`, 오류 0                          |
+| CSV 행 수와 Consumer 수신 개수 일치 | 완료      | Producer 2,929개, Consumer 2,929개                     |
 | Kafka 연결 실패 로그                | 완료      | 브로커 미실행 상태에서 connection failure 확인        |
-| Kafka 실제 송수신                   | 미검증    | Docker 실행 컴퓨터에서 확인 필요                      |
+| Kafka 실제 송수신                   | 완료      | 집컴의 신규 토픽에서 2,929개 송수신 정상              |
 | Producer 성공·실패 최종 집계        | 보완 필요 | delivery callback 실패 건수를 최종 결과에 반영해야 함 |
 
 ## 11. 현재 상태
@@ -267,33 +270,28 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 - 확인용 group은 별도 환경변수 없이 코드 기본값 `tep-replay-check` 사용
 - 기존 `.env`의 `KAFKA_CONSUMER_GROUP=inference-service` 유지
 - 가상환경에 `confluent-kafka==2.15.0` 설치 및 import 확인
+- `confluent-kafka==2.15.0`을 `requirements.txt`에 고정
+- `DATA_RAW_DIR=data/raw/TEP` 기본값 및 기존 `data/raw` 설정 호환 처리
+- Producer·Consumer 실행 전 Kafka topic 자동 준비
 - Producer와 Consumer 모두 실제 실행 경로 진입 확인
 
-실제 실행 결과:
+실제 실행 결과(2026-09-21, 집컴 Docker Kafka):
 
-- 개발 PC의 `.env` 기본값에 따라 `localhost:9092`로 연결을 시도함
-- 해당 PC에서 Kafka broker가 실행되지 않아 connection failure 발생
-- Producer 메시지는 broker에 전달되지 않고 `_MSG_TIMED_OUT` 처리됨
-- Consumer도 broker에 연결되지 않아 실제 메시지를 수신하지 못함
-- 이는 CSV 처리, Schema 또는 Python 문법 오류가 아니라 Kafka 미실행 상태에
-  따른 결과임
+- 비어 있는 검증용 topic을 Consumer가 자동 생성
+- `case1::1`의 2,929개 메시지를 interval 0으로 발행
+- Consumer 수신 2,929개, Schema 정상 2,929개
+- 메시지 오류 0개, sequence 오류 0개
+- 마지막 sequence `2928`, 마지막 Time `146.4` 확인
 
 남은 작업:
 
-- `confluent-kafka==2.15.0`을 `requirements.txt`에 추가
 - Producer delivery callback의 성공·실패 건수를 집계하여 최종 결과에 반영
-- 2026-09-15 Docker 실행 컴퓨터에서 Kafka broker 기동 상태 확인
-- 실제 Kafka 송수신 검증
-- Producer 발행 2,929개와 Consumer 수신 2,929개 일치 확인
-- Consumer sequence `0`~`2928` 연속성 확인
 - 장애 및 재시도 검증
 - `kafka/README.md` 작성
 
 현재 11번 작업은 **Sensor 메시지 Schema, Producer, 확인용 Consumer 구현과
-로컬 데이터 검증까지 완료**된 상태다. Kafka broker가 없는 개발 PC에서 연결
-실패 동작까지 확인했지만, 실제 송수신은 완료되지 않았으므로 11번 전체를
-완료로 표시하지 않는다. Docker 기반 실제 송수신 검증은 2026-09-15에
-진행한다.
+집컴 Docker Kafka 실제 송수신 검증까지 완료**된 상태다. 성공·실패 최종 집계,
+장애·재시도 검증과 별도 README 작성은 후속 보완 항목으로 남긴다.
 
 ## 12. 실행 명령
 
