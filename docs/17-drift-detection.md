@@ -176,19 +176,21 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - 최소 20개 관측값 준비 상태와 최신 관측값 유지
 - sequence 누락·역전 및 timestamp 역전 시 해당 trajectory 창만 초기화
 - 감시 Feature 누락·비수치·NaN·무한대 입력 거부
+- case별 재학습 요청 시각을 JSON 상태 파일에 원자적으로 저장
+- `CONFIRMED_DRIFT`, 데이터 품질 통과, `RETRAIN_ENABLED=true` 조건 결합
+- 같은 case의 24시간 cooldown 중복 요청 차단 및 재시작 후 상태 복원
 - PSI와 KS statistic/p-value 계산
 - Benjamini-Hochberg 다중 검정 보정
 - Feature별 Drift 및 전체 상태 판정
 - 3회 연속 Drift 확인 상태 관리
 - Drift Event Schema v1.0 생성·검증
 - 정상, 분포 이동, 표본 부족, event schema, 기준 분포와 Sliding Window
-  단위 테스트 14개 통과
+  단위 테스트와 재학습 trigger 테스트 19개 통과
 - Python 문법 검사와 패키지 충돌 검사 통과
 
 남음:
 
 - Kafka Consumer·Producer 연결
-- 재학습 cooldown 상태 저장과 trigger 연결
 - 실제 Kafka 송수신 및 정상 구간 오탐률 검증
 
 기준 분포 파일:
