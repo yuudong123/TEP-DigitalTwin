@@ -26,16 +26,16 @@ Production XGBoost 모델 4개를 실행하여 다음 결과를 만든다.
 
 ## 2. 현재까지 준비된 것
 
-| 구분 | 상태 | 내용 |
-| --- | --- | --- |
-| Sensor Schema v1.0 | 완료 | `Id`·`Time` 제외 공정 변수 56개 |
-| Kafka Producer | 완료 | case와 trajectory 선택 및 순차 발행 |
-| 확인용 Consumer | 완료 | Schema·key·개수·sequence 검증 |
-| 원격 Kafka 연결 | 완료 | Tailscale `100.127.7.26:9092` |
-| 전체 송수신 검증 | 완료 | `case1::1` 2,929개, 오류 0개 |
-| Temporal Feature 설계 | 완료 | 5·15·30·60분, 총 728개 |
-| Production 모델 선정 | 완료 | Temporal XGBoost 모델 4개 |
-| 실시간 추론 서비스 | 완료 | Feature 일치·모델 예측·Kafka 전체 흐름 검증 완료 |
+| 구분                  | 상태 | 내용                                             |
+| --------------------- | ---- | ------------------------------------------------ |
+| Sensor Schema v1.0    | 완료 | `Id`·`Time` 제외 공정 변수 56개                  |
+| Kafka Producer        | 완료 | case와 trajectory 선택 및 순차 발행              |
+| 확인용 Consumer       | 완료 | Schema·key·개수·sequence 검증                    |
+| 원격 Kafka 연결       | 완료 | Tailscale `100.127.7.26:9092`                    |
+| 전체 송수신 검증      | 완료 | `case1::1` 2,929개, 오류 0개                     |
+| Temporal Feature 설계 | 완료 | 5·15·30·60분, 총 728개                           |
+| Production 모델 선정  | 완료 | Temporal XGBoost 모델 4개                        |
+| 실시간 추론 서비스    | 완료 | Feature 일치·모델 예측·Kafka 전체 흐름 검증 완료 |
 
 ---
 
@@ -104,17 +104,17 @@ KAFKA_CONSUMER_GROUP=inference-service
 
 실행 위치에 따른 bootstrap server는 다음과 같다.
 
-| 실행 위치 | Kafka 주소 |
-| --- | --- |
-| 개발 PC에서 직접 실행 | `100.127.7.26:9092` |
-| Docker Compose 내부 실행 | `kafka:19092` |
+| 실행 위치                | Kafka 주소          |
+| ------------------------ | ------------------- |
+| 개발 PC에서 직접 실행    | `100.127.7.26:9092` |
+| Docker Compose 내부 실행 | `kafka:19092`       |
 
 확인용 Consumer와 AI 추론 Consumer는 group을 분리한다.
 
-| Consumer | Group 용도 |
-| --- | --- |
+| Consumer            | Group 용도                         |
+| ------------------- | ---------------------------------- |
 | `kafka/consumer.py` | 송수신 검증용 `tep-replay-check-*` |
-| Inference Service | 실제 추론용 `inference-service` |
+| Inference Service   | 실제 추론용 `inference-service`    |
 
 group이 다르므로 동일한 Sensor 메시지를 각 Consumer가 독립적으로 받을 수 있다.
 
@@ -213,10 +213,10 @@ trajectory의 버퍼를 제거하는 정책도 필요하다.
 trajectory의 처음 20개 row는 완전한 60분 과거 데이터가 없으므로 모델
 추론을 수행하지 않는다.
 
-| sequence | 처리 |
-| ---: | --- |
+| sequence | 처리                              |
+| -------: | --------------------------------- |
 | `0`~`19` | 버퍼에 저장하고 warm-up 상태 출력 |
-| `20`부터 | 60분 데이터가 준비되어 추론 시작 |
+| `20`부터 | 60분 데이터가 준비되어 추론 시작  |
 
 `sequence=20`에서 현재 행을 포함하여 21개 시점이 존재한다.
 
@@ -255,14 +255,14 @@ Kafka의 56개 값 중 필요한 원본 변수 52개가 모두 존재하는지 �
 
 학습 당시와 동일하게 다음 Feature를 생성한다.
 
-| 구간 | 계산 종류 | Feature 수 |
-| --- | --- | ---: |
-| 현재 | 현재값 | 52 |
-| 5분 | 변화량, 변화속도 | 104 |
-| 15분 | 평균, 표준편차, 변화량, 변화속도 | 208 |
-| 30분 | 평균, 표준편차, 최대값, 최소값 | 208 |
-| 60분 | 변화량, 변화속도, 선형 기울기 | 156 |
-| **합계** |  | **728** |
+| 구간     | 계산 종류                        | Feature 수 |
+| -------- | -------------------------------- | ---------: |
+| 현재     | 현재값                           |         52 |
+| 5분      | 변화량, 변화속도                 |        104 |
+| 15분     | 평균, 표준편차, 변화량, 변화속도 |        208 |
+| 30분     | 평균, 표준편차, 최대값, 최소값   |        208 |
+| 60분     | 변화량, 변화속도, 선형 기울기    |        156 |
+| **합계** |                                  |    **728** |
 
 ### 11.1 현재값
 
@@ -370,8 +370,8 @@ models/production/v1.0.0/
 
 Validation 데이터로 결정한 threshold는 다음과 같다.
 
-| Target | Threshold |
-| --- | ---: |
+| Target               |  Threshold |
+| -------------------- | ---------: |
 | 4시간 이내 고장 위험 | `0.622766` |
 | 2시간 이내 고장 위험 | `0.610441` |
 | 1시간 이내 고장 위험 | `0.783028` |
@@ -502,42 +502,147 @@ FastAPI 또는 저장 계층은 이 기준으로 중복 결과를 덮어쓰거�
 
 ## 19. 오류 처리
 
-| 상황 | 처리 원칙 |
-| --- | --- |
-| 잘못된 JSON | 오류 로그 후 메시지 격리 또는 건너뛰기 |
-| Schema 불일치 | 추론하지 않고 오류 기록 |
-| 변수 56개 미만·초과 | 추론하지 않음 |
-| 모델 원본 변수 52개 누락 | 추론하지 않음 |
-| NaN·무한대 | 추론하지 않음 |
-| sequence 중복 | 이미 처리한 결과인지 확인 후 중복 방지 |
-| sequence 누락·역순 | 버퍼 신뢰 불가 상태로 표시하고 재구성 |
-| warm-up 미완료 | 버퍼만 갱신하고 예측하지 않음 |
-| Feature 728개 불일치 | 모델을 호출하지 않음 |
-| 모델·metadata 로드 실패 | 서비스 시작 실패 |
-| Prediction 발행 실패 | offset commit하지 않고 재시도 |
+| 상황                     | 처리 원칙                              |
+| ------------------------ | -------------------------------------- |
+| 잘못된 JSON              | 오류 로그 후 메시지 격리 또는 건너뛰기 |
+| Schema 불일치            | 추론하지 않고 오류 기록                |
+| 변수 56개 미만·초과      | 추론하지 않음                          |
+| 모델 원본 변수 52개 누락 | 추론하지 않음                          |
+| NaN·무한대               | 추론하지 않음                          |
+| sequence 중복            | 이미 처리한 결과인지 확인 후 중복 방지 |
+| sequence 누락·역순       | 버퍼 신뢰 불가 상태로 표시하고 재구성  |
+| warm-up 미완료           | 버퍼만 갱신하고 예측하지 않음          |
+| Feature 728개 불일치     | 모델을 호출하지 않음                   |
+| 모델·metadata 로드 실패  | 서비스 시작 실패                       |
+| Prediction 발행 실패     | offset commit하지 않고 재시도          |
 
 MVP에서는 오류 내용을 로그로 남긴다. 운영 확장 시에는 별도의 dead-letter
 topic을 추가할 수 있다.
 
 ---
 
-## 20. 권장 구현 파일 구조
+## 20. 최종 구현 파일 구조
 
-실제 저장소 구조를 확인한 뒤 기존 `inference/` 폴더가 있으면 그 구조를
-우선한다. 새로 구성해야 한다면 다음처럼 역할을 분리한다.
+실시간 추론 코드는 프로젝트 루트의 `inference/`가 아닌
+`src/inference/`에 배치한다. 실제 구현 구조는 다음과 같다.
 
 ```text
-inference/
-├─ service.py              # Kafka 수신부터 Prediction 발행까지 실행
-├─ temporal_buffer.py      # trajectory별 최근 60분 메모리 관리
-├─ feature_builder.py      # 728개 Temporal Feature 생성
-├─ model_runner.py         # 모델 4개 로드 및 추론
-├─ prediction_schema.py    # 결과 메시지 생성·검증
-└─ README.md               # 실행 방법과 환경변수
+src/inference/
+├─ __init__.py             # Python package 인식
+├─ main.py                 # Kafka 수신·추론·Prediction 발행
+├─ temporal_features.py    # trajectory별 60분 버퍼·728개 Feature 생성
+├─ model_loader.py         # Production 모델 4개·threshold·SHAP 로드
+├─ prediction_schema.py    # Prediction 메시지 검증
+├─ validate_temporal.py    # offline·online Feature 일치 검증
+└─ README.md               # 실행 방법·환경변수·파일 역할
 ```
 
-5번 학습 과정에서 이미 사용한 공통 Temporal Feature 코드가 있다면 복사해서
-두 벌로 만들지 말고 import 가능한 공통 모듈로 분리하여 재사용한다.
+`main.py`와 `validate_temporal.py`는 `src/inference/`에서 프로젝트
+루트까지 두 단계 올라가야 하므로 다음 경로를 사용한다.
+
+```python
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+```
+
+`kafka/producer.py`, `kafka/consumer.py`, `tests/test_inference_runtime.py`는
+프로젝트 루트 아래 한 단계에 있으므로 `parents[1]`을 유지한다.
+
+### 20.1 원격 Kafka 기준 실행 방법
+
+Docker PC에서 Kafka를 실행하고, 개발 PC에서 Inference와 Producer를
+Python으로 실행한다.
+
+데이터 처리 흐름은 다음과 같다.
+
+```text
+개발 PC의 Producer
+→ 원격 Docker PC의 Kafka
+→ 개발 PC의 Inference
+→ 원격 Kafka의 tep-predictions topic
+```
+
+개발 PC의 `.env`는 다음과 같이 설정한다.
+
+```env
+KAFKA_BOOTSTRAP_SERVERS=100.127.7.26:9092
+KAFKA_SENSOR_TOPIC=tep-sensor-data
+KAFKA_PREDICTION_TOPIC=tep-predictions
+KAFKA_CONSUMER_GROUP=inference-service
+MODEL_DIR=models/production/v1.0.0
+```
+
+원격 Kafka 연결 여부는 다음 명령으로 확인한다.
+
+```powershell
+Test-NetConnection 100.127.7.26 -Port 9092
+```
+
+정상 연결 시 다음 결과가 출력된다.
+
+```text
+TcpTestSucceeded : True
+```
+
+첫 번째 PowerShell에서 Inference를 먼저 실행한다.
+
+```powershell
+cd C:\TEP-DigitalTwin
+.\.venv\Scripts\Activate.ps1
+python -m src.inference.main
+```
+
+정상적으로 실행되면 다음 내용이 출력된다.
+
+```text
+Kafka 서버: 100.127.7.26:9092
+입력 토픽: tep-sensor-data
+출력 토픽: tep-predictions
+[수신 대기] Producer를 실행하세요. 첫 20개 메시지는 60분 준비 구간입니다.
+```
+
+Inference PowerShell을 종료하지 않고 유지한 상태에서 두 번째 PowerShell을
+열어 Producer를 실행한다.
+
+```powershell
+cd C:\TEP-DigitalTwin
+.\.venv\Scripts\Activate.ps1
+python .\kafka\producer.py --case case1 --id 1 --send
+```
+
+빠른 동작 확인이 필요한 경우 25개 메시지만 전송한다.
+
+```powershell
+python .\kafka\producer.py --case case1 --id 1 --limit 25 --send
+```
+
+처음 20개 메시지는 60분 Temporal Feature 생성을 위한 warm-up으로 사용한다.
+따라서 `sequence=20`부터 실제 Prediction이 생성된다.
+
+전체 `case1::1` 데이터를 전송하면 다음 결과가 출력된다.
+
+```text
+========== Producer 전송 결과 ==========
+전송 요청: 2929
+전송 성공: 2929
+전송 실패: 0
+최종 결과: 정상
+```
+
+Inference는 마지막 메시지까지 정상적으로 처리한다.
+
+```text
+[추론 완료] case1::1 sequence=2928, time=146.4,
+status=CRITICAL, rul=0.348h
+```
+
+`case1::1`의 전체 Sensor 메시지는 2,929개이며 처음 20개를 warm-up으로
+사용하므로 총 2,909개의 Prediction이 생성된다.
+
+```text
+2,929 - 20 = 2,909
+```
+
+Inference를 종료할 때는 Inference를 실행한 PowerShell에서 `Ctrl+C`를 누른다.
 
 ---
 
@@ -625,17 +730,17 @@ Producer를 실행하고 warm-up 이후 모든 예측 결과를 검사한다.
 2026-09-22에 Tailscale로 연결된 원격 Kafka에서 `case1::1` 전체 흐름을
 검증했다.
 
-| 확인 항목 | 결과 |
-| --- | --- |
-| Sensor 전송 요청 | 2,929개 |
-| Sensor 전송 성공 | 2,929개 |
-| Sensor 전송 실패 | 0개 |
-| warm-up | `sequence=0`~`19`, 20개 |
-| Prediction 생성 구간 | `sequence=20`~`2928` |
-| Prediction 예상·처리 개수 | 2,909개 |
-| 마지막 처리 | `sequence=2928`, `time=146.4` |
-| 상태 변화 | `NORMAL` → `CAUTION` → `WARNING` → `CRITICAL` |
-| 마지막 결과 | `CRITICAL`, RUL 약 `0.348h` |
+| 확인 항목                 | 결과                                          |
+| ------------------------- | --------------------------------------------- |
+| Sensor 전송 요청          | 2,929개                                       |
+| Sensor 전송 성공          | 2,929개                                       |
+| Sensor 전송 실패          | 0개                                           |
+| warm-up                   | `sequence=0`~`19`, 20개                       |
+| Prediction 생성 구간      | `sequence=20`~`2928`                          |
+| Prediction 예상·처리 개수 | 2,909개                                       |
+| 마지막 처리               | `sequence=2928`, `time=146.4`                 |
+| 상태 변화                 | `NORMAL` → `CAUTION` → `WARNING` → `CRITICAL` |
+| 마지막 결과               | `CRITICAL`, RUL 약 `0.348h`                   |
 
 Producer, Inference Service와 Prediction 발행 과정에서 전송 실패 또는 입력
 오류가 발생하지 않았다. 첫 20개 Sensor 메시지는 최근 60분 Feature를 만들기

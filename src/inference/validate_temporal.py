@@ -17,7 +17,7 @@ import pandas as pd
 from .temporal_features import base_features_from_feature_list, build_latest_features
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _load_offline_module():

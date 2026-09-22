@@ -4,7 +4,7 @@
 처리 순서: 센서 수신 → 60분 버퍼 → 728개 Feature → 모델 4개 추론
 출력 토픽: tep-predictions
 
-사용자는 프로젝트 루트에서 ``python -m inference.service``만 실행하면 된다.
+사용자는 프로젝트 루트에서 ``python -m src.inference.main``만 실행하면 된다.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from .model_loader import ProductionPredictor
 from .temporal_features import TrajectoryFeatureBuffer
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / ".env")
 RUNNING = True
 

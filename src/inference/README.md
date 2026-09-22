@@ -61,7 +61,7 @@ docker exec tep-kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhos
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
-python -m inference.service
+python -m src.inference.main
 ```
 
 다음 문구가 나온 상태로 창을 유지한다.
@@ -84,11 +84,10 @@ Prediction 메시지 2,909개가 생성된다.
 
 ## 파일 역할
 
-| 파일 | 역할 |
-| --- | --- |
-| `temporal_features.py` | 최근 21행으로 728개 Feature 생성 |
-| `model_loader.py` | 모델·임계값 로딩, 상태 판정, SHAP 계산 |
-| `prediction_schema.py` | Prediction 메시지 기본 검증 |
-| `service.py` | Kafka 수신·추론·발행 |
+| 파일                   | 역할                                       |
+| ---------------------- | ------------------------------------------ |
+| `temporal_features.py` | 최근 21행으로 728개 Feature 생성           |
+| `model_loader.py`      | 모델·임계값 로딩, 상태 판정, SHAP 계산     |
+| `prediction_schema.py` | Prediction 메시지 기본 검증                |
+| `service.py`           | Kafka 수신·추론·발행                       |
 | `validate_temporal.py` | 오프라인 계산 결과와 실시간 계산 결과 비교 |
-

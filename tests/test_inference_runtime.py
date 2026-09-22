@@ -7,10 +7,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from inference.model_loader import determine_status
-from inference.prediction_schema import RISK_TARGETS, validate_prediction
-from inference.service import decode_sensor_message
-from inference.temporal_features import (
+from src.inference.model_loader import determine_status
+from src.inference.prediction_schema import RISK_TARGETS, validate_prediction
+from src.inference.main import decode_sensor_message
+from src.inference.temporal_features import (
     TrajectoryFeatureBuffer,
     base_features_from_feature_list,
     build_latest_features,
