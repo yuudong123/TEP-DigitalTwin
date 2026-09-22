@@ -81,10 +81,30 @@ kafka/
 기존 공통 환경변수를 사용한다.
 
 ```text
-KAFKA_BOOTSTRAP_SERVERS=localhost:9092
+KAFKA_BOOTSTRAP_SERVERS=100.127.7.26:9092
 KAFKA_SENSOR_TOPIC=tep-sensor-data
 TEP_REPLAY_INTERVAL_SECONDS=0.1
 ```
+
+Kafka는 별도의 Docker 컴퓨터 `DESKTOP-VNS4A9P`에서 실행하며, 개발 PC는
+Tailscale을 통해 Docker 컴퓨터의 `100.127.7.26:9092`로 접속한다.
+
+접속 위치별 주소는 다음과 같이 분리한다.
+
+| 실행 위치                               | Kafka 주소          |
+| --------------------------------------- | ------------------- |
+| 개발 PC의 Producer·Consumer             | `100.127.7.26:9092` |
+| Docker 내부 `api`·`inference`·`monitor` | `kafka:19092`       |
+
+Kafka broker에는 다음 advertised listener가 적용되어 있다.
+
+```text
+INTERNAL://kafka:19092
+EXTERNAL://100.127.7.26:9092
+```
+
+외부 Producer·Consumer가 최초 접속 후에도 접근 가능한 Tailscale 주소를
+Kafka metadata로 받을 수 있도록 내부·외부 listener를 분리하였다.
 
 Kafka message key는 `trajectory_key`를 사용한다. 동일 trajectory의 메시지가
 같은 partition에 배치되어 순서를 유지할 수 있도록 하기 위한 규칙이다.
@@ -110,9 +130,14 @@ Producer와 Consumer는 실행 전에 sensor topic의 존재 여부를 확인하
 partition 1개·replication factor 1로 생성한다. 따라서 토픽을 수동으로 먼저
 만들 필요가 없다.
 
-개발 PC에서는 Kafka 코드를 작성하고, Docker Compose와 Kafka의 실제
-실행은 별도의 컴퓨터에서 진행한다. 따라서 실제 송수신 검증은
-Producer와 Consumer 구현 후 Docker 실행 컴퓨터에서 수행한다.
+개발 PC에서는 Kafka 코드를 작성하고 Producer·Consumer를 실행한다. Docker
+Compose와 Kafka broker는 별도의 컴퓨터에서 실행하며, 실제 송수신은
+Tailscale 네트워크를 통해 검증한다.
+
+Kafka는 원본 데이터의 장기 저장소가 아니라 실시간 재생·전달 통로로 사용한다.
+원본 데이터는 `data/raw/case1.csv`~`case6.csv`로 보관되므로 Kafka 메시지
+영구 볼륨은 필수 요구사항으로 두지 않는다. 컨테이너 재생성으로 토픽이
+사라지면 토픽을 다시 생성하고 Producer로 원본 CSV를 재전송한다.
 
 ## 6. Sensor 메시지 Schema v1.0
 
@@ -274,6 +299,18 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 - `DATA_RAW_DIR=data/raw/TEP` 기본값 및 기존 `data/raw` 설정 호환 처리
 - Producer·Consumer 실행 전 Kafka topic 자동 준비
 - Producer와 Consumer 모두 실제 실행 경로 진입 확인
+- Docker 컴퓨터의 `tep-kafka` 컨테이너 `healthy` 상태 확인
+- Kafka 내부·외부 listener 분리 및 Tailscale 외부 주소 적용 확인
+- 개발 PC에서 Docker 컴퓨터의 `9092` 포트 연결 성공
+- `tep-sensor-data` topic 생성
+- `case1::1` 전체 2,929개 메시지 실제 발행 및 수신 성공
+- Sensor Schema v1.0 정상 2,929개, 메시지 오류 0개 확인
+- sequence `0`~`2928` 연속성 확인, sequence 오류 0개
+- Producer 기본 전송 간격 `0.1초` 적용 확인
+- Producer delivery callback 기반 성공·실패 최종 집계 구현 및 문법 검사 통과
+- Producer 전송 요청 2,929개, 성공 2,929개, 실패 0개, 최종 결과 `정상` 확인
+- `requirements.txt`에 `pytest==9.1.1`, `confluent-kafka==2.15.0` 반영
+- `kafka/README.md` 작성 및 실행·검증·장애 확인 방법 정리
 
 실제 실행 결과(2026-09-21, 집컴 Docker Kafka):
 
@@ -302,21 +339,33 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 python .\kafka\producer.py --case case1 --id 1 --limit 3
 ```
 
-### 12.2 Docker 실행 컴퓨터에서 실제 송수신
+### 12.2 Tailscale 원격 Kafka 실제 송수신
 
-첫 번째 PowerShell에서 Consumer를 먼저 실행한다.
+개발 PC의 첫 번째 PowerShell에서 Consumer를 먼저 실행한다.
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 python .\kafka\consumer.py --case case1 --id 1 --expected-count 2929
 ```
 
-Consumer가 수신 대기 상태가 된 뒤 두 번째 PowerShell에서 Producer를 실행한다.
+Consumer가 수신 대기 상태가 된 뒤 개발 PC의 두 번째 PowerShell에서
+Producer를 실행한다.
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
-python .\kafka\producer.py --case case1 --id 1 --interval 0.1 --send
+python .\kafka\producer.py --case case1 --id 1 --send
 ```
 
-두 PowerShell 모두 각각 가상환경을 활성화해야 한다. Kafka가 같은 컴퓨터의
-Docker에서 호스트 포트 `9092`로 노출되면 `localhost:9092`를 사용한다.
+두 PowerShell 모두 각각 가상환경을 활성화해야 한다. 개발 PC의 `.env`에는
+다음 원격 주소를 사용한다.
+
+```text
+KAFKA_BOOTSTRAP_SERVERS=100.127.7.26:9092
+```
+
+Kafka 컨테이너 재생성 후 `UNKNOWN_TOPIC_OR_PART`가 발생하면 Docker 컴퓨터에서
+topic을 다시 생성한다.
+
+```cmd
+docker exec tep-kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:19092 --create --topic tep-sensor-data --partitions 1 --replication-factor 1
+```
