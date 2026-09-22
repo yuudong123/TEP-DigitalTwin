@@ -45,13 +45,14 @@ Step 0. feat/web-monitoring 브랜치 생성
 Step 1. Vite + React + TypeScript 스캐폴딩, dev 서버 정상 기동 확인
 Step 2. prediction schema를 TS 타입으로 이식하고 sample_prediction.json 값을 정적으로 렌더링
 Step 3. 모의 실시간 스트림과 재생 제어를 연결하고 Unity WebGL에 같은 예측 전달
+Step 4. Mock/API 데이터 소스 전환, API 응답 검증, 연결 상태와 오류 처리 기반 구현
 ```
 
 진행 예정:
 
 ```text
-Step 4. (선택) RUL·risk score 시계열 그래프
-Step 5. 본 문서 최신화
+Step 5. FastAPI endpoint 확정 후 실제 응답 통합
+Step 6. (선택) RUL·risk score 시계열 그래프
 ```
 
 Step 2 구현 내용:
@@ -75,8 +76,27 @@ Step 3 구현 내용:
 - Web 카드와 Unity WebGL에 같은 `Prediction` 객체를 전달한다. Unity가 준비되면
   `DigitalTwinRuntime.ApplyPredictionJson`을 호출하며 Unity 자체 모의 스트림은 자동으로 중지된다.
 
+Step 4 구현 내용:
+
+- `web/.env.example` — `VITE_PREDICTION_SOURCE`로 `mock`/`api` 모드를 선택하고 API URL,
+  조회 주기, 요청 제한 시간을 환경변수로 관리한다.
+- `web/src/config/predictionSource.ts` — 환경변수를 안전한 기본값과 함께 읽는 설정 계층.
+- `web/src/services/predictionApi.ts` — 최신 예측 조회, 요청 타임아웃, HTTP 오류 및 Prediction
+  응답 구조의 런타임 검증을 담당한다.
+- API 모드에서는 연결 중·연결됨·일시정지·오류 상태와 마지막 정상 수신 시각을 표시한다.
+  일시적 오류가 발생해도 마지막 정상 예측은 화면에 유지하며 `다시 연결`로 즉시 재시도할 수 있다.
+
+API 모드 실행 예시:
+
+```powershell
+cd web
+Copy-Item .env.example .env.local
+# .env.local에서 VITE_PREDICTION_SOURCE=api 및 endpoint 수정
+npm run dev
+```
+
 ## 7. 현재 제한 사항
 
-13번 FastAPI, 12번 Inference, 11번 Kafka가 구현되기 전까지는 실제 실시간 데이터 연동이
-불가능하다. 화면은 전부 모의 데이터로 검증하며, 실제 API 연동 시점은
-`web/src/hooks/usePredictionStream.ts`의 데이터 공급 부분만 교체하는 것으로 한정한다.
+13번 FastAPI endpoint와 최종 전송 방식이 확정되기 전까지 실제 실시간 데이터 검증은 불가능하다.
+현재 클라이언트는 `GET`으로 단일 Prediction JSON을 조회하는 계약을 가정한다. 실제 명세가 다르면
+`web/src/services/predictionApi.ts`의 요청 및 응답 변환 부분만 조정한다.

@@ -125,6 +125,11 @@
   opacity: 0.65;
 }
 
+.stream-state .stream-state__error {
+  color: var(--status-critical);
+  opacity: 1;
+}
+
 .stream-state__dot {
   width: 9px;
   height: 9px;
@@ -136,6 +141,19 @@
   background: var(--status-normal);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--status-normal) 18%, transparent);
   animation: stream-pulse 1.5s ease-in-out infinite;
+}
+
+.stream-controls--connecting .stream-state__dot {
+  background: var(--status-caution);
+  animation: stream-pulse 1s ease-in-out infinite;
+}
+
+.stream-controls--error {
+  border-color: color-mix(in srgb, var(--status-critical) 45%, var(--border));
+}
+
+.stream-controls--error .stream-state__dot {
+  background: var(--status-critical);
 }
 
 .stream-actions button {
@@ -162,6 +180,24 @@
   50% {
     opacity: 0.55;
   }
+}
+
+.prediction-empty {
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  min-height: 320px;
+  padding: 32px;
+  color: var(--text);
+  text-align: center;
+  background: var(--card-bg);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+.prediction-empty span {
+  font-size: 13px;
+  opacity: 0.65;
 }
 
 @media (max-width: 640px) {

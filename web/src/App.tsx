@@ -14,13 +14,26 @@ function App() {
 
   return (
     <div className="dashboard">
-      <Header prediction={prediction} />
-
-      <div className="dashboard-status-row">
-        <StatusBadge status={prediction.status} />
-      </div>
+      {prediction ? (
+        <>
+          <Header prediction={prediction} sourceMode={stream.mode} />
+          <div className="dashboard-status-row">
+            <StatusBadge status={prediction.status} />
+          </div>
+        </>
+      ) : (
+        <header className="dashboard-header">
+          <div>
+            <h1>TEP Digital Twin</h1>
+            <p className="dashboard-subtitle">예지보전 모니터링</p>
+          </div>
+        </header>
+      )}
 
       <StreamControls
+        mode={stream.mode}
+        connectionState={stream.connectionState}
+        errorMessage={stream.errorMessage}
         currentIndex={stream.currentIndex}
         totalSnapshots={stream.totalSnapshots}
         isPlaying={stream.isPlaying}
@@ -29,16 +42,25 @@ function App() {
         onRestart={stream.restart}
       />
 
-      <UnityDigitalTwin prediction={prediction} />
+      {prediction ? (
+        <>
+          <UnityDigitalTwin prediction={prediction} />
 
-      <main className="dashboard-grid">
-        <RulCard hours={prediction.rul.hours} />
-        <RiskPanel risk={prediction.risk} />
-        <RiskFactorList
-          factors={prediction.top_risk_factors}
-          explanationModel={prediction.explanation_model}
-        />
-      </main>
+          <main className="dashboard-grid">
+            <RulCard hours={prediction.rul.hours} />
+            <RiskPanel risk={prediction.risk} />
+            <RiskFactorList
+              factors={prediction.top_risk_factors}
+              explanationModel={prediction.explanation_model}
+            />
+          </main>
+        </>
+      ) : (
+        <section className="prediction-empty" aria-live="polite">
+          <strong>예측 데이터를 기다리는 중입니다.</strong>
+          <span>API가 연결되면 대시보드와 Unity 화면이 자동으로 표시됩니다.</span>
+        </section>
+      )}
     </div>
   )
 }

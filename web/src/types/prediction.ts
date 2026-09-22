@@ -1,6 +1,6 @@
 /**
  * models/production/v1.0.0/prediction_schema.json 을 그대로 옮긴 타입.
- * 실제 FastAPI(13번) 연동 시 응답이 이 타입과 어긋나면 컴파일 에러로 드러난다.
+ * 실제 FastAPI 응답은 predictionApi의 런타임 검증을 통과한 뒤 이 타입으로 사용한다.
  */
 
 export type Status = 'NORMAL' | 'CAUTION' | 'WARNING' | 'CRITICAL'
