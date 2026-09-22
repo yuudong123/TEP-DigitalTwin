@@ -11,7 +11,12 @@ from pathlib import Path
 from confluent_kafka import Producer
 from dotenv import load_dotenv
 
-from message_schema import build_sensor_message
+try:
+    from .message_schema import build_sensor_message
+    from .topic_admin import ensure_topic
+except ImportError:
+    from message_schema import build_sensor_message
+    from topic_admin import ensure_topic
 
 
 # ============================================================
@@ -19,10 +24,39 @@ from message_schema import build_sensor_message
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_RAW_DIR = PROJECT_ROOT / "data" / "raw"
 
 # 프로젝트 루트의 .env 파일을 읽는다.
 load_dotenv(PROJECT_ROOT / ".env")
+
+
+def get_data_raw_dir() -> Path:
+    """환경변수의 데이터 경로를 프로젝트 기준 절대 경로로 바꾼다."""
+
+    configured_path = Path(
+        os.getenv("DATA_RAW_DIR", "data/raw/TEP")
+    )
+
+    if configured_path.is_absolute():
+        return configured_path
+
+    return PROJECT_ROOT / configured_path
+
+
+def resolve_case_csv_path(case_name: str) -> Path:
+    """현재 경로와 기존 data/raw 설정을 모두 지원한다."""
+
+    data_raw_dir = get_data_raw_dir()
+    direct_path = data_raw_dir / f"{case_name}.csv"
+
+    if direct_path.exists():
+        return direct_path
+
+    nested_path = data_raw_dir / "TEP" / f"{case_name}.csv"
+
+    if nested_path.exists():
+        return nested_path
+
+    return direct_path
 
 
 # ============================================================
@@ -35,7 +69,7 @@ def load_trajectory(case_name: str, trajectory_id: int):
     Time 오름차순으로 정렬한다.
     """
 
-    csv_path = DATA_RAW_DIR / f"{case_name}.csv"
+    csv_path = resolve_case_csv_path(case_name)
 
     if not csv_path.exists():
         raise FileNotFoundError(
@@ -137,6 +171,8 @@ def publish_trajectory(
         "tep-sensor-data",
     )
 
+    topic_created = ensure_topic(bootstrap_servers, topic)
+
     # Kafka Producer 생성
     producer = Producer(
         {
@@ -150,6 +186,10 @@ def publish_trajectory(
 
     print(f"Kafka 서버: {bootstrap_servers}")
     print(f"Kafka 토픽: {topic}")
+    print(
+        "Kafka 토픽 준비: "
+        f"{'새로 생성' if topic_created else '기존 토픽 사용'}"
+    )
     print(f"전송 간격: {interval_seconds}초")
     print(f"전송 예정: {len(rows)}개")
     print()

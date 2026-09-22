@@ -117,3 +117,6 @@ Personal_Checklist.md
 PROJECT_FULL_EXPORT.md
 a-backend-timeline.md
 a-backend-web-handoff.md
+
+# Local Jenkins agent runtime and authentication
+.jenkins-agent/

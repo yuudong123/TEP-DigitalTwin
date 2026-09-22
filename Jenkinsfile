@@ -1,97 +1,42 @@
 pipeline {
-    agent any
-
+    agent { label 'tep-windows' }
     options {
         timestamps()
         disableConcurrentBuilds()
+        skipDefaultCheckout(true)
+        timeout(time: 45, unit: 'MINUTES')
     }
-
+    triggers { pollSCM('H/2 * * * *') }
+    environment {
+        TEP_RUNTIME_DIR = 'D:\\TEP_DigitalTwin'
+        DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
+        PATH = "C:\\Program Files\\Git\\cmd;C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+    }
     stages {
-        stage('Checkout') {
+        stage('Checkout dev') {
             steps {
-                checkout scm
+                checkout scmGit(
+                    branches: [[name: '*/dev']],
+                    extensions: [[$class: 'DisableRemotePoll']],
+                    userRemoteConfigs: [[url: 'https://github.com/yuudong123/TEP-DigitalTwin.git']]
+                )
+                bat '@git log -1 --oneline'
             }
         }
-
-        stage('Prepare deployment environment') {
-            steps {
-                withCredentials([
-                    file(
-                        credentialsId: 'tep-development-env',
-                        variable: 'DEPLOY_ENV_FILE'
-                    )
-                ]) {
-                    sh '''
-                        install -m 600 "$DEPLOY_ENV_FILE" .env
-                    '''
-                }
-            }
-        }
-
-        stage('Validate deployment configuration') {
-            steps {
-                sh '''
-                    set -eu
-                    test -f compose.yaml
-                    test -f .env
-                    docker compose config --quiet
-                '''
-            }
-        }
-
-        stage('Run tests') {
+        stage('Build and deploy on home PC') {
             steps {
                 script {
-                    if (!fileExists('.venv/bin/python')) {
-                        echo 'Skipping tests: project .venv is not available on this agent.'
-                    } else if (!fileExists('tests')) {
-                        echo 'Skipping tests: tests directory has not been added yet.'
-                    } else {
-                        int hasTests = sh(
-                            script: "find tests -type f -name 'test_*.py' -print -quit | grep -q .",
-                            returnStatus: true
-                        )
-
-                        if (hasTests != 0) {
-                            echo 'Skipping tests: no pytest test files were found.'
-                        } else {
-                            sh '.venv/bin/python -m pytest tests'
-                        }
+                    int result = bat(returnStatus: true, script: '''@echo off
+powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%TEP_RUNTIME_DIR%\\deploy\\09-manual-deploy.ps1" -SourceDir "%WORKSPACE%" -RuntimeDir "%TEP_RUNTIME_DIR%"
+exit /b %ERRORLEVEL%
+''')
+                    if (result == 2) {
+                        unstable('Infrastructure deployed; application entrypoints are pending sections 12, 13 and 17. See deployment log.')
+                    } else if (result != 0) {
+                        error("Deployment failed (exit ${result}). See deployment log.")
                     }
                 }
             }
-        }
-
-        stage('Build Docker images') {
-            when {
-                branch 'dev'
-            }
-            steps {
-                sh 'docker compose build'
-            }
-        }
-
-        stage('Deploy to development server') {
-            when {
-                branch 'dev'
-            }
-            steps {
-                sh '''
-                    set -eu
-                    docker compose up --detach
-                    docker compose ps --all
-                '''
-            }
-        }
-    }
-
-    post {
-        always {
-            sh 'rm -f .env'
-        }
-        failure {
-            sh 'docker compose ps --all || true'
-            sh 'docker compose logs --tail 100 || true'
         }
     }
 }
