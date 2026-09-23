@@ -131,6 +131,10 @@ class DriftDetector:
         self.thresholds = thresholds or DriftThresholds()
         self._consecutive_drift_count = 0
 
+    def reset(self) -> None:
+        """연속 Drift 상태를 현재 trajectory 단절에 맞춰 초기화한다."""
+        self._consecutive_drift_count = 0
+
     def detect(
         self,
         reference: Mapping[str, Sequence[float]],
