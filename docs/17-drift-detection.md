@@ -192,7 +192,7 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 
 남음:
 
-- 실제 Kafka 송수신 및 정상 구간 오탐률 검증
+- 정상 기준 구간 오탐률 검증
 
 기준 분포 파일:
 
@@ -202,3 +202,10 @@ models/monitoring/drift-reference-v1.0.0.json
 
 - 파일 SHA-256: `954F22ACF9E2A08DB7A4F5860B120A91415EC5E22DB948CB03A89CF281D2C5B8`
 - 재생성: `python -m src.monitoring.reference_builder`
+
+Runtime smoke test (2026-09-23):
+
+- `tep-drift-events-check`에 40개 Event 발행
+- timestamp 0~1.2h는 warm-up Event만 발행하고 Drift 판정 생략
+- timestamp 30h 이후 Window에서 Drift Event 발행 확인
+- Monitor 컨테이너 재시작 0회, Event schema 검증은 발행 경로에서 수행

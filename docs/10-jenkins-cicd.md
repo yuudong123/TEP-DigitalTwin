@@ -92,8 +92,9 @@ TEP-dev의 지금 빌드를 실행해 재검증한다. PC는 로그인 상태로
 - `UNSTABLE`: 이미지 빌드·Kafka 기동 통과, 이후 단계의 서비스 코드 미구현
 - `FAILURE`: checkout·설정·테스트·빌드·기동 중 실제 실패
 
-현재 미구현 entrypoint는 `src/api/main.py`, `src/monitoring/main.py`다.
-`src/inference/main.py`는 PR #24로 dev에 통합되었다. 각각 구현되면 다음 배포에서 기동 대상에 포함된다.
+현재 미구현 entrypoint는 `src/api/main.py`다.
+`src/inference/main.py`와 `src/monitoring/main.py`는 dev에 통합되었다.
+API가 구현되면 다음 배포에서 전체 기동 대상에 포함된다.
 기동 성공은 도메인 기능 검증을 대체하지 않으며 API·Kafka 흐름은 구현 후 별도 검증한다.
 
 ## 2026-09-11 확인 기록
