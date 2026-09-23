@@ -7,6 +7,7 @@ from src.monitoring.drift_detector import (
     DriftThresholds,
     benjamini_hochberg,
     population_stability_index,
+    ks_test,
 )
 
 
@@ -41,6 +42,11 @@ class DriftDetectorTests(unittest.TestCase):
             population_stability_index(self.reference["feature_a"], self.reference["feature_a"]),
             0.0,
         )
+
+    def test_ks_identical_values_has_full_p_value(self) -> None:
+        statistic, p_value = ks_test(self.reference["feature_a"], self.reference["feature_a"])
+        self.assertEqual(statistic, 0.0)
+        self.assertEqual(p_value, 1.0)
 
     def test_benjamini_hochberg_preserves_input_order(self) -> None:
         adjusted = benjamini_hochberg([0.04, 0.001, 0.02])

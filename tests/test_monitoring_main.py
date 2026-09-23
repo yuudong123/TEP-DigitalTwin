@@ -76,8 +76,36 @@ def test_monitor_does_not_compare_before_reference_start(tmp_path):
         thresholds=DriftThresholds(min_samples=2),
     )
 
-    assert monitor.process(message(0, 0.0))["status"] == "INSUFFICIENT_DATA"
-    assert monitor.process(message(1, 0.05)) is None
+    assert monitor.process(message(0, 0.0))["reason"] == "before_reference_window"
+    before = monitor.process(message(1, 0.05))
+    assert before["reason"] == "before_reference_window"
+    after = monitor.process(message(2, 30.0))
+    assert after["window"]["samples"] == 1
+
+
+def test_monitor_confirmation_is_isolated_per_trajectory(tmp_path):
+    thresholds = DriftThresholds(min_samples=2, drift_ratio=0.20)
+    monitor = DriftMonitor(
+        features=["a", "b"],
+        references={"case1": {"a": [0.0, 1.0], "b": [0.5, 1.5]}},
+        reference_version="v1.0.0",
+        model_version="v1.0.0",
+        check_interval_seconds=0,
+        minimum_timestamp_hours=0,
+        retraining_state_path=tmp_path / "state.json",
+        window_size=2,
+        min_samples=2,
+        thresholds=thresholds,
+    )
+
+    # 각 trajectory는 두 번의 Drift만 보았으므로, 서로 섞여 CONFIRMED가 되면 안 된다.
+    for sequence in range(2):
+        monitor.process(message(sequence, float(sequence), trajectory_id=1))
+        monitor.process(message(sequence, float(sequence), trajectory_id=2))
+    event_1 = monitor.process(message(2, 2.0, trajectory_id=1))
+    event_2 = monitor.process(message(2, 2.0, trajectory_id=2))
+    assert event_1["status"] != "CONFIRMED_DRIFT"
+    assert event_2["status"] != "CONFIRMED_DRIFT"
 
 
 def test_real_reference_file_has_six_cases_and_52_features():

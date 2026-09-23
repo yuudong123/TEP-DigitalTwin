@@ -187,12 +187,33 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - 3회 연속 Drift 확인 상태 관리
 - Drift Event Schema v1.0 생성·검증
 - 정상, 분포 이동, 표본 부족, event schema, 기준 분포·Sliding Window·Monitor
-  단위 테스트와 재학습 trigger 테스트 22개 통과
+  단위 테스트와 재학습 trigger 테스트 35개 통과
 - Python 문법 검사와 패키지 충돌 검사 통과
+
+검증 보완:
+
+- `src/monitoring/evaluate_drift.py`로 validation/test split을 실제 `DriftMonitor`와
+  같은 창·임계값으로 평가할 수 있다. split에 Drift 라벨이 없으므로 결과는 정상성
+  proxy이며 운영 오탐률 확정값으로 해석하지 않는다.
+- 연속 Drift 상태는 case가 아니라 `trajectory_key`별로 격리한다.
+- 기준 시작 시각(기본 30시간) 이전 샘플은 판정 창에서 제거해 30시간 이후 창에
+  혼입되지 않도록 한다.
+- 동일 표본의 KS statistic 0일 때 p-value를 1.0으로 보정한다.
 
 남음:
 
-- 정상 기준 구간 오탐률 검증
+- 홈 PC의 실제 validation/test raw 데이터로 평가를 실행하고 결과를 이 문서에 기록
+- 정상성 proxy 결과가 임계값을 넘으면 기준 구간·임계값을 재검토
+- Kafka 재시작 후 offset/중복/발행 실패 재시도 시나리오 검증
+
+Validation proxy 결과(2026-09-23)는 별도 보고서에 고정했다:
+
+- 보고서: `reports/17-drift/validation-summary-2026-09-23.md`
+- 90개 trajectory, 1,579개 평가 창 중 1,572개가 Drift/Confirmed Drift
+- Alert window rate 99.56%, 최대 Drift Feature 비율 98.08%
+- 30~60시간 전체 평균은 train/validation에서 거의 일치했으므로, pooled train
+  기준과 단일 trajectory 창의 비교 방식에서 생기는 구조적 오탐 가능성도 조사한다.
+- 따라서 현재 기준 분포/임계값은 운영 적용 불가이며 17번은 미완료다.
 
 기준 분포 파일:
 
@@ -209,3 +230,7 @@ Runtime smoke test (2026-09-23):
 - timestamp 0~1.2h는 warm-up Event만 발행하고 Drift 판정 생략
 - timestamp 30h 이후 Window에서 Drift Event 발행 확인
 - Monitor 컨테이너 재시작 0회, Event schema 검증은 발행 경로에서 수행
+
+위 smoke test에서 30시간 이후 정상 입력도 다수 Drift로 판정된 사실이 있어, 이는
+정상 동작 통과 증적이 아니다. 실제 split 평가를 완료하기 전에는 17번을 완료로
+표시하지 않는다.

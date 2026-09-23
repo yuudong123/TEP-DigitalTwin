@@ -98,6 +98,8 @@ def ks_test(reference: Sequence[float], current: Sequence[float]) -> tuple[float
 
     effective_n = left.size * right.size / (left.size + right.size)
     root_n = math.sqrt(effective_n)
+    if statistic == 0.0:
+        return 0.0, 1.0
     scaled = (root_n + 0.12 + 0.11 / root_n) * statistic
     terms = [
         2.0 * ((-1.0) ** (index - 1)) * math.exp(-2.0 * index * index * scaled * scaled)

@@ -149,10 +149,10 @@ class DriftMonitor:
         self.minimum_timestamp_hours = minimum_timestamp_hours
         self.clock = clock
         self.window = SlidingWindowManager(features, window_size, min_samples)
-        self.detectors = {
-            case_name: DriftDetector(thresholds)
-            for case_name in references
-        }
+        # 연속 Drift 횟수는 case가 아니라 trajectory별 상태다. 같은 case의
+        # 여러 trajectory를 번갈아 처리해도 서로의 확인 횟수가 섞이지 않아야 한다.
+        self.detectors: dict[str, DriftDetector] = {}
+        self.thresholds = thresholds
         self.trigger = RetrainingTrigger(
             retraining_state_path,
             enabled=retraining_enabled,
@@ -167,8 +167,32 @@ class DriftMonitor:
             raise ValueError(f"기준 분포가 없는 case입니다: {case_name}")
 
         update = self.window.add(message)
+        detector = self.detectors.setdefault(
+            trajectory_key, DriftDetector(self.thresholds)
+        )
         if update.reset_reason:
-            self.detectors[case_name].reset()
+            detector.reset()
+
+        if update.timestamp_hours < self.minimum_timestamp_hours:
+            event = self._event(
+                message,
+                update,
+                DriftResult(
+                    status="INSUFFICIENT_DATA",
+                    drifted_feature_count=0,
+                    monitored_feature_count=len(self.features),
+                    drifted_feature_ratio=0.0,
+                    consecutive_drift_count=0,
+                    features=[],
+                ),
+                False,
+                "before_reference_window",
+            )
+            # 기준 시작 이전 샘플은 이후 판정 창에 섞이면 안 된다.
+            self.window.remove(trajectory_key)
+            self.detectors.pop(trajectory_key, None)
+            self.last_checked_at.pop(trajectory_key, None)
+            return event
 
         if not update.ready:
             result = DriftResult(
@@ -182,9 +206,6 @@ class DriftMonitor:
             reason = update.reset_reason or "window_warmup"
             return self._event(message, update, result, False, reason)
 
-        if update.timestamp_hours < self.minimum_timestamp_hours:
-            return None
-
         now = self.clock()
         previous = self.last_checked_at.get(trajectory_key)
         if (
@@ -195,7 +216,7 @@ class DriftMonitor:
             return None
         self.last_checked_at[trajectory_key] = now
 
-        result = self.detectors[case_name].detect(
+        result = detector.detect(
             self.references[case_name],
             self.window.current(trajectory_key),
         )
