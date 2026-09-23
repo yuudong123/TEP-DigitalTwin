@@ -22,7 +22,9 @@ Kafka, API, inference, monitoring 서비스를 동일한 Docker Compose
 - 저장소에는 공유 가능한 기본값만 `.env.example`에 둔다.
 - 실제 실행값은 Git에서 제외되는 루트 `.env`에 둔다.
 - `compose.yaml`은 각 애플리케이션 서비스에 `env_file: .env`를 적용한다.
-- 컨테이너 내부 Kafka 주소는 서비스 DNS를 사용해 `kafka:9092`로 덮어쓴다.
+- 컨테이너 내부 Kafka 주소는 서비스 DNS를 사용해 `kafka:19092`로 덮어쓴다.
+- Kafka는 외부 볼륨 `tep-kafka-data`를 사용한다. 최초 이전·준비 절차는
+  `08-kafka-persistence.md`를 따른다.
 
 첫 실행 전에는 다음과 같이 설정 파일을 만든다.
 

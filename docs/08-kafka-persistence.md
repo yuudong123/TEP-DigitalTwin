@@ -22,6 +22,16 @@ Docker 볼륨 자체 삭제·Docker 데이터 초기화는 보호하지 않으�
 토픽 목록, 메시지 offset, 검증 메시지를 기록하고 컨테이너를 강제 재생성한 뒤
 같은 데이터가 조회되는지 확인한다. 백업은 검증 후에도 보존한다.
 
+2026-09-23 집컴에서 이전 및 강제 재생성 검증 완료:
+
+- sensor topic 끝 offset 8,787, prediction topic 끝 offset 8,727 재생성 전후 동일
+- 재생성 후 기존 Prediction 메시지 실제 수신 확인
+- Kafka healthy, 외부 볼륨 `tep-kafka-data` 연결 확인
+- 백업: `D:\TEP_DigitalTwin\logs\kafka-backup-20260923-142829`
+- 노트북·집컴 전체 단위 테스트 각각 29개 통과
+- 실제 case1::1 sequence 20의 728개 Feature 비교 최대 절대 오차 0
+- 추론 Docker 이미지 빌드, 모듈 import 및 모델 4개 로딩 성공
+
 ## 의존성·추론 통합
 
 비어 있던 requirements.txt를 복원했다. 추론 이미지에 kafka 패키지를 포함하고,

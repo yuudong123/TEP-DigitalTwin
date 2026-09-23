@@ -3,7 +3,7 @@
 ## 1. 목적
 
 `docs/00-team-roles.md` 기준 담당 C(Visualization + Model Lifecycle)의 시작 작업이다. 11 Kafka,
-12 Inference, 13 FastAPI가 아직 구현되지 않은 상태이므로, 실제 API 없이 이미 확정된 예측 출력
+12 Inference는 dev에 통합되었고 13 FastAPI는 미구현 상태다. 실제 API 없이 이미 확정된 예측 출력
 계약(prediction schema)에 맞춰 모의 데이터로 동작하는 대시보드를 먼저 만든다. FastAPI가
 완성되면 데이터 소스만 실제 API로 교체하고 화면은 다시 만들지 않는 것을 목표로 한다.
 

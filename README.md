@@ -328,7 +328,10 @@ docs/
 개발서버는 Oracle 대신 집 Windows PC의 `D:\TEP_DigitalTwin`을 사용한다.
 Jenkins는 별도 작업 폴더에서 GitHub `dev`를 받아 2분마다 변경을 확인한다.
 이미지 세 개 빌드와 Kafka healthy는 실제 Jenkins 실행으로 검증했다.
-API·inference·monitor는 12·13·17번 구현 대기이며, 이 상태는 `UNSTABLE`로 표시한다.
+Inference는 PR #24로 통합되었다. API·monitor는 13·17번 구현 대기이며,
+미구현 서비스가 남아 있는 배포는 `UNSTABLE`로 표시한다.
+Kafka 데이터는 외부 볼륨 `tep-kafka-data`에 보존한다. 기존 브로커의 최초 이전은
+`docs/08-kafka-persistence.md`를 따른다.
 전체 서비스 정상 기동과 재부팅 복구는 아직 검증하지 않았다.
 현재 운영 절차와 남은 항목은 `docs/09-manual-deployment.md`,
 `docs/10-jenkins-cicd.md`를 따른다.
