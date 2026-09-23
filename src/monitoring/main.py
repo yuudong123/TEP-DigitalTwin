@@ -38,6 +38,7 @@ class MonitorSettings:
     reference_version: str
     model_version: str
     check_interval_seconds: float
+    minimum_timestamp_hours: float
     retraining_enabled: bool
     retraining_state_path: Path
 
@@ -65,6 +66,9 @@ def settings_from_environment() -> MonitorSettings:
         model_version=os.getenv("MODEL_VERSION", "v1.0.0"),
         check_interval_seconds=float(
             os.getenv("DRIFT_CHECK_INTERVAL_SECONDS", "60")
+        ),
+        minimum_timestamp_hours=float(
+            os.getenv("DRIFT_MIN_TIMESTAMP_HOURS", "30")
         ),
         retraining_enabled=boolean("RETRAIN_ENABLED", True),
         retraining_state_path=path(
@@ -125,6 +129,7 @@ class DriftMonitor:
         reference_version: str,
         model_version: str,
         check_interval_seconds: float = 60.0,
+        minimum_timestamp_hours: float = 30.0,
         retraining_enabled: bool = True,
         retraining_state_path: Path = Path("retraining-state.json"),
         window_size: int = 120,
@@ -134,11 +139,14 @@ class DriftMonitor:
     ) -> None:
         if check_interval_seconds < 0:
             raise ValueError("check_interval_seconds는 0 이상이어야 합니다.")
+        if minimum_timestamp_hours < 0:
+            raise ValueError("minimum_timestamp_hours는 0 이상이어야 합니다.")
         self.features = features
         self.references = references
         self.reference_version = reference_version
         self.model_version = model_version
         self.check_interval_seconds = check_interval_seconds
+        self.minimum_timestamp_hours = minimum_timestamp_hours
         self.clock = clock
         self.window = SlidingWindowManager(features, window_size, min_samples)
         self.detectors = {
@@ -173,6 +181,9 @@ class DriftMonitor:
             )
             reason = update.reset_reason or "window_warmup"
             return self._event(message, update, result, False, reason)
+
+        if update.timestamp_hours < self.minimum_timestamp_hours:
+            return None
 
         now = self.clock()
         previous = self.last_checked_at.get(trajectory_key)
@@ -244,6 +255,7 @@ def main() -> None:
         reference_version=reference_version,
         model_version=settings.model_version,
         check_interval_seconds=settings.check_interval_seconds,
+        minimum_timestamp_hours=settings.minimum_timestamp_hours,
         retraining_enabled=settings.retraining_enabled,
         retraining_state_path=settings.retraining_state_path,
     )

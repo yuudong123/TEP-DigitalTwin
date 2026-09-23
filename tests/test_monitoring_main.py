@@ -24,6 +24,7 @@ def test_monitor_emits_schema_valid_warmup_and_normal_events(tmp_path):
         reference_version="v1.0.0",
         model_version="v1.0.0",
         check_interval_seconds=0,
+        minimum_timestamp_hours=0,
         retraining_state_path=tmp_path / "state.json",
         window_size=3,
         min_samples=2,
@@ -47,6 +48,7 @@ def test_monitor_resets_after_sequence_gap(tmp_path):
         reference_version="v1.0.0",
         model_version="v1.0.0",
         check_interval_seconds=0,
+        minimum_timestamp_hours=0,
         retraining_state_path=tmp_path / "state.json",
         window_size=3,
         min_samples=2,
@@ -58,6 +60,24 @@ def test_monitor_resets_after_sequence_gap(tmp_path):
     assert event["status"] == "INSUFFICIENT_DATA"
     assert event["reason"] == "sequence_gap"
     assert event["window"]["samples"] == 1
+
+
+def test_monitor_does_not_compare_before_reference_start(tmp_path):
+    monitor = DriftMonitor(
+        features=["a", "b"],
+        references={"case1": {"a": [0.0, 1.0], "b": [0.5, 1.5]}},
+        reference_version="v1.0.0",
+        model_version="v1.0.0",
+        check_interval_seconds=0,
+        minimum_timestamp_hours=30,
+        retraining_state_path=tmp_path / "state.json",
+        window_size=3,
+        min_samples=2,
+        thresholds=DriftThresholds(min_samples=2),
+    )
+
+    assert monitor.process(message(0, 0.0))["status"] == "INSUFFICIENT_DATA"
+    assert monitor.process(message(1, 0.05)) is None
 
 
 def test_real_reference_file_has_six_cases_and_52_features():
