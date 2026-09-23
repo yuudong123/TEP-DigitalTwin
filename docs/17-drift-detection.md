@@ -179,19 +179,20 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - case별 재학습 요청 시각을 JSON 상태 파일에 원자적으로 저장
 - `CONFIRMED_DRIFT`, 데이터 품질 통과, `RETRAIN_ENABLED=true` 조건 결합
 - 같은 case의 24시간 cooldown 중복 요청 차단 및 재시작 후 상태 복원
+- Kafka Sensor Consumer와 Drift Event Producer 실행 모듈 연결
+- 기준 분포 로드, Sensor Schema·Kafka key 검증 및 offset commit 연결
 - PSI와 KS statistic/p-value 계산
 - Benjamini-Hochberg 다중 검정 보정
 - Feature별 Drift 및 전체 상태 판정
 - 3회 연속 Drift 확인 상태 관리
 - Drift Event Schema v1.0 생성·검증
-- 정상, 분포 이동, 표본 부족, event schema, 기준 분포와 Sliding Window
-  단위 테스트와 재학습 trigger 테스트 19개 통과
+- 정상, 분포 이동, 표본 부족, event schema, 기준 분포·Sliding Window·Monitor
+  단위 테스트와 재학습 trigger 테스트 22개 통과
 - Python 문법 검사와 패키지 충돌 검사 통과
 
 남음:
 
-- Kafka Consumer·Producer 연결
-- 실제 Kafka 송수신 및 정상 구간 오탐률 검증
+- 정상 기준 구간 오탐률 검증
 
 기준 분포 파일:
 
@@ -201,3 +202,10 @@ models/monitoring/drift-reference-v1.0.0.json
 
 - 파일 SHA-256: `954F22ACF9E2A08DB7A4F5860B120A91415EC5E22DB948CB03A89CF281D2C5B8`
 - 재생성: `python -m src.monitoring.reference_builder`
+
+Runtime smoke test (2026-09-23):
+
+- `tep-drift-events-check`에 40개 Event 발행
+- timestamp 0~1.2h는 warm-up Event만 발행하고 Drift 판정 생략
+- timestamp 30h 이후 Window에서 Drift Event 발행 확인
+- Monitor 컨테이너 재시작 0회, Event schema 검증은 발행 경로에서 수행

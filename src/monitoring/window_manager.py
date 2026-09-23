@@ -21,6 +21,7 @@ class WindowUpdate:
 class _TrajectoryState:
     case_name: str
     rows: deque[dict[str, float]]
+    timestamps: deque[float]
     last_sequence: int | None = None
     last_timestamp_hours: float | None = None
 
@@ -84,6 +85,7 @@ class SlidingWindowManager:
             self._states[trajectory_key] = state
 
         state.rows.append(row)
+        state.timestamps.append(timestamp_hours)
         state.last_sequence = sequence
         state.last_timestamp_hours = timestamp_hours
         sample_count = len(state.rows)
@@ -106,11 +108,21 @@ class SlidingWindowManager:
             for feature in self.features
         }
 
+    def bounds(self, trajectory_key: str) -> tuple[float, float]:
+        state = self._states.get(trajectory_key)
+        if state is None or not state.timestamps:
+            raise KeyError(f"관리 중인 trajectory가 아닙니다: {trajectory_key}")
+        return state.timestamps[0], state.timestamps[-1]
+
     def remove(self, trajectory_key: str) -> None:
         self._states.pop(trajectory_key, None)
 
     def _new_state(self, case_name: str) -> _TrajectoryState:
-        return _TrajectoryState(case_name, deque(maxlen=self.window_size))
+        return _TrajectoryState(
+            case_name,
+            deque(maxlen=self.window_size),
+            deque(maxlen=self.window_size),
+        )
 
     @staticmethod
     def _discontinuity_reason(
