@@ -54,8 +54,16 @@ class InferenceRuntimeTests(unittest.TestCase):
     def setUpClass(cls):
         cls.ordered_features = load_feature_list()
         cls.base_features = base_features_from_feature_list(cls.ordered_features)
-        source = pd.read_csv(PROJECT_ROOT / "data" / "raw" / "case1.csv")
-        cls.trajectory = source[source["Id"] == 1].sort_values("Time").reset_index(drop=True)
+        # Deterministic non-linear inputs keep unit tests independent of raw CSVs.
+        schema = pd.read_csv(PROJECT_ROOT / "data" / "metadata" / "feature_schema.csv")
+        step = np.arange(21, dtype=float)
+        cls.trajectory = pd.DataFrame({
+            name: np.sin(step / (index + 1)) + step ** 2 * 0.01 + index
+            for index, name in enumerate(schema["column"])
+            if name not in ("Id", "Time")
+        })
+        cls.trajectory["Id"] = 1
+        cls.trajectory["Time"] = step * 0.05
 
     def test_online_features_match_training_features(self):
         trajectory = self.trajectory.iloc[:21].copy()

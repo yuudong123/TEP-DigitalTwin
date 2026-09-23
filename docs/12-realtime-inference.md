@@ -751,9 +751,10 @@ Producer, Inference Service와 Prediction 발행 과정에서 전송 실패 또�
 ## 23. 실행 원칙
 
 - Kafka는 Sensor 데이터의 실시간 전달 통로로 사용한다.
-- 원본 장기 보관은 `data/raw/case1.csv`~`case6.csv`가 담당한다.
+- 원본 장기 보관은 `data/raw/TEP/case1.csv`~`case6.csv`가 담당한다.
 - Inference Service의 60분 버퍼는 메모리에만 유지한다.
-- Kafka 메시지와 버퍼의 영구 저장은 12번 필수 범위가 아니다.
+- Kafka 토픽·메시지·offset은 외부 볼륨 `tep-kafka-data`에 보존한다.
+- 추론의 인메모리 버퍼는 재시작 시 재구성해야 한다.
 - 예측 결과의 장기 저장 여부는 FastAPI·DB 설계 단계에서 결정한다.
 - 코드 구현 전에 Production artifact와 기존 Feature 생성 코드를 먼저 확인한다.
 - 학습과 실시간 추론에서 같은 Feature 함수를 사용한다.
@@ -776,8 +777,8 @@ Producer, Inference Service와 Prediction 발행 과정에서 전송 실패 또�
 자동 검증은 다음 명령으로 실행한다.
 
 ```powershell
-python -m inference.validate_temporal --case case1 --id 1 --row 20
-python -m unittest tests.test_inference_runtime -v
+python -m src.inference.validate_temporal --case case1 --id 1 --row 20
+python -m pytest tests/test_inference_runtime.py -v
 ```
 
 12번 실시간 추론 작업의 필수 구현과 검증은 완료했다. 다음 작업은 13번

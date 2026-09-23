@@ -25,6 +25,9 @@ services:
       CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
 
+    volumes:
+      - kafka-data:/tmp/kraft-combined-logs
+
     healthcheck:
       test:
         [
@@ -153,6 +156,11 @@ services:
     networks:
       - tep-network
 
+
+volumes:
+  kafka-data:
+    external: true
+    name: tep-kafka-data
 
 networks:
   tep-network:

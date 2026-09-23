@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 
 from .temporal_features import base_features_from_feature_list, build_latest_features
+from kafka.producer import resolve_case_csv_path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -43,7 +44,7 @@ def main() -> None:
     feature_payload = json.loads((model_dir / "feature_list.json").read_text(encoding="utf-8"))
     ordered_features = feature_payload["features"]
     base_features = base_features_from_feature_list(ordered_features)
-    source = pd.read_csv(PROJECT_ROOT / "data" / "raw" / f"{args.case}.csv")
+    source = pd.read_csv(resolve_case_csv_path(args.case))
     trajectory = source[source["Id"] == args.trajectory_id].sort_values("Time").reset_index(drop=True)
     if args.row < 20 or args.row >= len(trajectory):
         raise ValueError("--row는 20 이상이고 trajectory 행 개수보다 작아야 합니다.")

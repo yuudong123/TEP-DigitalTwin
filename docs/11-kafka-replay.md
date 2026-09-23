@@ -322,13 +322,11 @@ Consumer는 `latest`에서 시작하므로 실제 검증 시 반드시 Consumer�
 
 남은 작업:
 
-- Producer delivery callback의 성공·실패 건수를 집계하여 최종 결과에 반영
 - 장애 및 재시도 검증
-- `kafka/README.md` 작성
 
 현재 11번 작업은 **Sensor 메시지 Schema, Producer, 확인용 Consumer 구현과
-집컴 Docker Kafka 실제 송수신 검증까지 완료**된 상태다. 성공·실패 최종 집계,
-장애·재시도 검증과 별도 README 작성은 후속 보완 항목으로 남긴다.
+집컴 Docker Kafka 실제 송수신 검증까지 완료**된 상태다. 성공·실패 최종 집계와
+README 작성도 완료했으며 장애·재시도 검증은 후속 보완 항목이다.
 
 ## 12. 실행 명령
 
