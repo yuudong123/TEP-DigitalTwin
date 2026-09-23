@@ -54,6 +54,8 @@ try {
         if (-not (Test-Path -LiteralPath $python)) { throw 'Tests exist, but the host Python environment is missing.' }
         Push-Location $SourceDir
         try {
+            & $python -m pip install -r (Join-Path $SourceDir 'requirements.txt')
+            if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
             & $python -m pytest tests
             if ($LASTEXITCODE -ne 0) { throw "Tests failed (exit $LASTEXITCODE)." }
         } finally { Pop-Location }
