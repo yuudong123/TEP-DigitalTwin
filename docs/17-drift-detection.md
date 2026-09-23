@@ -1,10 +1,18 @@
-# Drift Detection 설계
+# TEP 운전상태·열화 변화 모니터링 설계
+
+> 기존 코드와 Kafka topic의 호환성을 위해 파일명·클래스명·상태값에는 `drift`라는
+> 이름이 남아 있다. 현재 TEP 데이터에서의 의미는 일반적인 운영 Data Drift가 아니라
+> **trajectory 내부의 운전상태·열화 변화 신호**다.
 
 ## 1. 목적
 
-실시간 TEP 센서 분포가 Production 모델 `v1.0.0`의 학습 기준 분포에서
-지속적으로 벗어나는지 감지하고, 재학습 후보를 생성할 근거를 남긴다.
-Drift는 고장 예측 결과가 아니며, Drift 감지만으로 Production 모델을 자동 교체하지 않는다.
+실시간 TEP 센서 분포가 안정 운전 기준에서 지속적으로 벗어나는지 감지하고,
+Run-to-Failure 열화 및 운전상태 변화의 관찰 근거를 남긴다.
+
+현재 공식 `case1`~`case6` 데이터에는 별도 운영 Data Drift label이 없다.
+따라서 이 모니터는 새로운 운영환경에 대한 Drift 검증기나 자동 재학습 Trigger로
+간주하지 않는다. 알려진 열화·고장 위험은 Inference/RUL 모델의 책임이며, 이 모니터는
+그 변화 신호를 별도 축으로 기록한다.
 
 ## 2. 입력과 출력
 
@@ -24,7 +32,7 @@ Drift는 고장 예측 결과가 아니며, Drift 감지만으로 Production 모
 
 출력은 `tep-drift-events` topic의 Drift Event Schema v1.0 메시지다.
 
-## 3. 기준 데이터
+## 3. 기준 데이터와 적용 범위
 
 - `data/metadata/split_manifest.csv`의 train trajectory만 사용한다.
 - 각 trajectory의 안정 운전 구간인 30시간 이상 60시간 미만을 기준 구간으로 사용한다.
@@ -32,8 +40,10 @@ Drift는 고장 예측 결과가 아니며, Drift 감지만으로 Production 모
 - 각 Feature의 기준 통계, PSI 구간, 결측률은 버전이 지정된 JSON으로 저장한다.
 - 기준 데이터 버전에는 dataset split, feature schema, 생성 시각을 함께 기록한다.
 
-실제 구현 전에 30~60시간 구간에 열화가 섞이지 않았는지 case별 분포와 원본 데이터 설명을
-다시 검증한다. 검증 결과에 따라 기준 구간은 변경할 수 있지만, train 이외 데이터는 사용하지 않는다.
+프로젝트 데이터 설명상 열화는 약 60~70시간 이후 시작하므로 30~60시간을 안정 기준으로
+두었다. 다만 이 기준은 운전모드 변경·trajectory 간 자연 변동을 모두 제거한 것은 아니다.
+현재 validation에서 pooled train 기준과 단일 trajectory 창을 비교할 때 과도한 경보가
+발생했으므로, 이를 운영 오탐률로 해석하거나 임계값만 조정해 통과시키지 않는다.
 
 ## 4. 판정 창과 검사 주기
 
@@ -66,7 +76,7 @@ Feature Drift는 다음 중 하나를 만족할 때 발생한다.
 1. `PSI >= 0.25`
 2. `PSI >= 0.10`이고 KS 조건도 만족
 
-## 6. 전체 상태와 재학습 Trigger
+## 6. 전체 상태와 재학습 연계 보류
 
 단일 Feature의 일시적 변화로 재학습하지 않는다.
 
@@ -75,28 +85,34 @@ Feature Drift는 다음 중 하나를 만족할 때 발생한다.
 - `DRIFT`: Drift Feature 비율 20% 이상
 - `CONFIRMED_DRIFT`: `DRIFT` 상태가 3회 연속 발생
 
-재학습 요청은 다음 조건을 모두 만족할 때만 생성한다.
+기존 `RetrainingTrigger` 코드는 schema 호환성과 향후 별도 운영 데이터가 들어올 때를
+위해 남겨두지만, 현재 TEP 범위에서는 재학습 연계를 보류한다. 기본 설정은
+`RETRAIN_ENABLED=false`다.
 
-1. `CONFIRMED_DRIFT`
-2. 같은 case에서 직전 재학습 요청 이후 cooldown 24시간 경과
-3. 기준 창과 현재 창의 데이터 품질 검사 통과
-4. `RETRAIN_ENABLED=true`
+향후 운영 Drift 데이터와 승인 기준이 별도로 확보되는 경우에만 다음 조건을 재검토한다.
 
-재학습 요청은 Candidate 모델 생성만 시작한다. 19번 평가·승격 기준을 통과하기 전에는
-Production 모델을 교체하지 않는다.
+1. 별도 운영 Drift label과 데이터 품질 기준 확보
+2. `CONFIRMED_DRIFT`
+3. 같은 case에서 직전 재학습 요청 이후 cooldown 24시간 경과
+4. 기준 창과 현재 창의 데이터 품질 검사 통과
+5. 명시적인 운영 승인과 `RETRAIN_ENABLED=true`
 
-## 7. 고장 위험과 Drift 구분
+현재는 `retraining_requested=false`를 유지한다. 향후 연계를 재개하더라도 재학습 요청은
+Candidate 모델 생성만 시작하고, 19번 평가·승격 기준을 통과하기 전에는 Production
+모델을 교체하지 않는다.
+
+## 7. 고장 위험과 변화 신호 구분
 
 Inference의 risk/status와 Drift 상태는 별도 축으로 보존한다.
 
-| 예측 위험 | Drift | 해석 |
+| 예측 위험 | 변화 신호 | 해석 |
 | --- | --- | --- |
 | 낮음 | 없음 | 정상 운전 |
 | 높음 | 없음 | 학습 범위 안에서 감지된 고장 위험 |
-| 낮음 | 있음 | 운전조건·센서 분포 변화 또는 미학습 상태 |
-| 높음 | 있음 | 고장 위험과 분포 변화가 동시에 존재, 우선 점검 |
+| 낮음 | 있음 | 운전조건·trajectory 열화 신호 또는 미학습 상태 |
+| 높음 | 있음 | 고장 위험과 변화 신호가 동시에 존재, 우선 점검 |
 
-위험도가 높다는 이유로 Drift를 확정하지 않고, Drift가 있다는 이유로 고장을 확정하지 않는다.
+위험도가 높다는 이유로 변화 신호를 확정하지 않고, 변화 신호가 있다는 이유로 고장을 확정하지 않는다.
 
 ## 8. Drift Event Schema v1.0
 
@@ -156,11 +172,11 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 ## 10. 완료 기준
 
 - 같은 입력으로 항상 같은 판정 결과가 나온다.
-- 정상 기준 구간에서는 오탐률을 별도로 측정해 보고한다.
+- 안정 기준 구간과 trajectory 자연 변동에 대한 변화 신호율을 별도로 측정해 보고한다.
 - 인위적으로 이동시킨 Feature를 탐지하는 테스트를 통과한다.
 - 결측, 순서 역전, trajectory 전환을 안전하게 처리한다.
 - Drift Event가 schema 검증을 통과하고 Kafka에서 실제 수신된다.
-- 재학습 요청 중복 방지와 cooldown을 검증한다.
+- 재학습 연계는 운영 Drift 데이터 확보 전까지 비활성 상태임을 검증한다.
 - Inference risk와 Drift 상태가 독립적으로 보존된다.
 
 ## 11. 현재 구현 상태
@@ -177,7 +193,7 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - sequence 누락·역전 및 timestamp 역전 시 해당 trajectory 창만 초기화
 - 감시 Feature 누락·비수치·NaN·무한대 입력 거부
 - case별 재학습 요청 시각을 JSON 상태 파일에 원자적으로 저장
-- `CONFIRMED_DRIFT`, 데이터 품질 통과, `RETRAIN_ENABLED=true` 조건 결합
+- 기존 `CONFIRMED_DRIFT`·품질·cooldown 조합 로직 보존(현재 자동 재학습은 기본 비활성화)
 - 같은 case의 24시간 cooldown 중복 요청 차단 및 재시작 후 상태 복원
 - Kafka Sensor Consumer와 Drift Event Producer 실행 모듈 연결
 - 기준 분포 로드, Sensor Schema·Kafka key 검증 및 offset commit 연결
@@ -202,18 +218,19 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 
 남음:
 
-- 홈 PC의 실제 validation/test raw 데이터로 평가를 실행하고 결과를 이 문서에 기록
-- 정상성 proxy 결과가 임계값을 넘으면 기준 구간·임계값을 재검토
+- trajectory 간 자연 변동을 고려한 변화 신호 기준 재설계
+- 운영 Data Drift 데이터·label이 확보되기 전까지 자동 재학습 연계 보류
 - Kafka 재시작 후 offset/중복/발행 실패 재시도 시나리오 검증
 
-Validation proxy 결과(2026-09-23)는 별도 보고서에 고정했다:
+안정 기준 보정 결과(2026-09-23)는 별도 보고서에 고정했다:
 
 - 보고서: `reports/17-drift/validation-summary-2026-09-23.md`
 - 90개 trajectory, 1,579개 평가 창 중 1,572개가 Drift/Confirmed Drift
 - Alert window rate 99.56%, 최대 Drift Feature 비율 98.08%
 - 30~60시간 전체 평균은 train/validation에서 거의 일치했으므로, pooled train
   기준과 단일 trajectory 창의 비교 방식에서 생기는 구조적 오탐 가능성도 조사한다.
-- 따라서 현재 기준 분포/임계값은 운영 적용 불가이며 17번은 미완료다.
+- 따라서 현재 기준 분포/임계값은 운영 Data Drift 판정에 사용할 수 없으며, 모니터링
+  기준 재설계 전까지 17번은 보정 작업 상태다.
 
 기준 분포 파일:
 

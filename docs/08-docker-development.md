@@ -12,7 +12,7 @@ Kafka, API, inference, monitoring 서비스를 동일한 Docker Compose
 | `kafka` | 센서·예측·드리프트 이벤트 메시지 브로커 | `tep-kafka` |
 | `api` | 외부 조회용 FastAPI 서비스 | `tep-api` |
 | `inference` | Kafka 센서 메시지 기반 실시간 추론 | `tep-inference` |
-| `monitor` | 드리프트 감시와 재학습 트리거 | `tep-monitor` |
+| `monitor` | 운전상태·열화 변화 감시 | `tep-monitor` |
 
 모든 서비스는 `tep-network` bridge 네트워크를 사용한다. 애플리케이션
 컨테이너는 Kafka healthcheck가 성공한 뒤에 시작한다.

@@ -24,8 +24,8 @@
 | 14 | C | 🟡 | React/Vite 대시보드·mock stream·API client | 실제 API 연결·라이브 검증 |
 | 15 | C | 🟡 | Unity prefab/mock·WebGL bridge·Prediction 모델 | API 연결·오류 UI·자동/장시간/Windows 검증 |
 | 16 | A/B/C | 🟡 | 서비스 간 일부 계약·Jenkins checklist | API→Inference→Kafka→Web/Unity 전체 통합 |
-| 17 | B | 🟡 | 기준 분포, PSI/KS/BH, trajectory window, cooldown, runtime 연결·격리 결함 보완 | validation proxy 99.56% Drift 원인 분석·기준/임계값 재검증 |
-| 18 | C | ⬜ | 자동 재학습 파이프라인 미구현 | trigger→학습→candidate 산출 |
+| 17 | B | 🟡 | TEP 운전상태·열화 변화 모니터링, PSI/KS/BH, trajectory window, runtime 연결 | trajectory 자연 변동을 반영한 기준 재설계·운영 Data Drift 분리 |
+| 18 | C | 🟡 | 자동 재학습 연계 보류 결정 | 운영 Drift 데이터·label 확보 후 범위 재확정 |
 | 19 | C | ⬜ | candidate 평가·승격 미구현 | 평가 기준·승격/거부·rollback 계약 |
 | 20 | B | ⬜ | Production 모델 hot application/rollback 미구현 | 19번 계약 이후 적용 |
 | 21 | B | ⬜ | 상세 작업 문서 미확정 | 요구사항 확인 후 범위 확정 |
@@ -35,9 +35,10 @@
 
 ## 이번 작업 순서
 
-1. 17번 정상 기준 구간의 오탐률을 재현 가능한 오프라인 평가로 측정한다.
+1. 17번 안정 기준과 trajectory 자연 변동을 재현 가능한 오프라인 평가로 측정한다.
 2. 평가 중 드러난 안전성 결함(trajectory 상태 격리, KS 동일표본 경계 등)을 테스트와 함께 보완한다.
 3. 결과와 한계를 `docs/17-drift-detection.md`에 반영한다.
 4. 변경을 `feat/drift-validation` 작업 단위로 커밋하고 PR 대상으로 정리한다.
 
-17번의 정상 구간 평가는 “오탐률 통과”를 미리 가정하지 않는다. 기준 구간 자체에 열화가 섞였거나 현재 임계값이 부적절하면 그 결과를 실패/추가 조정 필요로 기록한다.
+17번 평가는 “운영 Data Drift 오탐률 통과”를 미리 가정하지 않는다. 현재 TEP에는
+별도 운영 Drift label이 없으므로 재학습 Trigger는 기본 비활성화한다.

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from src.monitoring.drift_detector import DriftThresholds
-from src.monitoring.main import DriftMonitor, load_reference
+from src.monitoring.main import DriftMonitor, load_reference, settings_from_environment
 from src.monitoring.event_schema import validate_drift_event
 
 
@@ -116,3 +116,8 @@ def test_real_reference_file_has_six_cases_and_52_features():
     assert version == "v1.0.0"
     assert set(references) == {f"case{number}" for number in range(1, 7)}
     assert all(len(features) == 52 for features in references.values())
+
+
+def test_retraining_is_disabled_by_default(monkeypatch):
+    monkeypatch.delenv("RETRAIN_ENABLED", raising=False)
+    assert settings_from_environment().retraining_enabled is False

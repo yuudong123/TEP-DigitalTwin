@@ -133,7 +133,7 @@ class Settings:
     # Retraining
     retrain_enabled: bool = env_bool(
         "RETRAIN_ENABLED",
-        True,
+        False,
     )
 
     # Paths

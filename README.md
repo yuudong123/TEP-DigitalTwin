@@ -2,7 +2,7 @@
 
 TEP Run-to-Failure 화학공정 데이터를 실시간으로 스트리밍하고,
 AI를 이용해 공정의 고장 위험과 잔여수명(RUL)을 예측하며,
-데이터 드리프트에 따른 자동 재학습과 디지털트윈 모니터링까지 구현하는
+공정 열화·운전상태 변화 모니터링과 디지털트윈 모니터링까지 구현하는
 예지보전 시스템이다.
 
 ---
@@ -18,8 +18,8 @@ AI를 이용해 공정의 고장 위험과 잔여수명(RUL)을 예측하며,
 - FastAPI 기반 예측 API
 - Web 모니터링
 - Unity 디지털트윈
-- Drift Detection
-- 자동 재학습
+- 운전상태·열화 변화 모니터링
+- 운영 Drift 데이터 확보 후 재검토할 모델 생명주기 연계
 - Candidate 모델 평가 및 Production 승격
 - Docker 기반 서비스 구성
 - Jenkins 기반 CI/CD
@@ -49,19 +49,13 @@ MLOps 흐름:
 ```text
 Real-time Data
    ↓
-Drift Monitor
+운전상태·열화 변화 Monitor
    ↓
-Drift Confirmed
+변화 Event 기록
    ↓
-Retraining
+Inference/RUL 결과와 함께 점검
    ↓
-Candidate Model
-   ↓
-Candidate Evaluation
-   ↓
-Production Promotion
-   ↓
-Inference Model Update
+운영 Drift 데이터 확보 후 모델 생명주기 연계 검토
 ```
 
 CI/CD:

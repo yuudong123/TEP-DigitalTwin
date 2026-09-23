@@ -1,10 +1,10 @@
-# Drift validation proxy 결과
+# TEP 운전상태·열화 변화 기준 보정 결과
 
 실행 시각: 2026-09-23 15:54 KST  
 대상: `validation` split, case1~case6, trajectory 90개  
 기준: `drift-reference-v1.0.0.json` (SHA-256 `954f22acf9e2a08db7a4f5860b120a91415ec5e22db948cb03a89cf281d2c5b8`)  
 판정 창: 120 samples, 최소 20 samples, 기준 시작 30시간  
-오프라인 계산 주기: 6시간 가상 주기(원본 행 간격 180초). 운영 오탐률 확정용이 아닌 후보 선별용.
+오프라인 계산 주기: 6시간 가상 주기(원본 행 간격 180초). 운영 Data Drift 오탐률 확정용이 아닌 기준 보정용.
 
 | 지표 | 결과 |
 |---|---:|
@@ -33,7 +33,7 @@ validation 0.679457; `Separator` train 39.486257, validation 39.485116).
 
 ## 판정
 
-현재 기준 분포/임계값 조합은 validation 정상성 proxy에서 과도하게 Drift를 발생시킨다.
-따라서 17번은 미완료이며, 이 결과를 통과로 취급하거나 `RETRAIN_ENABLED=true` 상태로
-재학습 요청을 운영에 맡기면 안 된다. 기준 구간 품질, case별/feature별 기준 산출,
-PSI·KS 적용 방식과 임계값을 재검토한 뒤 동일 평가를 다시 실행해야 한다.
+현재 pooled train 기준과 단일 trajectory 창 조합은 변화 신호를 과도하게 발생시킨다.
+따라서 이 결과를 운영 Data Drift 통과나 재학습 근거로 사용하지 않는다.
+`RETRAIN_ENABLED=false`를 기본으로 유지하고, trajectory 간 자연 변동을 반영한
+변화 신호 기준을 재설계해야 한다.

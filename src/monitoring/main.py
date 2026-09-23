@@ -1,4 +1,4 @@
-"""Kafka Sensor 메시지를 받아 Drift Event를 발행하는 실행 모듈."""
+"""Kafka Sensor 메시지에서 TEP 운전상태·열화 변화를 발행하는 모듈."""
 
 from __future__ import annotations
 
@@ -70,7 +70,8 @@ def settings_from_environment() -> MonitorSettings:
         minimum_timestamp_hours=float(
             os.getenv("DRIFT_MIN_TIMESTAMP_HOURS", "30")
         ),
-        retraining_enabled=boolean("RETRAIN_ENABLED", True),
+        # 현재 TEP 데이터에는 운영 Drift label이 없으므로 자동 재학습은 기본 차단한다.
+        retraining_enabled=boolean("RETRAIN_ENABLED", False),
         retraining_state_path=path(
             "DRIFT_RETRAINING_STATE_PATH",
             PROJECT_ROOT / "logs" / "retraining-state.json",
@@ -130,7 +131,7 @@ class DriftMonitor:
         model_version: str,
         check_interval_seconds: float = 60.0,
         minimum_timestamp_hours: float = 30.0,
-        retraining_enabled: bool = True,
+        retraining_enabled: bool = False,
         retraining_state_path: Path = Path("retraining-state.json"),
         window_size: int = 120,
         min_samples: int = 20,
