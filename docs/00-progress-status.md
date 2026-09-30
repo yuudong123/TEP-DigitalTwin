@@ -1,7 +1,7 @@
 # TEP-DigitalTwin 작업 진행표
 
-기준일: 2026-09-23  
-기준 브랜치: `dev` (`0380467`, origin과 동기화)  
+기준일: 2026-09-30  
+통합 브랜치: `origin/dev` (`0380467`, 원격 조회 확인). 아래 17번 변경은 `feat/drift-validation`에서 검증 중이며 아직 dev 미병합.  
 최근 병합: PR #24(실시간 추론), PR #25(Kafka 영구 저장), PR #26(Drift runtime)
 
 상태 표기: ✅ 완료 · 🟡 부분 완료/검증 필요 · ⬜ 미착수
@@ -24,8 +24,8 @@
 | 14 | C | 🟡 | React/Vite 대시보드·mock stream·API client | 실제 API 연결·라이브 검증 |
 | 15 | C | 🟡 | Unity prefab/mock·WebGL bridge·Prediction 모델 | API 연결·오류 UI·자동/장시간/Windows 검증 |
 | 16 | A/B/C | 🟡 | 서비스 간 일부 계약·Jenkins checklist | API→Inference→Kafka→Web/Unity 전체 통합 |
-| 17 | B | 🟡 | TEP 운전상태·열화 변화 모니터링, PSI/KS/BH, trajectory window, runtime 연결 | trajectory 자연 변동을 반영한 기준 재설계·운영 Data Drift 분리 |
-| 18 | C | 🟡 | 자동 재학습 연계 보류 결정 | 운영 Drift 데이터·label 확보 후 범위 재확정 |
+| 17 | B | 🟡 | 기획 전환·자동 재학습 기본 해제, 구간별 평가 구현·집컴 실행 | 안정 구간 434/450 경보(96.44%); train에서 자연 변동 분석 후 기준 보완 |
+| 18 | C | 보류 | 자동 재학습 연계 보류 결정(파이프라인 미구현) | 필요 데이터·승인 기준 확보 후 범위 재확정 |
 | 19 | C | ⬜ | candidate 평가·승격 미구현 | 평가 기준·승격/거부·rollback 계약 |
 | 20 | B | ⬜ | Production 모델 hot application/rollback 미구현 | 19번 계약 이후 적용 |
 | 21 | B | ⬜ | 상세 작업 문서 미확정 | 요구사항 확인 후 범위 확정 |
@@ -35,10 +35,12 @@
 
 ## 이번 작업 순서
 
-1. 17번 안정 기준과 trajectory 자연 변동을 재현 가능한 오프라인 평가로 측정한다.
-2. 평가 중 드러난 안전성 결함(trajectory 상태 격리, KS 동일표본 경계 등)을 테스트와 함께 보완한다.
-3. 결과와 한계를 `docs/17-drift-detection.md`에 반영한다.
-4. 변경을 `feat/drift-validation` 작업 단위로 커밋하고 PR 대상으로 정리한다.
+1. 완료: 17번 평가를 안정·전환·열화 이후로 분리. 과거 99.56%의 정상성 해석 정정.
+2. 다음 B 작업: train의 case·feature별 창 통계를 분석하고 변화 판단 기준 보완.
+3. 이후 B 작업: Kafka 발행 실패·재시작 복구 검증, API 준비 후 09·10·16 전체 통합.
+4. A/C 의존: 13 API 구현과 14·15 실제 연결. 19·20 모델 승격·적용은 계약 확정 대기.
+
+결과: `reports/17-drift/validation-phases-2026-09-30.md`.
 
 17번 평가는 “운영 Data Drift 오탐률 통과”를 미리 가정하지 않는다. 현재 TEP에는
 별도 운영 Drift label이 없으므로 재학습 Trigger는 기본 비활성화한다.

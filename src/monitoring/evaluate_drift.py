@@ -1,7 +1,7 @@
-"""분리된 trajectory의 정상 구간을 Drift Monitor와 동일한 방식으로 평가한다.
+"""TEP 변화 경보를 안정/전환/열화 이후 구간별로 평가한다.
 
-이 도구의 alert rate는 validation/test에 Drift 라벨이 없을 때의 *정상성 proxy*다.
-따라서 결과만으로 운영 오탐률을 확정하지 않고, 기준 구간 품질 검토와 함께 사용한다.
+구간은 데이터 생성 설명의 시간 기준이며 개별 run의 열화 정답 라벨은 아니다.
+전체 수명 경보율과 안정 구간 경보율을 분리하고 완성된 창만 집계한다.
 """
 
 from __future__ import annotations
@@ -11,6 +11,7 @@ import csv
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +21,15 @@ from .main import DriftMonitor, load_reference
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SPLITS = {"validation", "test"}
 ALERT_STATUSES = {"DRIFT", "CONFIRMED_DRIFT"}
+
+
+def window_phase(start: float, end: float) -> str:
+    """경계를 걸치는 창을 순수 안정/열화 이후 창으로 집계하지 않는다."""
+    if 30.0 <= start <= end < 60.0:
+        return "stable_30_60"
+    if 70.0 <= start <= end:
+        return "post_70"
+    return "transition_or_boundary"
 
 
 def _sha256(path: Path) -> str:
@@ -86,10 +96,18 @@ def evaluate(
     split: str,
     minimum_timestamp_hours: float = 30.0,
     window_size: int = 120,
-    min_samples: int = 20,
+    min_samples: int = 120,
     check_interval_seconds: float = 21600.0,
     simulation_step_seconds: float = 180.0,
 ) -> dict[str, Any]:
+    if not math.isfinite(check_interval_seconds) or check_interval_seconds < 0:
+        raise ValueError("check_interval_seconds must be finite and nonnegative")
+    if not math.isfinite(simulation_step_seconds) or simulation_step_seconds <= 0:
+        raise ValueError("simulation_step_seconds must be finite and positive")
+    if minimum_timestamp_hours != 30.0:
+        raise ValueError("phase evaluation requires minimum_timestamp_hours=30")
+    if min_samples != window_size:
+        raise ValueError("phase evaluation requires complete windows")
     reference_version, references = load_reference(reference_path)
     selected = _trajectory_ids(manifest_path, split)
     trajectories = _read_trajectories(raw_dir, selected)
@@ -116,6 +134,10 @@ def evaluate(
     evaluated_windows = 0
     alerts = 0
     max_ratio = 0.0
+    phases = {
+        name: {"windows": 0, "alerts": 0, "status_counts": {}}
+        for name in ("stable_30_60", "transition_or_boundary", "post_70")
+    }
     feature_alert_counts = {feature: 0 for feature in features}
     for (case_name, trajectory_id), rows in sorted(trajectories.items()):
         case_stats = per_case.setdefault(case_name, {"trajectories": 0, "windows": 0, "alerts": 0})
@@ -125,7 +147,13 @@ def evaluate(
             event = monitor.process(_sensor_message(case_name, trajectory_id, sequence, row))
             if event is None or event["status"] == "INSUFFICIENT_DATA":
                 continue
+            bounds = event["window"]
+            phase = phases[window_phase(
+                bounds["start_timestamp_hours"], bounds["end_timestamp_hours"]
+            )]
             status = str(event["status"])
+            phase["windows"] += 1
+            phase["status_counts"][status] = phase["status_counts"].get(status, 0) + 1
             status_counts[status] = status_counts.get(status, 0) + 1
             evaluated_windows += 1
             case_stats["windows"] += 1
@@ -135,16 +163,23 @@ def evaluate(
                 if feature_result["drifted"]:
                     feature_alert_counts[feature_result["feature"]] += 1
             if status in ALERT_STATUSES:
+                phase["alerts"] += 1
                 alerts += 1
                 case_stats["alerts"] += 1
 
+    for phase in phases.values():
+        phase["alert_window_rate"] = (
+            phase["alerts"] / phase["windows"] if phase["windows"] else None
+        )
+
     return {
-        "schema_version": "1.0",
+        "schema_version": "2.0",
         "evaluated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "evaluation_type": "normality_proxy",
+        "evaluation_type": "operating_state_phase_evaluation",
         "split": split,
         "reference_version": reference_version,
         "reference_sha256": _sha256(reference_path),
+        "manifest_sha256": _sha256(manifest_path),
         "minimum_timestamp_hours": minimum_timestamp_hours,
         "window_size": window_size,
         "min_samples": min_samples,
@@ -166,8 +201,9 @@ def evaluate(
             )
         ],
         "status_counts": status_counts,
+        "phases": phases,
         "per_case": per_case,
-        "interpretation": "라벨 없는 split의 정상성 proxy이며 운영 오탐률 확정값이 아님",
+        "interpretation": "전체 수명 경보율은 오탐률이 아님. stable_30_60만 안정 구간 경보율; post_70은 생성 설명 기준 열화 이후 경보율이며 정확도/재현율이 아님. 실제 60초 runtime 검사와 다른 가상 시간 평가.",
     }
 
 
