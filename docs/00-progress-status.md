@@ -25,7 +25,7 @@
 | 14 | C | 🟡 | React/Vite 대시보드·mock stream·API client | 실제 API 연결·라이브 검증 |
 | 15 | C | 🟡 | Unity prefab/mock·WebGL bridge·Prediction 모델 | API 연결·오류 UI·자동/장시간/Windows 검증 |
 | 16 | A/B/C | 🟡 | 서비스 간 일부 계약·Jenkins checklist | API→Inference→Kafka→Web/Unity 전체 통합 |
-| 17 | B | 🟡 | 기획 전환·자동 재학습 기본 해제, 구간별 평가 구현·집컴 실행 | 안정 구간 434/450 경보(96.44%); train에서 자연 변동 분석 후 기준 보완 |
+| 17 | B | 🟡 | train 전용 기준 후보, validation/test 안정 구간 각각 0/450 경보, Kafka 실제 242개 Event 검증, 발행 성공 후 commit | 운영 기준 승인·적용, 60초 주기 장시간·재시작/중복 복구 검증 |
 | 18 | C | 보류 | 자동 재학습 연계 보류 결정(파이프라인 미구현) | 필요 데이터·승인 기준 확보 후 범위 재확정 |
 | 19 | C | ⬜ | candidate 평가·승격 미구현 | 평가 기준·승격/거부·rollback 계약 |
 | 20 | B | ⬜ | Production 모델 hot application/rollback 미구현 | 19번 계약 이후 적용 |
@@ -37,11 +37,11 @@
 ## 이번 작업 순서
 
 1. 완료: 17번 평가를 안정·전환·열화 이후로 분리. 과거 99.56%의 정상성 해석 정정.
-2. 다음 B 작업: train의 case·feature별 창 통계를 분석하고 변화 판단 기준 보완.
+2. 완료: train 2,100개 안정 창으로 기준 후보 생성. validation/test 및 격리 Kafka runtime 검증(자동 재학습 비활성).
 3. 이후 B 작업: Kafka 발행 실패·재시작 복구 검증, API 준비 후 09·10·16 전체 통합.
 4. A/C 의존: 13 API 구현과 14·15 실제 연결. 19·20 모델 승격·적용은 계약 확정 대기.
 
-결과: `reports/17-drift/validation-phases-2026-09-30.md`.
+결과: `reports/17-drift/validation-phases-2026-09-30.md`, `reports/17-drift/calibration-summary-2026-09-30.md`.
 
 17번 평가는 “운영 Data Drift 오탐률 통과”를 미리 가정하지 않는다. 현재 TEP에는
 별도 운영 Drift label이 없으므로 재학습 Trigger는 기본 비활성화한다.

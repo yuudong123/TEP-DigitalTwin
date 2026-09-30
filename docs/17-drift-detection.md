@@ -50,6 +50,7 @@ Run-to-Failure 열화 및 운전상태 변화의 관찰 근거를 남긴다.
 - trajectory별로 독립된 Sliding Window를 유지한다.
 - 최근 6시간, 즉 기본 3분 간격 기준 120개 관측값을 판정 창으로 사용한다.
 - 20개 미만 관측값에서는 `INSUFFICIENT_DATA`로 기록하고 판정하지 않는다.
+- 보정 기준 후보를 선택하면 120개 창이 완성될 때까지 판정하지 않는다.
 - 서비스의 실제 검사 주기는 기본 60초다.
 - sequence 누락, 역전, trajectory 변경 시 창 상태를 로그에 남기고 안전하게 초기화한다.
 
@@ -77,6 +78,19 @@ Feature Drift는 다음 중 하나를 만족할 때 발생한다.
 2. `PSI >= 0.10`이고 KS 조건도 만족
 
 ## 6. 전체 상태와 재학습 연계 보류
+
+### 검증된 운전상태 기준 후보 (기본 자동 적용 아님)
+
+train trajectory의 30~60시간을 120개씩 나눈 2,100개 창만 사용해 case·feature별
+PSI/KS의 경험적 99백분위를 계산한다. 임계값은 각각 최소 0.25/0.15를 유지하며,
+**PSI와 KS가 모두 해당 임계값을 초과**할 때 Feature 변화를 기록한다.
+시계열 표본의 독립성을 가정할 수 없어 후보 판정에는 p/q-value를 사용하지 않는다.
+validation/test는 기준 생성에 사용하지 않았으며 평가 후 기준을 다시 조정하지 않았다.
+
+`DRIFT_CALIBRATION_PATH=models/monitoring/state-calibration-v1.0.0.json`으로 명시적으로
+선택한다. Docker 이미지의 models에도 포함된다. reference/manifest SHA 불일치,
+120개가 아닌 창, `RETRAIN_ENABLED=true`는 실행을 거부한다.
+미지정 시 5절의 기존 규칙을 사용한다. 후보는 운영 승인 전까지 기본값으로 활성화하지 않는다.
 
 단일 Feature의 일시적 변화로 재학습하지 않는다.
 
@@ -220,9 +234,21 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 
 남음:
 
-- trajectory 간 자연 변동을 고려한 변화 신호 기준 재설계
+- train 자연 변동으로 보정한 후보의 운영 승인·적용 및 60초 검사 주기 장시간 검증
 - 운영 Data Drift 데이터·label이 확보되기 전까지 자동 재학습 연계 보류
 - Kafka 재시작 후 offset/중복/발행 실패 재시도 시나리오 검증
+
+2026-09-30 추가 검증:
+
+- 집컴 전체 Python 테스트 57개 통과.
+- 보정 후보의 validation/test 안정 창은 각각 0/450 경보. 70시간 이후는
+  각각 572/883(64.78%), 567/885(64.07%) 경보. 고장 재현율이나 정확도가 아니다.
+- 실제 Kafka와 Monitor 컨테이너의 격리 topic에서 242개 Event 수신,
+  정상 입력 마지막 상태 NORMAL, 인위 이동 입력 마지막 상태 CONFIRMED_DRIFT,
+  schema 오류 및 재학습 요청 0. 검사 주기 0초인 양성 대조 smoke이며 운영 주기 검증은 아니다.
+- broker delivery callback 성공을 확인한 뒤에만 입력 offset commit.
+  발행 실패 시 종료하고 해당 offset을 남긴다. 중복 가능하며 창 상태는 재시작 후 다시 준비한다.
+- 상세 증적: `reports/17-drift/calibration-summary-2026-09-30.md`.
 
 기존 평가 결과(2026-09-23, 해석 정정 2026-09-30):
 
