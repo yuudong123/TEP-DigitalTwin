@@ -6,7 +6,9 @@ Unity는 사용자 집 PC 작업 범위로 남긴다. 아래는 실제 CSV→Kaf
 ## 실행
 
 `.venv/Scripts/python -m src.api.main` (모델, Kafka, `data/metadata` 필요).
-Docker API 이미지는 Web을 빌드해 같은 주소 `http://100.127.7.26:8000/`에서 제공한다.
+배포 gate가 Web을 검사·빌드한 후 Docker API 이미지에 포함해 같은 주소
+`http://100.127.7.26:8000/`에서 제공한다. 단독 Docker build 전에는 `web`에서
+`npm ci && npm run build`를 먼저 실행해야 한다.
 노트북 Web 개발 서버는 localhost:8000으로 `/api`, `/v1`, `/health`를 proxy한다.
 집컴 CSV는 API에 읽기 전용 mount, SQLite는 `logs/api-snapshots.sqlite3`에 영구 저장한다.
 
