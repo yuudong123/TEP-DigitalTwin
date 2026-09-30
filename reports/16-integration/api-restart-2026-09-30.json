@@ -1,0 +1,7 @@
+﻿{
+    "scenario":  "api_restart_durable_snapshot",
+    "before_received_at":  "2026-09-30T08:24:13.692794+00:00",
+    "after_received_at":  "2026-09-30T08:24:13.692794+00:00",
+    "unchanged_receipt":  true,
+    "last_timestamp":  146.4
+}

@@ -35,3 +35,14 @@ Web 계약 테스트3개, lint/build 통과. Starlette TestClient의 httpx depre
 Unity WebGL은 현재 build required placeholder이며 사용자 집 PC 마무리 대상이다.
 이 검증은 실제 replay acceptance이지 장시간 부하·집컴 재부팅 실증이 아니다.
 운영 Jenkins 배포 성공, 영구 snapshot 재시작 복구 결과는 후속 증거에 별도 기록한다.
+
+## 후속 실증
+
+- 격리 API 컨테이너 실제 restart 후 Prediction 마지막146.4h 및 수신 시각
+  `2026-09-30T08:24:13.692794+00:00` 유지. `api-restart-2026-09-30.json`.
+- PR #29 dev 병합(`bea3e4f`) 후 기존 H/2 Poll SCM이 자동 감지.
+  Jenkins **#25 SUCCESS**, Kafka/API/Inference/Monitor 전체 배포 exit0 및 보고서 보관 확인.
+  `jenkins-deployment-2026-09-30.json`. 재부팅 실증은 아니다.
+- 배포 후 화면 검토에서 host `.env`의 `DATA_RAW_DIR=data/raw`와 TEP 하위 mount 차이를 발견.
+  direct/nested CSV 탐색 호환 및 컨테이너 경로 override를 보완하고 regression test를 추가했다.
+  단순 기동 성공만으로 raw replay 성공을 판단하지 않았다. 운영 replay 검증은 해당 수정 배포 후 수행한다.

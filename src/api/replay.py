@@ -9,6 +9,15 @@ from confluent_kafka import Producer
 from kafka.delivery import publish_json
 from kafka.message_schema import build_sensor_message
 from kafka.topic_admin import ensure_topic
+from kafka.message_schema import ALLOWED_CASES
+
+
+def case_csv_path(raw_dir, case):
+    if case not in ALLOWED_CASES:
+        raise ValueError('Unsupported case')
+    direct = raw_dir / (case + '.csv')
+    # Existing host .env uses data/raw, while Docker mounts data/raw/TEP.
+    return direct if direct.is_file() else raw_dir / 'TEP' / (case + '.csv')
 
 
 class ReplayController:
@@ -33,7 +42,7 @@ class ReplayController:
             if key not in self.catalog:
                 raise ValueError('Unknown trajectory')
             row = self.catalog[key]
-            path = self.settings.raw_dir / (row['case'] + '.csv')
+            path = case_csv_path(self.settings.raw_dir, row['case'])
             if not path.is_file():
                 raise FileNotFoundError('Raw CSV is not available on this host')
             self.state = dict(status='running', sent=0, run_id=str(uuid4()),

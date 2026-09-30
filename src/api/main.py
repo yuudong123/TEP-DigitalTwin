@@ -15,7 +15,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from kafka.message_schema import validate_sensor_message
 from .runtime import PredictionRuntime
-from .replay import ReplayController
+from .replay import ReplayController, case_csv_path
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / '.env')
@@ -146,7 +146,7 @@ def create_app(settings=None, runtime=None, replay=None):
 
     @app.get('/v1/trajectories')
     def trajectories():
-        return {'items': [dict(row, raw_available=(settings.raw_dir / (row['case']+'.csv')).is_file())
+        return {'items': [dict(row, raw_available=case_csv_path(settings.raw_dir, row['case']).is_file())
                           for row in catalog]}
 
     @app.get('/v1/replay')

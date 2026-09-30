@@ -192,3 +192,13 @@ def test_completed_sensor_replay_is_not_completed_inference(api):
     assert client.post('/v1/replay/start', json={'trajectory_key': 'case1::1'}).status_code == 409
     runtime.store.put('prediction', 'topic', 0, 1, prediction(timestamp=4.95))
     assert client.get('/v1/replay').json()['inference_caught_up'] is True
+
+
+def test_existing_raw_parent_environment_finds_nested_tep(api):
+    client, _, settings = api
+    nested = settings.raw_dir/'TEP'
+    nested.mkdir(parents=True)
+    (nested/'case1.csv').touch()
+    items = client.get('/v1/trajectories').json()['items']
+    assert next(row for row in items if row['trajectory_key'] == 'case1::1')['raw_available']
+    assert not next(row for row in items if row['trajectory_key'] == 'case2::1')['raw_available']
