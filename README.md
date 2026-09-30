@@ -19,7 +19,7 @@ AI를 이용해 공정의 고장 위험과 잔여수명(RUL)을 예측하며,
 - Web 모니터링
 - Unity 디지털트윈
 - 운전상태·열화 변화 모니터링
-- 운영 Drift 데이터 확보 후 재검토할 모델 생명주기 연계
+- 자동 재학습은 운영 Drift 데이터 확보 후 재검토
 - Candidate 모델 평가 및 Production 승격
 - Docker 기반 서비스 구성
 - Jenkins 기반 CI/CD
@@ -123,6 +123,7 @@ TEP_DigitalTwin/
 │  ├─ data/
 │  ├─ evaluation/
 │  ├─ inference/
+│  ├─ lifecycle/
 │  ├─ mlops/
 │  ├─ monitoring/
 │  ├─ streaming/
@@ -321,12 +322,15 @@ docs/
 
 개발서버는 Oracle 대신 집 Windows PC의 `D:\TEP_DigitalTwin`을 사용한다.
 Jenkins는 별도 작업 폴더에서 GitHub `dev`를 받아 2분마다 변경을 확인한다.
-이미지 세 개 빌드와 Kafka healthy는 실제 Jenkins 실행으로 검증했다.
-Inference는 PR #24로 통합되었다. Monitor도 Drift runtime 작업으로 통합되었고 API만 13번 구현 대기이며,
-미구현 서비스가 남아 있는 배포는 `UNSTABLE`로 표시한다.
+Kafka·Inference·Monitor·API/Web 전체 운영 기동과 Jenkins #25/#26 SUCCESS를 확인했다.
+PR #27–30은 dev 병합 완료. 실제 CSV 센서2,929건 → 예측2,909건,
+동기 예측 일치·재생 제어·API snapshot 재시작 보존까지 실증했다.
+실제 validation 전체238,872행에서 후보 평가와 승격·hot application·rollback 경로를 검증했다.
+동등 모델 복사 control 및 악화 후보로 검증한 것이며 새 개선 모델을 운영 적용한 것은 아니다.
 Kafka 데이터는 외부 볼륨 `tep-kafka-data`에 보존한다. 기존 브로커의 최초 이전은
 `docs/08-kafka-persistence.md`를 따른다.
-전체 서비스 정상 기동과 재부팅 복구는 아직 검증하지 않았다.
-현재 운영 절차와 남은 항목은 `docs/09-manual-deployment.md`,
-`docs/10-jenkins-cicd.md`를 따른다.
+Unity는 사용자 집 PC 마무리 대상이다. PC 재부팅 복구·장시간 부하 검증,
+17번 보정 기준 선택은 남아 있고 자동 재학습은 비활성 유지한다.
+상세 진행표는 [docs/00-progress-status.md](docs/00-progress-status.md),
+집 PC 재개/Unity 인계는 [docs/25-home-pc-handoff.md](docs/25-home-pc-handoff.md)를 따른다.
  

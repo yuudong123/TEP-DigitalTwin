@@ -69,16 +69,16 @@ Git에 포함하지 않고, 빈 디렉터리 유지를 위한 `.gitkeep`만 포�
 
 - `tep-kafka`는 healthcheck를 통과해 `healthy` 상태로 실행됐다.
 - API, inference, monitor 이미지는 정상 빌드됐다.
-- API, inference, monitor 컨테이너는 아직 구현되지 않은 실행 모듈 때문에
-  재시작한다. 이는 Docker 설정 오류가 아니라 이후 서비스 구현이 아직 없는
-  현재 작업 단계의 결과다.
+- 초기에는 미구현 실행 모듈로 재시작했으나, 2026-09-30 현재 모두 구현되었다.
+  Jenkins #25/#26에서 Kafka/API/Inference/Monitor 전체 정상 기동·재시작 증가 없음 확인.
 
-전체 기동 검증을 통과하려면 다음 작업이 선행되어야 한다.
+전체 기동에 필요한 다음 구현은 완료했다.
 
 1. Docker Desktop 또는 Docker Engine 실행
 2. 12번 inference 서비스 구현
 3. 13번 FastAPI 서비스 구현
 4. 17번 monitor 서비스 구현 또는 monitor 임시 실행 정책 결정
 
-따라서 현재는 Docker 개발환경의 구성 규칙까지 완료됐으며,
-`docker compose up -d` 최소 시스템 실행 완료 기준은 아직 체크하지 않는다.
+따라서 최소 시스템 실행 기준은 통과했다. 기동과 도메인 acceptance는 별도로 검증한다.
+API 이미지는 배포 gate가 검사·빌드한 `web/dist`를 포함하고 실제 raw CSV를 읽기 전용 mount한다.
+집컴 재부팅/장시간 테스트는 아직 별도 항목이며 자동 로그인/재부팅을 무단 수행하지 않는다.

@@ -1,31 +1,23 @@
-# Jenkins 통합 검증 체크리스트
+# Jenkins · 비 Unity 통합 acceptance
 
-집컴에서 수동으로 반복 실행하지 않는다. `dev` push 후 Poll SCM이 시작한 Jenkins build에서 확인한다.
+기준 2026-09-30. dev 병합 후 기존 H/2 Poll SCM 자동 배포를 사용한다.
 
-## 현재 노트북 검증 완료
+- [x] PR #27·#28·#29·#30 dev 병합, 최신 dev 기반 독립 feature branch 규칙 준수
+- [x] Jenkins #25/#26 실제 새 dev 감지·SUCCESS 및 배포 JSON 보관
+- [x] Python compileall/pip check/pytest gate (최신89개 테스트)
+- [x] Web npm ci/test/lint/build, API와 동일 origin 서비스
+- [x] Kafka healthy/영구 볼륨, API healthy, Inference/Monitor 실행 및 재학습 false
+- [x] 실제 CSV 전체2,929개 → Prediction2,909개, 시간/개수/key/schema
+- [x] 동기 `/v1/predict`와 첫 Kafka Prediction JSON 일치
+- [x] 실제 replay pause/resume/충돌409, 없는 raw/없는 예측404 및 stale/backlog 표시
+- [x] 실제 API restart 후 SQLite snapshot/수신 시각 유지
+- [x] 실제 Inference 발행 거부 시 offset미commit, restart 후 21행 재준비·복구
+- [x] 실제 validation 전체238,872행·90 trajectories, 동등 후보 통과·열화 후보 거부
+- [x] 실제 Kafka/API control version 적용·손상 pointer 거부·rollback (운영 모델 미변경)
+- [ ] Unity 실제 API/WebGL 연결·오류 UI·Windows build (사용자 집 PC 작업)
+- [ ] 운영 Monitor 후보 보정 기준 명시 선택/승인 (기본 자동 적용 아님)
+- [ ] 집컴 재부팅→로그인→Docker/실행기 복구 실증
+- [ ] 장시간 부하·운영 장애 endurance
 
-- Python 3.11 환경 생성 및 의존성 설치
-- Python 소스 문법 검사
-- Drift·Kafka·Inference·Monitor 전체 33개 테스트 통과 (2026-09-23)
-- Python 패키지 충돌 없음
-- Web TypeScript 및 Vite production build 통과
-- npm 취약점 0개
-
-## 집컴 Jenkins에서 확인
-
-- [ ] Poll SCM이 새 `dev` commit 감지
-- [ ] Python 3.11 의존성 설치 또는 기존 환경 확인
-- [ ] `python -m compileall -q src kafka tests` 통과
-- [ ] `python -m pytest tests -q` 통과 (함수형 pytest 테스트도 포함)
-- [ ] `python -m pip check` 통과
-- [ ] `web`에서 `npm ci` 통과
-- [ ] `web`에서 `npm run build` 통과
-- [ ] Kafka healthcheck 통과
-- [x] Kafka Producer·Consumer 실제 송수신 및 sequence 순서 확인 (2026-09-21, 2,929건)
-- [x] Drift Monitor 이미지 빌드·Kafka Event smoke test (2026-09-23, 40개 Event)
-- [ ] API·inference·monitor Docker image build 통과
-- [ ] 구현된 서비스 container가 재시작 없이 유지
-- [ ] 실패 시 `docker compose ps --all`과 최근 로그 보존
-
-API·inference·monitor 실행 모듈이 모두 구현되기 전에는 전체 Compose 기동 실패를
-08~10번 완료로 처리하지 않는다.
+기동 성공과 기능 acceptance, 컨테이너 restart와 PC reboot는 서로 다른 증거다.
+실제 결과: `reports/16-integration`, `reports/19-20-lifecycle`, `reports/17-drift`, `reports/08-operations`.

@@ -1,0 +1,14 @@
+{
+  "scenario": "actual_inference_delivery_rejection_and_restart",
+  "source": "real_case1_csv",
+  "committed_before": 30,
+  "committed_after_failure": 30,
+  "committed_after_recovery": 51,
+  "failed_input_offset": 30,
+  "output_before_recovery": 10,
+  "recovered_timestamp": 2.5,
+  "warmup_after_restart_rows": 21,
+  "failed_input_reread": true,
+  "topic_configuration_restored": true,
+  "isolated_only": true
+}

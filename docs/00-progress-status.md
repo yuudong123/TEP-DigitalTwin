@@ -1,53 +1,40 @@
 # TEP-DigitalTwin 작업 진행표
 
-기준일: 2026-09-30
+기준일: 2026-09-30. PR #27·#28·#29·#30은 dev 병합 완료.
+구현 증거와 실제 실행 증거를 구분한다. Unity는 사용자 집 PC 작업으로 제외했다.
+✅ 정의된 구현/acceptance 완료 · 🟡 별도 검증/외부 선택 남음 · 보류: 현재 데이터·요구사항으로 실행 불가.
 
-통합 브랜치: `origin/dev` (`0380467`, 원격 조회 확인). 아래 17번 변경은 `feat/drift-validation`에서 검증 중이며 아직 dev 미병합.
-최근 병합: PR #24(실시간 추론), PR #25(Kafka 영구 저장), PR #26(Drift runtime)
+| 번호 | 상태 | 완료된 범위 | 남은 범위 |
+|---:|---|---|---|
+| 01–07 | ✅ | 기획·데이터·분할·모델·구조, v1.0.0 4모델·728 feature | 새 운영 학습은 별도 |
+| 08 | 🟡 | 전체4서비스 기동·Kafka 영구 저장·격리 broker 재생성 보존 실증 | PC reboot/장시간 검증 |
+| 09 | ✅ | workspace/runtime 분리 배포·사전 gate·보고서, API 포함 전체 배포 | reboot은08 별도 |
+| 10 | ✅ | dev H/2 Poll SCM·사용자 실행기, #25/#26 SUCCESS·보고서 archive | reboot 실행기 복구는08 별도 |
+| 11 | ✅ | 실제 CSV replay·56 sensor schema·ACK·선택/시작/중지/제어 | 외부 같은 key 병렬 replay 금지 |
+| 12 | ✅ | 실제2,929→2,909 Prediction, feature/SHAP 계약·ACK후commit·누락 재준비·발행 거부 복구 | 장시간 부하는22 별도 |
+| 13 | ✅ | Live latest/list·동기 predict·replay·monitoring·health, SQLite durable cache | 인터넷 인증 서비스는 범위 밖 |
+| 14 | ✅ | 실제 API Web·replay 제어·error/stale/backlog·Monitor 표시 | Unity와 혼동하지 않음 |
+| 15 | 🟡 사용자 | 기존 prefab/mock/bridge 존재. 이번에는 변경 안 함 | 사용자 집 PC Unity build·실제 연결 |
+| 16 | 🟡 | 비 Unity 실제 CSV→Kafka→Inference→API→Web 및 Jenkins 배포 | Unity 포함 최종 acceptance |
+| 17 | 🟡 | train 보정 후보·validation/test 안정 각0/450·60초 판정·offset/중복/복구 증거 | 운영 후보 기준 승인/선택·장시간 |
+| 18 | 보류 | 자동 재학습=false 유지 | 운영 Drift label/데이터 및 별도 범위 승인 필요 |
+| 19 | ✅ 계약/실증 | 실제 validation 전체238,872행·90 trajectories 평가, 동등 통과·악화 거부·승인 SHA 승격 | 실제 새 개선 후보 학습/운영 승격은18과 별도 |
+| 20 | ✅ 계약/실증 | hash/원자 pointer·live hot application·실패시 직전 유지·restart fallback·rollback | 실제 운영 모델은 v1.0.0 유지 |
+| 21 | 범위 미정 | 기존 문서에 번호/담당만 존재, 요구사항 미정임을 명시 | 임의 기능을 만들지 않음. 요구사항 확인 필요 |
+| 22 | 🟡 | 최신 Python89개, Web3개·lint/build, 실제 전달 실패·재시작·모델 거부/복구 | 장시간 부하·PC reboot |
+| 23 | 🟡 | 비 Unity 정의된 acceptance 통과·Jenkins 배포 | Unity 및 장시간/재부팅 포함 최종 종료 판정 |
+| 24 | ✅ 현재분 | API/lifecycle/운영 문서·본 표·원본 JSON/화면 증거 동기화 | 남은 실제 결과 발생 시 갱신 |
 
-상태 표기: ✅ 완료 · 🟡 부분 완료/검증 필요 · ⬜ 미착수
+## 바로 볼 곳
 
-| 번호 | 담당 | 현재 상태 | 완료된 범위 | 아직 필요한 작업 |
-|---:|---|---|---|---|
-| 01 | 공통 | ✅ | 프로젝트 범위·역할·일정 문서화 | 문서 최신화만 필요 |
-| 02 | 공통 | ✅ | TEP 데이터 구조·전처리 기준 정리 | 없음 |
-| 03 | 공통 | ✅ | train/validation/test 및 trajectory 분할 기준 확정 | 없음 |
-| 04 | 공통 | ✅ | baseline 모델과 비교 기준 산출 | 없음 |
-| 05 | 공통 | ✅ | 728개 temporal feature 생성·검증 | 없음 |
-| 06 | 공통 | ✅ | Production 4종 XGBoost 모델 v1.0.0 산출 | 운영 재학습 모델은 별도 |
-| 07 | 공통 | ✅ | 저장소 구조·실행 문서 정리 | 없음 |
-| 08 | B | 🟡 | Docker Compose, 집컴 dev Kafka/Inference/Monitor 복구, 영구 볼륨·격리 broker 재생성 보존 실증 | 집컴 재부팅·API 포함 전체 스택 검증 |
-| 09 | B | 🟡 | 수동 배포·ValidateOnly·runtime 감사 및 단계 보고서(독립 ops PR), 집컴 Python/Web 검증 | API 포함 전체 배포 acceptance |
-| 10 | B | 🟡 | dev Poll SCM·로그인 실행기, 승인된 workspace 스크립트/보고서 archive 설정 저장 | ops PR 병합 후 실제 자동 배포 및 API 전체 체인 |
-| 11 | A | 🟡 | Producer/Consumer·Schema·Kafka replay 구현, 실제 2,929건 replay | 실패·재시도·중복/순서 보장 검증 |
-| 12 | A | 🟡 | 실시간 추론 병합, 2,929건 중 2,909건 예측 확인 | reliable delivery·API 연동 |
-| 13 | A | ⬜ | `src/api/main.py` 없음 | `/v1/predict` 및 운영 API 구현·검증 |
-| 14 | C | 🟡 | React/Vite 대시보드·mock stream·API client | 실제 API 연결·라이브 검증 |
-| 15 | C | 🟡 | Unity prefab/mock·WebGL bridge·Prediction 모델 | API 연결·오류 UI·자동/장시간/Windows 검증 |
-| 16 | A/B/C | 🟡 | 서비스 간 일부 계약·Jenkins checklist | API→Inference→Kafka→Web/Unity 전체 통합 |
-| 17 | B | 🟡 | train 기준 후보, validation/test 안정 경보 각각 0/450, 실제 60초 판정, 발행 실패 offset 보존 및 Monitor 재시작 복구 | 운영 승인·적용, broker 재시작 및 장시간 부하·중복 검증 |
-| 18 | C | 보류 | 자동 재학습 연계 보류 결정(파이프라인 미구현) | 필요 데이터·승인 기준 확보 후 범위 재확정 |
-| 19 | C | ⬜ | candidate 평가·승격 미구현 | 평가 기준·승격/거부·rollback 계약 |
-| 20 | B | ⬜ | Production 모델 hot application/rollback 미구현 | 19번 계약 이후 적용 |
-| 21 | B | ⬜ | 상세 작업 문서 미확정 | 요구사항 확인 후 범위 확정 |
-| 22 | 공통 | 🟡 | 단위·고정 데이터 테스트 일부 통과 | 장애 복구·통합 테스트·운영 시나리오 |
-| 23 | 공통 | ⬜ | 최종 통합 미착수 | 전체 live chain 및 acceptance |
-| 24 | 공통 | 🟡 | 핵심 설계/운영 문서 존재 | 상태·증적을 본 표와 동기화 |
+- 실제 주소: `http://100.127.7.26:8000/` (집컴 켜짐·Docker/실행기 로그인 조건).
+- API 계약/사설 네트워크 범위: `13-live-api.md`.
+- 수동 승인·hot application·rollback: `19-20-model-lifecycle.md`.
+- 집 PC Unity 마무리 및 운영 보류: `25-home-pc-handoff.md`.
+- 실제 증거: `reports/16-integration`, `reports/19-20-lifecycle`, `reports/17-drift`, `reports/08-operations`.
 
-## 이번 작업 순서
+TEP의 “Drift” 클래스/topic은 호환 유지하되 실제 의미는 운전상태·열화 변화다.
+99.56%는 과거 lifetime/global 판정 비율이지 안정 구간 오탐률이 아니다.
+운영 label이 없는 상황에서 자동 재학습이나 새 개선 모델 운영 승격을 완료라고 하지 않는다.
 
-1. 완료: 17번 평가를 안정·전환·열화 이후로 분리. 과거 99.56%의 정상성 해석 정정.
-2. 완료: train 2,100개 안정 창으로 기준 후보 생성. validation/test 및 격리 Kafka runtime 검증(자동 재학습 비활성).
-3. 이후 B 작업: Kafka 발행 실패·재시작 복구 검증, API 준비 후 09·10·16 전체 통합.
-4. A/C 의존: 13 API 구현과 14·15 실제 연결. 19·20 모델 승격·적용은 계약 확정 대기.
-
-결과: `reports/17-drift/validation-phases-2026-09-30.md`, `reports/17-drift/calibration-summary-2026-09-30.md`.
-
-운영 후속은 최신 dev에서 독립 `feat/ops-verification`으로 작업했다. 17번 미병합 코드를
-포함하지 않는다. 운영 검증 보고서는 해당 브랜치 `reports/08-operations/verification-2026-09-30.md`.
-PR #27·#28 병합은 사용자가 진행한다. 새 기준 운영 적용, 병합 후 실제 dev Poll SCM 배포,
-집컴 재부팅·로그인 실증을 완료로 표시하지 않는다. 자동 로그인 설정은 확인되지 않았으므로
-재부팅 후 Docker/사용자 실행기 복구에는 사용자 로그인이 필요할 수 있다.
-
-17번 평가는 “운영 Data Drift 오탐률 통과”를 미리 가정하지 않는다. 현재 TEP에는
-별도 운영 Drift label이 없으므로 재학습 Trigger는 기본 비활성화한다.
+사용자는 검증/저장 완료 후 집컴과 노트북 즉시 종료를 승인했다. 종료는 reboot 복구 검증이 아니다.

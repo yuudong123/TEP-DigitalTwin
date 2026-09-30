@@ -66,5 +66,6 @@ Copy-Item .env.example .env
 ```
 
 Docker 개발환경과 서비스별 실행 상태는 `docs/08-docker-development.md`에서
-확인한다. 현재 API·inference·monitor 실행 모듈은 구현 전이므로 Compose의
-전체 정상 기동은 아직 완료 기준을 통과하지 않았다.
+확인한다. 현재 API·inference·monitor는 구현·전체 기동 및 비 Unity 실제 체인 검증을 통과했다.
+API 계약은 `13-live-api.md`, 모델 lifecycle은 `19-20-model-lifecycle.md`,
+최신 완료/미완료 경계는 `00-progress-status.md`를 따른다.

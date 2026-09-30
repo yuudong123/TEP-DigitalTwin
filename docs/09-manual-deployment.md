@@ -68,7 +68,7 @@ PC 재부팅 검증은 하지 않았으며, 로그아웃하면 사용자 실행�
 - [x] Kafka healthy 및 추가 재시작 없음
 - [x] 미구현 서비스 반복 재시작 중지, 컨테이너·데이터 보존
 - [x] AC 절전·최대절전 설정 및 Docker 로그인 시작 설정
-- [ ] API·inference·monitor 전체 정상 기동 (Inference·Monitor 통합 완료, API 구현 대기)
+- [x] API·inference·monitor 전체 정상 기동 (2026-09-30 Jenkins #25/#26 및 실제 replay 확인)
 - [ ] 로그인 후 자동 복구와 재부팅 실증 (실행기 자동 시작 등록 후 검증)
 
 ## Tailscale 원격 접속
@@ -82,11 +82,11 @@ Windows 서비스는 자동 시작이며, 로그아웃 뒤에도 연결을 유�
 ```text
 Jenkins: http://tep-server:8080
 Jenkins IP 주소: http://100.127.7.26:8080
-향후 API/Web: http://tep-server:8000
+API/Web: http://tep-server:8000
 ```
 
 `tep-server:8080`의 Jenkins 로그인 화면은 실제 HTTP 200 응답을 확인했다.
-포트 8000은 API/Web 구현 전이라 현재 연결되지 않는 것이 정상이다.
+2026-09-30 API/Web을 구현하고 Jenkins 자동 배포 및 8000 HTTP readiness를 확인했다.
 Tailscale 장치 키 만료 예정일은 2027-03-10이며, 그 전에 갱신하거나
 관리 콘솔에서 만료 정책을 검토해야 한다.
 
@@ -108,4 +108,6 @@ Monitor 재학습 비활성화를 확인한다. 종료 0은 컨테이너 준비,
 1은 실제 상태 오류다. 전체 기능 통합·장시간·재부팅 검증을 대체하지 않는다.
 
 2026-09-30 기존 dev 기준의 Kafka·Inference·Monitor를 복구하고 재시작 0을 확인했다.
-17번 기준 후보는 별도 PR에 있어 운영에 아직 적용하지 않았다. API 실행 파일도 없다.
+17번 기준 후보는 dev에 병합했지만 운영 선택은 기본 비활성이다. API도 구현·배포했다.
+모델 승격은 `docs/19-20-model-lifecycle.md`의 승인 SHA CLI 절차만 사용한다.
+Web gate는 npm test도 실행하고 동일 origin의 api 모드를 빌드한다.

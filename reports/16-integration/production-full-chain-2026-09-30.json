@@ -1,0 +1,86 @@
+{
+  "time": "2026-09-30T09:00:30.661329+00:00",
+  "trajectory": "case1::1",
+  "source": "real_raw_csv",
+  "sensors": 2929,
+  "predictions": 2909,
+  "first_timestamp": 1.0,
+  "last_timestamp": 146.4,
+  "synchronous_matches_first_kafka_prediction": true,
+  "replay_pause_resume_conflict": true,
+  "web_http": true,
+  "monitoring_event": true,
+  "retraining_requested": false,
+  "latest": {
+    "schema_version": "1.0",
+    "model_version": "v1.0.0",
+    "trajectory_key": "case1::1",
+    "timestamp_hours": 146.4,
+    "rul": {
+      "hours": 0.3481382429599762
+    },
+    "risk": {
+      "failure_within_4h": {
+        "score": 0.9999994039535522,
+        "threshold": 0.6227655410766602,
+        "alert": true
+      },
+      "failure_within_2h": {
+        "score": 0.9999452829360962,
+        "threshold": 0.6104410290718079,
+        "alert": true
+      },
+      "failure_within_1h": {
+        "score": 0.9999703168869019,
+        "threshold": 0.7830277681350708,
+        "alert": true
+      }
+    },
+    "status": "CRITICAL",
+    "explanation_model": "failure_within_1h",
+    "top_risk_factors": [
+      {
+        "rank": 1,
+        "feature": "Product Sep Level",
+        "source_feature": "Product Sep Level",
+        "transform": "current",
+        "window_minutes": null,
+        "shap_value": 3.758856773376465
+      },
+      {
+        "rank": 2,
+        "feature": "Product Sep Level__max_30m",
+        "source_feature": "Product Sep Level",
+        "transform": "max",
+        "window_minutes": 30,
+        "shap_value": 3.023216485977173
+      },
+      {
+        "rank": 3,
+        "feature": "Product Sep Level__mean_30m",
+        "source_feature": "Product Sep Level",
+        "transform": "mean",
+        "window_minutes": 30,
+        "shap_value": 0.8833147883415222
+      },
+      {
+        "rank": 4,
+        "feature": "Product Sep Level__mean_15m",
+        "source_feature": "Product Sep Level",
+        "transform": "mean",
+        "window_minutes": 15,
+        "shap_value": 0.812178909778595
+      },
+      {
+        "rank": 5,
+        "feature": "Product Sep Level__min_30m",
+        "source_feature": "Product Sep Level",
+        "transform": "min",
+        "window_minutes": 30,
+        "shap_value": 0.6191332936286926
+      }
+    ]
+  },
+  "received_at": "2026-09-30T09:00:30.620464+00:00",
+  "elapsed_seconds": 210.812
+}
