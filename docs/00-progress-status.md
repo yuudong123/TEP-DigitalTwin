@@ -21,7 +21,7 @@
 | 10 | B | 🟡 | dev Poll SCM·로그인 실행기, 승인된 workspace 스크립트/보고서 archive 설정 저장 | ops PR 병합 후 실제 자동 배포 및 API 전체 체인 |
 | 11 | A | 🟡 | Producer/Consumer·Schema·Kafka replay 구현, 실제 2,929건 replay | 실패·재시도·중복/순서 보장 검증 |
 | 12 | A | 🟡 | 실시간 추론 병합, 2,929건 중 2,909건 예측 확인 | reliable delivery·API 연동 |
-| 13 | A | ⬜ | FastAPI 구현 | `/v1/predict` 및 운영 API 구현·검증 |
+| 13 | A | ⬜ | `src/api/main.py` 없음 | `/v1/predict` 및 운영 API 구현·검증 |
 | 14 | C | 🟡 | React/Vite 대시보드·mock stream·API client | 실제 API 연결·라이브 검증 |
 | 15 | C | 🟡 | Unity prefab/mock·WebGL bridge·Prediction 모델 | API 연결·오류 UI·자동/장시간/Windows 검증 |
 | 16 | A/B/C | 🟡 | 서비스 간 일부 계약·Jenkins checklist | API→Inference→Kafka→Web/Unity 전체 통합 |
@@ -45,6 +45,9 @@
 
 운영 후속은 최신 dev에서 독립 `feat/ops-verification`으로 작업했다. 17번 미병합 코드를
 포함하지 않는다. 운영 검증 보고서는 해당 브랜치 `reports/08-operations/verification-2026-09-30.md`.
+PR #27·#28 병합은 사용자가 진행한다. 새 기준 운영 적용, 병합 후 실제 dev Poll SCM 배포,
+집컴 재부팅·로그인 실증을 완료로 표시하지 않는다. 자동 로그인 설정은 확인되지 않았으므로
+재부팅 후 Docker/사용자 실행기 복구에는 사용자 로그인이 필요할 수 있다.
 
 17번 평가는 “운영 Data Drift 오탐률 통과”를 미리 가정하지 않는다. 현재 TEP에는
 별도 운영 Drift label이 없으므로 재학습 Trigger는 기본 비활성화한다.
