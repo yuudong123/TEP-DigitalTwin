@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
 interface Trajectory { trajectory_key: string; row_count: string; raw_available: boolean }
-interface Replay { status: string; sent: number; total?: number; trajectory_key?: string; error?: string }
+interface Replay { status: string; sent: number; total?: number; trajectory_key?: string; error?: string;
+  inference_caught_up?: boolean; prediction_timestamp_hours?: number | null; end_timestamp_hours?: number }
 
 async function request(path: string, method = 'GET', body?: unknown) {
   const response = await fetch(`/v1/${path}`, {
@@ -50,7 +51,8 @@ export function ReplayControls() {
     finally { setBusy(false) }
   }
   const active = ['running', 'paused', 'stopping'].includes(replay.status)
-  return <section className="stream-controls" aria-label="실제 TEP 재생">
+  const processing = ['completed', 'stopped'].includes(replay.status) && replay.inference_caught_up === false
+  return <section className="stream-controls replay-controls" aria-label="실제 TEP 재생">
     <div className="stream-state">
       <strong>실제 CSV → Kafka 재생</strong>
       <label>Trajectory <select value={key} disabled={active || busy} onChange={(e) => setKey(e.target.value)}>
@@ -62,11 +64,12 @@ export function ReplayControls() {
         disabled={active || busy} onChange={(e) => setIntervalValue(Number(e.target.value))} /></label>
       <span aria-live="polite">{replay.status} · {replay.sent}/{replay.total ?? '—'}
         {replay.trajectory_key ? ` · ${replay.trajectory_key}` : ''}</span>
+      {processing && <span>센서 전송 종료 · 추론 처리 중 ({replay.prediction_timestamp_hours?.toFixed(2) ?? '준비'} h)</span>}
       <small>센서 시간은 3분 간격 그대로예요. 첫 20행은 예측 준비 구간입니다.</small>
       {(error || replay.error) && <span role="alert">{error ?? replay.error}</span>}
     </div>
     <div className="stream-actions">
-      <button disabled={active || busy || !key || interval < .01 || interval > 10} onClick={() => void command('start')}>시작</button>
+      <button disabled={active || processing || busy || !key || !Number.isFinite(interval) || interval < .01 || interval > 10} onClick={() => void command('start')}>시작</button>
       <button disabled={!['running', 'paused'].includes(replay.status) || busy}
         onClick={() => void command(replay.status === 'paused' ? 'resume' : 'pause')}>
         {replay.status === 'paused' ? '이어 재생' : '재생 일시정지'}</button>

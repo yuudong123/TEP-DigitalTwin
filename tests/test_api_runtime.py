@@ -140,3 +140,55 @@ def test_delivery_requires_ack_not_just_empty_queue():
         publish_json(FakeProducer(error='rejected'), 'topic', 'key', {})
     with pytest.raises(RuntimeError, match='acknowledged'):
         publish_json(FakeProducer(acknowledge=False), 'topic', 'key', {})
+
+
+@pytest.mark.parametrize('store_fails', [False, True])
+def test_reader_commits_only_after_durable_write(tmp_path, monkeypatch, store_fails):
+    import src.api.runtime as module
+    runtime = module.PredictionRuntime(Settings(store_path=tmp_path/'reader.db'))
+
+    class Message:
+        def error(self): return None
+        def topic(self): return 'tep-predictions'
+        def partition(self): return 0
+        def offset(self): return 10
+        def key(self): return b'case1::1'
+        def value(self): return json.dumps(prediction()).encode()
+
+    class Reader:
+        def __init__(self, config): self.committed = []
+        def subscribe(self, topics, on_assign, on_revoke): on_assign(self, [])
+        def list_topics(self, timeout): return None
+        def poll(self, timeout):
+            if getattr(self, 'sent', False):
+                runtime.stop_event.set()
+                return None
+            self.sent = True
+            return Message()
+        def commit(self, message, asynchronous):
+            assert runtime.store.latest('prediction') is not None
+            self.committed.append(message.offset())
+        def close(self): pass
+
+    reader = Reader({})
+    monkeypatch.setattr(module, 'Consumer', lambda config: reader)
+    if store_fails:
+        def fail(*args): raise RuntimeError('Disk write failure')
+        monkeypatch.setattr(runtime.store, 'put', fail)
+    runtime.consume()
+    assert reader.committed == ([] if store_fails else [10])
+    assert runtime.failed is store_fails
+    assert runtime.ready is False
+    runtime.close()
+
+
+def test_completed_sensor_replay_is_not_completed_inference(api):
+    client, runtime, _ = api
+    replay = client.app.state.replay
+    replay.state = dict(status='completed', sent=100, run_id='run', trajectory_key='case1::1',
+                        started_at='2000-01-01T00:00:00+00:00', last_sent_timestamp_hours=4.95)
+    runtime.store.put('prediction', 'topic', 0, 0, prediction(timestamp=1))
+    assert client.get('/v1/replay').json()['inference_caught_up'] is False
+    assert client.post('/v1/replay/start', json={'trajectory_key': 'case1::1'}).status_code == 409
+    runtime.store.put('prediction', 'topic', 0, 1, prediction(timestamp=4.95))
+    assert client.get('/v1/replay').json()['inference_caught_up'] is True

@@ -30,7 +30,7 @@ export function OperatingStatePanel({ trajectoryKey }: { trajectoryKey: string }
     const timer = window.setInterval(() => void refresh(), 5000)
     return () => { active = false; window.clearInterval(timer) }
   }, [trajectoryKey])
-  return <section className="stream-controls" aria-label="운전상태·열화 모니터링">
+  return <section className="stream-controls operating-state" aria-label="운전상태·열화 모니터링">
     <div className="stream-state">
       <strong>운전상태·열화 변화 · {event?.status ?? '판정 준비 중'}</strong>
       {event && <span>변화 변수 비율 {(event.drifted_feature_ratio * 100).toFixed(2)}% · 수신 {receivedAt}</span>}

@@ -151,12 +151,23 @@ def create_app(settings=None, runtime=None, replay=None):
 
     @app.get('/v1/replay')
     def replay_status():
-        return replay.snapshot()
+        state = replay.snapshot()
+        record = runtime.store.latest('prediction', state.get('trajectory_key')) if state.get('run_id') else None
+        current = bool(record and record[1] >= state.get('started_at', ''))
+        state['prediction_timestamp_hours'] = record[0]['timestamp_hours'] if current else None
+        sent_time = state.get('last_sent_timestamp_hours')
+        state['inference_caught_up'] = state.get('sent', 0) < 21 or bool(
+            current and sent_time is not None and record[0]['timestamp_hours'] >= sent_time
+        )
+        return state
 
     @app.post('/v1/replay/start', status_code=202)
     def start_replay(body: ReplayRequest):
         if not runtime.ready:
             raise HTTPException(503, 'Kafka reader is not ready')
+        state = replay_status()
+        if state['status'] in ('completed', 'stopped') and not state['inference_caught_up']:
+            raise HTTPException(409, 'Previous replay predictions are still processing')
         try:
             return replay.start(body.trajectory_key, body.interval_seconds)
         except FileNotFoundError as error:

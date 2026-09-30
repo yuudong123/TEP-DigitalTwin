@@ -42,6 +42,8 @@ Replay 중지는 이미 전송/처리 중인 최대 한 행까지 허용하며, 
 - 시뮬레이션 시간은 새 replay에서 작아질 수 있어 “더 큰 timestamp만 최신” 규칙은 쓰지 않는다.
 - HTTP 수신 반복은 새로운 Prediction이 아니다. `X-Prediction-Received-At`을 그대로 사용하고
   Web 기본 15초 동안 새 예측이 없으면 DATA STALE. 404/503/timeout은 오류로 표시, mock 대체 없음.
+- 센서 전송 종료와 추론 완료는 구분한다. `/v1/replay`의 `inference_caught_up` 및
+  `prediction_timestamp_hours`로 처리 backlog를 표시하고 이전 replay 처리 중 새 시작을 거부한다.
 - Monitor는 실제 Event만 표시. Data Drift 정답·오탐률·재학습 근거로 해석하지 않는다.
 
 ## 접근 범위

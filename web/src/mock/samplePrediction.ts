@@ -2,8 +2,7 @@ import type { Prediction } from '../types/prediction'
 
 /**
  * reports/06-final-model/sample_prediction.json 의 실제 값을 그대로 옮긴
- * 고정 스냅샷. 13번 FastAPI가 없는 지금 단계에서 화면이 예측 계약을
- * 정확히 렌더링하는지 검증하는 용도로만 사용한다.
+ * 고정 스냅샷. 명시적인 mock 모드와 화면 계약 테스트에만 사용한다.
  */
 export const samplePrediction: Prediction = {
   schema_version: '1.0',

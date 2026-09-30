@@ -1,5 +1,6 @@
 """One explicit, cancellable replay run at a time, from whitelisted CSVs."""
 import csv
+from datetime import datetime, timezone
 import threading
 import time
 from uuid import uuid4
@@ -36,7 +37,9 @@ class ReplayController:
             if not path.is_file():
                 raise FileNotFoundError('Raw CSV is not available on this host')
             self.state = dict(status='running', sent=0, run_id=str(uuid4()),
-                              trajectory_key=key, total=int(row['row_count']), error=None)
+                              trajectory_key=key, total=int(row['row_count']), error=None,
+                              started_at=datetime.now(timezone.utc).isoformat(),
+                              last_sent_timestamp_hours=None, end_timestamp_hours=float(row['end_time']))
             self.thread = threading.Thread(target=self.run, args=(row, path, interval), daemon=True)
             self.thread.start()
             return dict(self.state)
@@ -81,6 +84,7 @@ class ReplayController:
                     previous_time = timestamp
                     with self.condition:
                         self.state['sent'] += 1
+                        self.state['last_sent_timestamp_hours'] = timestamp
                         # Interruptible pacing; a pause applies before the next publish.
                         deadline = time.monotonic() + interval
                         while self.state['status'] == 'running' and time.monotonic() < deadline:
