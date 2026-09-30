@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     int result = bat(returnStatus: true, script: '''@echo off
-powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%TEP_RUNTIME_DIR%\\deploy\\09-manual-deploy.ps1" -SourceDir "%WORKSPACE%" -RuntimeDir "%TEP_RUNTIME_DIR%"
+powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%WORKSPACE%\\deploy\\09-manual-deploy.ps1" -SourceDir "%WORKSPACE%" -RuntimeDir "%TEP_RUNTIME_DIR%"
 exit /b %ERRORLEVEL%
 ''')
                     if (result == 2) {
@@ -37,6 +37,11 @@ exit /b %ERRORLEVEL%
                     }
                 }
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'reports/deployment/*.json', allowEmptyArchive: true
         }
     }
 }

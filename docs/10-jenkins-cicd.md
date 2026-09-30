@@ -55,15 +55,15 @@ Jenkinsfile을 수정하면 작업 Configure의 Script에도 동일하게 반영
 - 비공개 저장소를 controller에서 읽을 인증정보가 별도로 필요하다.
   현재 인증 구성에서는 Inline Script 방식을 유지한다.
 
-## 실행기 로그인 자동 시작 — 등록 대기
+## 실행기 로그인 자동 시작 — 등록 확인 (2026-09-30)
 
 실행기는 Jenkins에 WebSocket으로 연결한다. 추가 inbound TCP 포트를 열지 않는다.
 연결 키는 `.jenkins-agent/agent.secret`에만 저장하며 Git/Docker build에서 제외한다.
 실행기 폴더 접근은 현재 사용자, SYSTEM, Administrators로 제한했다.
 
-현재 세션의 임시 실행으로 실제 빌드와 polling을 검증했다.
-자동 실행 예약 작업 등록·시작 명령은 도구의 자동 승인 검토에서
-`blocked by policy`로 거부되어 등록하지 않았다.
+초기 등록 시도는 거부됐으나 2026-09-30 실제 예약 작업을 확인했다.
+TEP-Jenkins-Agent는 Running, MSFT_TaskLogonTrigger, Interactive/Limited다.
+현재는 등록 대기가 아니다. 재부팅 후 실제 재연결은 아직 검증하지 않았다.
 
 등록할 내용은 `deploy/10-register-agent.ps1`에 준비했다.
 현재 사용자 로그인 시, 관리자 권한·비밀번호 저장 없이 `TEP-Jenkins-Agent` 작업을
@@ -105,7 +105,7 @@ API가 구현되면 다음 배포에서 전체 기동 대상에 포함된다.
 - [x] 빌드 #2: 이미지 세 개 빌드·Kafka healthy 확인, UNSTABLE
 - [x] 00:20 KST Poll SCM: 실제 원격 fetch 후 No changes 확인
 - [x] 공개 webhook/추가 inbound 포트 없이 구성
-- [ ] 실행기 로그인 자동 시작 등록 (자동 승인 검토 거부)
+- [x] 실행기 로그인 자동 시작 등록 (2026-09-30 실제 등록 및 Running 확인)
 - [ ] 실제 새 dev 커밋으로 자동 빌드 발생 확인
 - [ ] 재부팅 후 로그인·Docker·실행기·배포 복구 검증
 - [ ] API/inference/monitor 전체 서비스 검증
@@ -113,3 +113,21 @@ API가 구현되면 다음 배포에서 전체 기동 대상에 포함된다.
 공식 참고: [Pipeline 문법](https://www.jenkins.io/doc/book/pipeline/syntax/),
 [Windows bat](https://www.jenkins.io/doc/pipeline/steps/workflow-durable-task-step/),
 [Compose up](https://docs.docker.com/reference/cli/docker/compose/up/).
+
+## 2026-09-30 현재 구성 (위 초기 기록을 대체)
+
+- 원격 dev의 Jenkinsfile도 Windows용으로 통합됐다. 인증 구조 보존을 위해 Inline Script는 유지한다.
+- 사용자 승인 후 TEP-dev Configure에서 최신 Jenkinsfile을 저장했다.
+  배포 도구는 **%WORKSPACE%의 deploy/09-manual-deploy.ps1**을 실행한다.
+  따라서 코드와 배포 도구 버전이 일치하고 runtime 폴더의 오래된 도구를 실행하지 않는다.
+- dev 감시, H/2 Poll SCM, DisableRemotePoll, 사용자 실행기, Groovy Sandbox를 유지했다.
+- 성공/실패 단계·commit이 담긴 `reports/deployment/last-attempt.json`을 artifact로 보관한다.
+- 저장된 Script와 Jenkinsfile의 LF 정규화 SHA-256이 일치:
+  `aaea1ca3aa525cef4e177c9f1346cc83343b373598af065373acbda48daf50e0`.
+- 새 배포 도구의 ValidateOnly를 격리 소스에서 실제 실행: Python 39개 테스트,
+  compileall/pip check 및 npm ci/lint/build 통과. 컨테이너를 변경하지 않았다.
+- 집컴 dev 기준 Kafka·Inference·Monitor 실행과 재시작 0, 재학습 false 확인.
+- 최근 실제 Jenkins build #23은 UNSTABLE, #22/#21은 FAILURE.
+  변경한 배포 코드가 PR로 dev에 병합되고 Poll SCM build가 수행된 증적은 아직 없다.
+  설정 저장은 배포 성공을 의미하지 않는다. API 포함 전체 체인·재부팅 검증도 남는다.
+- 비밀번호/secret/API key는 코드나 문서에 저장하지 않았다.

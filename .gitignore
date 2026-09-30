@@ -120,3 +120,4 @@ a-backend-web-handoff.md
 
 # Local Jenkins agent runtime and authentication
 .jenkins-agent/
+reports/deployment/
