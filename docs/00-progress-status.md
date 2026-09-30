@@ -1,7 +1,8 @@
 # TEP-DigitalTwin 작업 진행표
 
-기준일: 2026-09-30  
-통합 브랜치: `origin/dev` (`0380467`, 원격 조회 확인). 아래 17번 변경은 `feat/drift-validation`에서 검증 중이며 아직 dev 미병합.  
+기준일: 2026-09-30
+
+통합 브랜치: `origin/dev` (`0380467`, 원격 조회 확인). 아래 17번 변경은 `feat/drift-validation`에서 검증 중이며 아직 dev 미병합.
 최근 병합: PR #24(실시간 추론), PR #25(Kafka 영구 저장), PR #26(Drift runtime)
 
 상태 표기: ✅ 완료 · 🟡 부분 완료/검증 필요 · ⬜ 미착수
