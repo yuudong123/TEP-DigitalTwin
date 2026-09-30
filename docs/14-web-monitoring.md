@@ -3,9 +3,9 @@
 ## 1. 목적
 
 `docs/00-team-roles.md` 기준 담당 C(Visualization + Model Lifecycle)의 시작 작업이다. 11 Kafka,
-12 Inference는 dev에 통합되었고 13 FastAPI는 미구현 상태다. 실제 API 없이 이미 확정된 예측 출력
-계약(prediction schema)에 맞춰 모의 데이터로 동작하는 대시보드를 먼저 만든다. FastAPI가
-완성되면 데이터 소스만 실제 API로 교체하고 화면은 다시 만들지 않는 것을 목표로 한다.
+12 Inference와 13 FastAPI 모두 dev에 통합되었다. 확정된 예측 출력 계약에 맞춰
+모의 대시보드로 시작했고 2026-09-30 실제 API·CSV replay·Monitor 표시까지 연결했다.
+현재 기본 실행은 실제 API이며 mock은 명시 선택한 개발 모드다.
 
 ## 2. 계약 근거 문서
 
@@ -46,12 +46,12 @@ Step 1. Vite + React + TypeScript 스캐폴딩, dev 서버 정상 기동 확인
 Step 2. prediction schema를 TS 타입으로 이식하고 sample_prediction.json 값을 정적으로 렌더링
 Step 3. 모의 실시간 스트림과 재생 제어를 연결하고 Unity WebGL에 같은 예측 전달
 Step 4. Mock/API 데이터 소스 전환, API 응답 검증, 연결 상태와 오류 처리 기반 구현
+Step 5. 실제 FastAPI 응답·수신 시각 stale·CSV replay 제어·Monitor 통합
 ```
 
 진행 예정:
 
 ```text
-Step 5. FastAPI endpoint 확정 후 실제 응답 통합
 Step 6. (선택) RUL·risk score 시계열 그래프
 ```
 
@@ -97,6 +97,11 @@ npm run dev
 
 ## 7. 현재 제한 사항
 
-13번 FastAPI endpoint와 최종 전송 방식이 확정되기 전까지 실제 실시간 데이터 검증은 불가능하다.
-현재 클라이언트는 `GET`으로 단일 Prediction JSON을 조회하는 계약을 가정한다. 실제 명세가 다르면
-`web/src/services/predictionApi.ts`의 요청 및 응답 변환 부분만 조정한다.
+현재 FastAPI 계약이 확정되었고 실제 CSV→Kafka→Inference→API→Web을 검증했다.
+기본 source는 api, endpoint는 동일 origin `/api/predictions/latest`다.
+mock은 `VITE_PREDICTION_SOURCE=mock` 명시 시에만 사용한다. 배포 gate는 api/동일 origin을 강제한다.
+서버 수신 시각을 유지해 기본15초 이후 DATA STALE로 표시한다. 오류 시 mock으로 바꾸지 않는다.
+실제 trajectory 선택 및 replay 시작/일시정지/재개/중지, 센서 전송 종료와 추론 backlog를 구분한다.
+운전상태 Monitor Event도 표시하되 Data Drift 정답/오탐률로 해석하지 않는다.
+Unity는 사용자 집 PC 마무리 범위이며 이번 작업에서 소스/빌드를 변경하지 않았다.
+계약/보안 범위는 `docs/13-live-api.md`, 실제 증거는 `reports/16-integration` 참조.

@@ -24,4 +24,13 @@
 
 원자 pointer는 명령 처리 증거이고 실제 Kafka Prediction.model_version이 적용 증거다.
 운영 재학습 label/새 후보를 확보하지 않았으므로 실제 개선 모델의 운영 승격 완료로 표시하지 않는다.
-노트북·집컴 전체 Python88개 통과(후속 raw-dir regression은 별도 재검증).
+후속 raw-dir regression 포함 노트북 전체 Python89개 통과.
+
+## 실제 성능 악화 거부
+
+- 실제 동일 validation 전체238,872행/90 trajectories에서 별도 threshold=1 악화 후보 평가.
+- eligible=false, 42개 비악화 정책 위반. 전체 2h F1 0.924345→0, 1h F1 0.895499→0.
+- 명령 exit2로 거부, 승격/운영 pointer 변경 없음.
+- `validation-rejected-2026-09-30.json`, SHA256
+  `b92e731a670eb8d64cfc73806b2d079707efed47def1cef1366f55194dfab8de`.
+- 양성 control 통과와 별개 실제 음성 대조이며 모델 개선/재학습을 주장하지 않는다.

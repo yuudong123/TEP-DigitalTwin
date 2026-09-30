@@ -46,3 +46,17 @@ Unity WebGL은 현재 build required placeholder이며 사용자 집 PC 마무�
 - 배포 후 화면 검토에서 host `.env`의 `DATA_RAW_DIR=data/raw`와 TEP 하위 mount 차이를 발견.
   direct/nested CSV 탐색 호환 및 컨테이너 경로 override를 보완하고 regression test를 추가했다.
   단순 기동 성공만으로 raw replay 성공을 판단하지 않았다. 운영 replay 검증은 해당 수정 배포 후 수행한다.
+
+## 최종 운영 acceptance
+
+- PR #30 병합 후 Jenkins #26 SUCCESS. 운영 `http://100.127.7.26:8000`의 원본600 trajectories 탐색 확인.
+- 실제 운영 topic/API로 case1::1 재생: 2,929 Sensor / 2,909 Prediction, 1.0→146.4h.
+  동기 predict 첫 결과 일치·pause/resume/409·Web HTML·Monitor 이벤트 통과, 210.812초.
+  `production-full-chain-2026-09-30.json`, `web-production-2026-09-30.png`.
+- 격리 Inference의 Prediction topic 크기 제한으로 실제 발행 거부 발생.
+  입력 offset30은 실패 후30 유지; 제한 원복 후 컨테이너 restart·21행 재준비로
+  실제 timestamp2.5h 출력 및 committed offset51 확인. `delivery-recovery-2026-09-30.json`.
+  운영 topic 설정은 변경하지 않았고 격리 topic 제한은 원복했다.
+- 후속 전체 Python89개·Web3개/lint/build 통과. 과거78개/88개 수치는 중간 revision 결과다.
+- 운영 Monitor 화면의 변화 변수 비율은 공정 변화 신호이며 안정 구간 오탐률이 아니다.
+  새 보정 profile 미적용, 자동 재학습 false 유지.

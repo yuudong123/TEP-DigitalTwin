@@ -34,17 +34,17 @@ Git 확장 `DisableRemotePoll`로 polling도 실행기 workspace에서 수행한
 이를 제거하면 controller의 LocalSystem 계정에서 인증 실패가 다시 발생할 수 있다.
 
 사용자 Git 로그인이 만료되면 해당 Windows 사용자로 GitHub 인증을 갱신해야 한다.
-새 커밋 감지부터 자동 배포까지의 검증은 실제 `dev` 변경이 생길 때 추가 확인한다.
-테스트를 위해 팀 브랜치에 임의의 커밋을 push하지 않았다.
+새 dev 커밋 감지부터 자동 배포까지는 2026-09-30 PR #29·#30 병합 후 #25/#26 SUCCESS로 확인했다.
+테스트를 위한 임의 커밋 대신 실제 기능 변경의 dev 병합을 사용했다.
 
 ## 파이프라인 원본과 변경 반영
 
 현재 Jenkins 작업의 Definition은 **Pipeline script**다. 로컬 루트 `Jenkinsfile`의
-Windows용 내용을 동일하게 등록했다. 원격 `dev`의 기존 Jenkinsfile은 아직 Linux용이므로
-**Pipeline script from SCM**으로 전환하지 않았다. 프로젝트 수정은 미커밋 상태로 보존했다.
+Windows용 내용을 동일하게 등록했다. 원격 `dev`의 Jenkinsfile도 Windows용이다.
+기존 controller 인증 구조 보존을 위해 **Pipeline script from SCM**으로 전환하지 않았다.
 
 Jenkins는 매 빌드 GitHub의 최신 `dev` 소스를 checkout한다. 배포 도구 자체는
-집 PC의 `deploy/09-manual-deploy.ps1`을 사용하므로 미커밋 도구도 현재 동작한다.
+checkout의 `%WORKSPACE%/deploy/09-manual-deploy.ps1`을 사용한다. 집 PC의 미커밋 도구는 실행하지 않는다.
 Jenkinsfile을 수정하면 작업 Configure의 Script에도 동일하게 반영해야 한다.
 
 팀 규칙대로 변경을 기능 브랜치/PR로 `dev`에 반영한 뒤에는 다음으로 전환할 수 있다.
@@ -92,10 +92,9 @@ TEP-dev의 지금 빌드를 실행해 재검증한다. PC는 로그인 상태로
 - `UNSTABLE`: 이미지 빌드·Kafka 기동 통과, 이후 단계의 서비스 코드 미구현
 - `FAILURE`: checkout·설정·테스트·빌드·기동 중 실제 실패
 
-현재 미구현 entrypoint는 `src/api/main.py`다.
-`src/inference/main.py`와 `src/monitoring/main.py`는 dev에 통합되었다.
-API가 구현되면 다음 배포에서 전체 기동 대상에 포함된다.
-기동 성공은 도메인 기능 검증을 대체하지 않으며 API·Kafka 흐름은 구현 후 별도 검증한다.
+현재 API·Inference·Monitor entrypoint 모두 dev에 통합되어 전체 기동 대상이다.
+기동 성공은 도메인 기능 검증을 대체하지 않는다. 실제 API·Kafka 재생 증거는
+`reports/16-integration/production-full-chain-2026-09-30.json`에서 별도로 확인한다.
 
 ## 2026-09-11 확인 기록
 
@@ -106,9 +105,9 @@ API가 구현되면 다음 배포에서 전체 기동 대상에 포함된다.
 - [x] 00:20 KST Poll SCM: 실제 원격 fetch 후 No changes 확인
 - [x] 공개 webhook/추가 inbound 포트 없이 구성
 - [x] 실행기 로그인 자동 시작 등록 (2026-09-30 실제 등록 및 Running 확인)
-- [ ] 실제 새 dev 커밋으로 자동 빌드 발생 확인
+- [x] 실제 새 dev 커밋으로 자동 빌드 발생 확인 (2026-09-30 #25/#26 SUCCESS)
 - [ ] 재부팅 후 로그인·Docker·실행기·배포 복구 검증
-- [ ] API/inference/monitor 전체 서비스 검증
+- [x] API/inference/monitor 전체 서비스 기동 검증 (2026-09-30 #25/#26)
 
 공식 참고: [Pipeline 문법](https://www.jenkins.io/doc/book/pipeline/syntax/),
 [Windows bat](https://www.jenkins.io/doc/pipeline/steps/workflow-durable-task-step/),
@@ -127,7 +126,8 @@ API가 구현되면 다음 배포에서 전체 기동 대상에 포함된다.
 - 새 배포 도구의 ValidateOnly를 격리 소스에서 실제 실행: Python 39개 테스트,
   compileall/pip check 및 npm ci/lint/build 통과. 컨테이너를 변경하지 않았다.
 - 집컴 dev 기준 Kafka·Inference·Monitor 실행과 재시작 0, 재학습 false 확인.
-- 최근 실제 Jenkins build #23은 UNSTABLE, #22/#21은 FAILURE.
-  변경한 배포 코드가 PR로 dev에 병합되고 Poll SCM build가 수행된 증적은 아직 없다.
-  설정 저장은 배포 성공을 의미하지 않는다. API 포함 전체 체인·재부팅 검증도 남는다.
+- 초기 build #23 UNSTABLE, #22/#21 FAILURE 기록 이후 PR #29·#30 병합을 Poll SCM이 감지했다.
+  **#25/#26 SUCCESS**, workspace revision과 단계 보고서에서 전체4서비스 배포 exit0 확인.
+  실제 CSV 전체 체인과 모델 적용 증거는 `reports/16-integration`, `reports/19-20-lifecycle`.
+  집컴 재부팅 후 사용자 로그인/Docker/실행기 복구는 별도 미검증이다.
 - 비밀번호/secret/API key는 코드나 문서에 저장하지 않았다.
