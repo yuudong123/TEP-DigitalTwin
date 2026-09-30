@@ -1,0 +1,33 @@
+{
+  "tag": "ffbdf1312a2c",
+  "success": true,
+  "schema_errors": 0,
+  "event_count": 242,
+  "states": {
+    "INSUFFICIENT_DATA": 238,
+    "NORMAL": 1,
+    "DRIFT": 2,
+    "CONFIRMED_DRIFT": 1
+  },
+  "stable_last_status": "NORMAL",
+  "shifted_last_status": "CONFIRMED_DRIFT",
+  "retraining_requests": 0,
+  "calibration_sha256": "5e99120bdaf854e703c98ff8fca54f59e38544c3d57f818ef912d47713e600b1",
+  "recovery": {
+    "failed_input_offset": 242,
+    "committed_after_failure": 242,
+    "retried_sequence": 122,
+    "retry_status": "INSUFFICIENT_DATA",
+    "recovered_last_status": "CONFIRMED_DRIFT",
+    "event_count_total": 364,
+    "semantics": "at-least-once; window rewarm after restart"
+  },
+  "ordering": {
+    "duplicate_reset": "sequence_not_increasing",
+    "recovery_status": "CONFIRMED_DRIFT",
+    "gap_reset": "sequence_gap",
+    "reordered_reset": "sequence_not_increasing",
+    "event_count_total": 488,
+    "retraining_requests": 0
+  }
+}

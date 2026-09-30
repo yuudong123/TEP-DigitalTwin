@@ -1,10 +1,18 @@
-# Drift Detection 설계
+# TEP 운전상태·열화 변화 모니터링 설계
+
+> 기존 코드와 Kafka topic의 호환성을 위해 파일명·클래스명·상태값에는 `drift`라는
+> 이름이 남아 있다. 현재 TEP 데이터에서의 의미는 일반적인 운영 Data Drift가 아니라
+> **trajectory 내부의 운전상태·열화 변화 신호**다.
 
 ## 1. 목적
 
-실시간 TEP 센서 분포가 Production 모델 `v1.0.0`의 학습 기준 분포에서
-지속적으로 벗어나는지 감지하고, 재학습 후보를 생성할 근거를 남긴다.
-Drift는 고장 예측 결과가 아니며, Drift 감지만으로 Production 모델을 자동 교체하지 않는다.
+실시간 TEP 센서 분포가 안정 운전 기준에서 지속적으로 벗어나는지 감지하고,
+Run-to-Failure 열화 및 운전상태 변화의 관찰 근거를 남긴다.
+
+현재 공식 `case1`~`case6` 데이터에는 별도 운영 Data Drift label이 없다.
+따라서 이 모니터는 새로운 운영환경에 대한 Drift 검증기나 자동 재학습 Trigger로
+간주하지 않는다. 알려진 열화·고장 위험은 Inference/RUL 모델의 책임이며, 이 모니터는
+그 변화 신호를 별도 축으로 기록한다.
 
 ## 2. 입력과 출력
 
@@ -23,8 +31,10 @@ Drift는 고장 예측 결과가 아니며, Drift 감지만으로 Production 모
 추가 상태 변수이므로 1차 Drift 판정에서도 제외한다.
 
 출력은 `tep-drift-events` topic의 Drift Event Schema v1.0 메시지다.
+기준 후보 사용 시 선택 필드 `calibration_sha256`에 실제 후보 파일 해시를 포함한다.
+기존 필수 필드·상태값은 유지하며, 기존 규칙 Event에는 이 필드가 없다.
 
-## 3. 기준 데이터
+## 3. 기준 데이터와 적용 범위
 
 - `data/metadata/split_manifest.csv`의 train trajectory만 사용한다.
 - 각 trajectory의 안정 운전 구간인 30시간 이상 60시간 미만을 기준 구간으로 사용한다.
@@ -32,14 +42,17 @@ Drift는 고장 예측 결과가 아니며, Drift 감지만으로 Production 모
 - 각 Feature의 기준 통계, PSI 구간, 결측률은 버전이 지정된 JSON으로 저장한다.
 - 기준 데이터 버전에는 dataset split, feature schema, 생성 시각을 함께 기록한다.
 
-실제 구현 전에 30~60시간 구간에 열화가 섞이지 않았는지 case별 분포와 원본 데이터 설명을
-다시 검증한다. 검증 결과에 따라 기준 구간은 변경할 수 있지만, train 이외 데이터는 사용하지 않는다.
+프로젝트 데이터 설명상 열화는 약 60~70시간 이후 시작하므로 30~60시간을 안정 기준으로
+두었다. 다만 이 기준은 운전모드 변경·trajectory 간 자연 변동을 모두 제거한 것은 아니다.
+기존 validation 평가에는 열화 이후까지 포함되어 있었다. 구간별 평가로 안정 구간의
+경보와 열화 이후 변화를 구분한 뒤 기준의 적합성을 판단한다.
 
 ## 4. 판정 창과 검사 주기
 
 - trajectory별로 독립된 Sliding Window를 유지한다.
 - 최근 6시간, 즉 기본 3분 간격 기준 120개 관측값을 판정 창으로 사용한다.
 - 20개 미만 관측값에서는 `INSUFFICIENT_DATA`로 기록하고 판정하지 않는다.
+- 보정 기준 후보를 선택하면 120개 창이 완성될 때까지 판정하지 않는다.
 - 서비스의 실제 검사 주기는 기본 60초다.
 - sequence 누락, 역전, trajectory 변경 시 창 상태를 로그에 남기고 안전하게 초기화한다.
 
@@ -66,7 +79,20 @@ Feature Drift는 다음 중 하나를 만족할 때 발생한다.
 1. `PSI >= 0.25`
 2. `PSI >= 0.10`이고 KS 조건도 만족
 
-## 6. 전체 상태와 재학습 Trigger
+## 6. 전체 상태와 재학습 연계 보류
+
+### 검증된 운전상태 기준 후보 (기본 자동 적용 아님)
+
+train trajectory의 30~60시간을 120개씩 나눈 2,100개 창만 사용해 case·feature별
+PSI/KS의 경험적 99백분위를 계산한다. 임계값은 각각 최소 0.25/0.15를 유지하며,
+**PSI와 KS가 모두 해당 임계값을 초과**할 때 Feature 변화를 기록한다.
+시계열 표본의 독립성을 가정할 수 없어 후보 판정에는 p/q-value를 사용하지 않는다.
+validation/test는 기준 생성에 사용하지 않았으며 평가 후 기준을 다시 조정하지 않았다.
+
+`DRIFT_CALIBRATION_PATH=models/monitoring/state-calibration-v1.0.0.json`으로 명시적으로
+선택한다. Docker 이미지의 models에도 포함된다. reference/manifest SHA 불일치,
+120개가 아닌 창, `RETRAIN_ENABLED=true`는 실행을 거부한다.
+미지정 시 5절의 기존 규칙을 사용한다. 후보는 운영 승인 전까지 기본값으로 활성화하지 않는다.
 
 단일 Feature의 일시적 변화로 재학습하지 않는다.
 
@@ -75,28 +101,34 @@ Feature Drift는 다음 중 하나를 만족할 때 발생한다.
 - `DRIFT`: Drift Feature 비율 20% 이상
 - `CONFIRMED_DRIFT`: `DRIFT` 상태가 3회 연속 발생
 
-재학습 요청은 다음 조건을 모두 만족할 때만 생성한다.
+기존 `RetrainingTrigger` 코드는 schema 호환성과 향후 별도 운영 데이터가 들어올 때를
+위해 남겨두지만, 현재 TEP 범위에서는 재학습 연계를 보류한다. 기본 설정은
+`RETRAIN_ENABLED=false`다.
 
-1. `CONFIRMED_DRIFT`
-2. 같은 case에서 직전 재학습 요청 이후 cooldown 24시간 경과
-3. 기준 창과 현재 창의 데이터 품질 검사 통과
-4. `RETRAIN_ENABLED=true`
+향후 운영 Drift 데이터와 승인 기준이 별도로 확보되는 경우에만 다음 조건을 재검토한다.
 
-재학습 요청은 Candidate 모델 생성만 시작한다. 19번 평가·승격 기준을 통과하기 전에는
-Production 모델을 교체하지 않는다.
+1. 별도 운영 Drift label과 데이터 품질 기준 확보
+2. `CONFIRMED_DRIFT`
+3. 같은 case에서 직전 재학습 요청 이후 cooldown 24시간 경과
+4. 기준 창과 현재 창의 데이터 품질 검사 통과
+5. 명시적인 운영 승인과 `RETRAIN_ENABLED=true`
 
-## 7. 고장 위험과 Drift 구분
+현재는 `retraining_requested=false`를 유지한다. 향후 연계를 재개하더라도 재학습 요청은
+Candidate 모델 생성만 시작하고, 19번 평가·승격 기준을 통과하기 전에는 Production
+모델을 교체하지 않는다.
+
+## 7. 고장 위험과 변화 신호 구분
 
 Inference의 risk/status와 Drift 상태는 별도 축으로 보존한다.
 
-| 예측 위험 | Drift | 해석 |
+| 예측 위험 | 변화 신호 | 해석 |
 | --- | --- | --- |
 | 낮음 | 없음 | 정상 운전 |
 | 높음 | 없음 | 학습 범위 안에서 감지된 고장 위험 |
-| 낮음 | 있음 | 운전조건·센서 분포 변화 또는 미학습 상태 |
-| 높음 | 있음 | 고장 위험과 분포 변화가 동시에 존재, 우선 점검 |
+| 낮음 | 있음 | 운전조건·trajectory 열화 신호 또는 미학습 상태 |
+| 높음 | 있음 | 고장 위험과 변화 신호가 동시에 존재, 우선 점검 |
 
-위험도가 높다는 이유로 Drift를 확정하지 않고, Drift가 있다는 이유로 고장을 확정하지 않는다.
+위험도가 높다는 이유로 변화 신호를 확정하지 않고, 변화 신호가 있다는 이유로 고장을 확정하지 않는다.
 
 ## 8. Drift Event Schema v1.0
 
@@ -156,11 +188,11 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 ## 10. 완료 기준
 
 - 같은 입력으로 항상 같은 판정 결과가 나온다.
-- 정상 기준 구간에서는 오탐률을 별도로 측정해 보고한다.
+- 안정 기준 구간과 trajectory 자연 변동에 대한 변화 신호율을 별도로 측정해 보고한다.
 - 인위적으로 이동시킨 Feature를 탐지하는 테스트를 통과한다.
 - 결측, 순서 역전, trajectory 전환을 안전하게 처리한다.
 - Drift Event가 schema 검증을 통과하고 Kafka에서 실제 수신된다.
-- 재학습 요청 중복 방지와 cooldown을 검증한다.
+- 재학습 연계는 운영 Drift 데이터 확보 전까지 비활성 상태임을 검증한다.
 - Inference risk와 Drift 상태가 독립적으로 보존된다.
 
 ## 11. 현재 구현 상태
@@ -177,7 +209,7 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - sequence 누락·역전 및 timestamp 역전 시 해당 trajectory 창만 초기화
 - 감시 Feature 누락·비수치·NaN·무한대 입력 거부
 - case별 재학습 요청 시각을 JSON 상태 파일에 원자적으로 저장
-- `CONFIRMED_DRIFT`, 데이터 품질 통과, `RETRAIN_ENABLED=true` 조건 결합
+- 기존 `CONFIRMED_DRIFT`·품질·cooldown 조합 로직 보존(현재 자동 재학습은 기본 비활성화)
 - 같은 case의 24시간 cooldown 중복 요청 차단 및 재시작 후 상태 복원
 - Kafka Sensor Consumer와 Drift Event Producer 실행 모듈 연결
 - 기준 분포 로드, Sensor Schema·Kafka key 검증 및 offset commit 연결
@@ -187,12 +219,53 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - 3회 연속 Drift 확인 상태 관리
 - Drift Event Schema v1.0 생성·검증
 - 정상, 분포 이동, 표본 부족, event schema, 기준 분포·Sliding Window·Monitor
-  단위 테스트와 재학습 trigger 테스트 22개 통과
+  단위 테스트와 재학습 trigger 테스트 35개 통과
 - Python 문법 검사와 패키지 충돌 검사 통과
+
+검증 보완:
+
+- `src/monitoring/evaluate_drift.py`로 validation/test split을 실제 `DriftMonitor`와
+  같은 통계·임계값으로 평가한다. 평가에서는 완성된 120개 창만 사용하고,
+  기본 6시간 가상 주기로 검사한다(운영의 wall-clock 60초 검사와 다름).
+  창 전체가 30~60시간 미만인 안정 구간, 70시간 이후인 구간, 경계/전환 구간을
+  분리한다. 정확한 run별 열화 라벨이 없어 70시간 이후 경보율을 재현율로 부르지 않는다.
+- 연속 Drift 상태는 case가 아니라 `trajectory_key`별로 격리한다.
+- 기준 시작 시각(기본 30시간) 이전 샘플은 판정 창에서 제거해 30시간 이후 창에
+  혼입되지 않도록 한다.
+- 동일 표본의 KS statistic 0일 때 p-value를 1.0으로 보정한다.
 
 남음:
 
-- 정상 기준 구간 오탐률 검증
+- train 자연 변동으로 보정한 후보의 운영 승인·적용 및 60초 검사 주기 장시간 검증
+- 운영 Data Drift 데이터·label이 확보되기 전까지 자동 재학습 연계 보류
+- Kafka 재시작 후 offset/중복/발행 실패 재시도 시나리오 검증
+
+2026-09-30 추가 검증:
+
+- 집컴 전체 Python 테스트 최종 64개 통과.
+- 보정 후보의 validation/test 안정 창은 각각 0/450 경보. 70시간 이후는
+  각각 572/883(64.78%), 567/885(64.07%) 경보. 고장 재현율이나 정확도가 아니다.
+- 실제 Kafka와 Monitor 컨테이너의 격리 topic에서 242개 Event 수신,
+  정상 입력 마지막 상태 NORMAL, 인위 이동 입력 마지막 상태 CONFIRMED_DRIFT,
+  schema 오류 및 재학습 요청 0. 검사 주기 0초인 양성 대조 smoke이며 운영 주기 검증은 아니다.
+- broker delivery callback 성공을 확인한 뒤에만 입력 offset commit.
+  발행 실패 시 종료하고 해당 offset을 남긴다. 중복 가능하며 창 상태는 재시작 후 다시 준비한다.
+- 상세 증적: `reports/17-drift/calibration-summary-2026-09-30.md`.
+- 추가: 실제 60초 설정의 판정 간격 61.016초 2회 확인. UUID topic 발행 거부 시
+  입력 offset 242 보존, 재시작 후 해당 입력 재처리·창 재준비·CONFIRMED_DRIFT 회복 확인.
+  증적은 `timing-smoke-2026-09-30.json`, `recovery-smoke-2026-09-30.json`.
+- 중복·누락·역전 입력도 실제 Kafka에서 안전한 창 초기화와 회복 확인(488개 Event).
+  후보 Event의 선택 calibration_sha256 필드도 검증했다.
+  증적: `recovery-identified-smoke-2026-09-30.json`.
+
+기존 평가 결과(2026-09-23, 해석 정정 2026-09-30):
+
+- 보고서: `reports/17-drift/validation-summary-2026-09-23.md`
+- 90개 trajectory, 1,579개 평가 창 중 1,572개가 Drift/Confirmed Drift
+- Alert window rate 99.56%, 최대 Drift Feature 비율 98.08%
+- 평가가 30시간부터 수명 종료까지 포함하므로 99.56%는 안정 구간 오탐률이 아니다.
+- 이 결과만으로 구조적 오탐을 단정했던 결론은 철회한다. 17번은 구간별 검증 중이다.
+- 재평가: `reports/17-drift/validation-phases-2026-09-30.md`.
 
 기준 분포 파일:
 
@@ -209,3 +282,7 @@ Runtime smoke test (2026-09-23):
 - timestamp 0~1.2h는 warm-up Event만 발행하고 Drift 판정 생략
 - timestamp 30h 이후 Window에서 Drift Event 발행 확인
 - Monitor 컨테이너 재시작 0회, Event schema 검증은 발행 경로에서 수행
+
+위 smoke test에서 30시간 이후 정상 입력도 다수 Drift로 판정된 사실이 있어, 이는
+정상 동작 통과 증적이 아니다. 실제 split 평가를 완료하기 전에는 17번을 완료로
+표시하지 않는다.

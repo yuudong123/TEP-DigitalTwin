@@ -1,0 +1,2156 @@
+{
+  "schema_version": "2.0",
+  "evaluated_at": "2026-09-30T06:47:20+00:00",
+  "evaluation_type": "operating_state_phase_evaluation",
+  "split": "test",
+  "reference_version": "v1.0.0",
+  "reference_sha256": "954f22acf9e2a08db7a4f5860b120a91415ec5e22db948cb03a89cf281d2c5b8",
+  "calibration_sha256": "5e99120bdaf854e703c98ff8fca54f59e38544c3d57f818ef912d47713e600b1",
+  "manifest_sha256": "dae262bb20fa1d3578394879b9a3f9cea971e6136a267a13e16022e82afe7504",
+  "minimum_timestamp_hours": 30.0,
+  "window_size": 120,
+  "min_samples": 120,
+  "check_interval_seconds": 21600.0,
+  "simulation_step_seconds": 180.0,
+  "trajectory_count": 90,
+  "trajectories_with_alert": 87,
+  "trajectories_with_confirmed": 76,
+  "trajectory_results": [
+    {
+      "trajectory_key": "case1::9",
+      "eol_hours": 144.35,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::13",
+      "eol_hours": 139.8,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::14",
+      "eol_hours": 145.65,
+      "first_alert_hours": 101.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::15",
+      "eol_hours": 145.0,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::20",
+      "eol_hours": 141.45,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::23",
+      "eol_hours": 139.2,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::36",
+      "eol_hours": 141.0,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::37",
+      "eol_hours": 143.2,
+      "first_alert_hours": 101.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::42",
+      "eol_hours": 143.9,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::48",
+      "eol_hours": 139.4,
+      "first_alert_hours": 101.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::54",
+      "eol_hours": 139.85,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::65",
+      "eol_hours": 143.75,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::66",
+      "eol_hours": 144.8,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::67",
+      "eol_hours": 140.35,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case1::78",
+      "eol_hours": 141.0,
+      "first_alert_hours": 95.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::2",
+      "eol_hours": 145.0,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 12
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::6",
+      "eol_hours": 141.0,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::23",
+      "eol_hours": 140.7,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::45",
+      "eol_hours": 146.05,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 12
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::49",
+      "eol_hours": 138.6,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::50",
+      "eol_hours": 139.75,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::59",
+      "eol_hours": 141.55,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::60",
+      "eol_hours": 138.9,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::62",
+      "eol_hours": 137.65,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 10
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::74",
+      "eol_hours": 138.8,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::77",
+      "eol_hours": 144.35,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 12
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::79",
+      "eol_hours": 142.15,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::86",
+      "eol_hours": 141.05,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 11
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::94",
+      "eol_hours": 137.35,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 10
+        }
+      }
+    },
+    {
+      "trajectory_key": "case2::100",
+      "eol_hours": 144.9,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 12
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::2",
+      "eol_hours": 140.8,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::8",
+      "eol_hours": 142.6,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::9",
+      "eol_hours": 144.55,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 4
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::24",
+      "eol_hours": 144.55,
+      "first_alert_hours": 131.95,
+      "first_confirmed_hours": 143.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::28",
+      "eol_hours": 141.6,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::31",
+      "eol_hours": 142.7,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": 131.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 4
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::32",
+      "eol_hours": 140.9,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::33",
+      "eol_hours": 142.5,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::44",
+      "eol_hours": 140.4,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": 131.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 4
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::48",
+      "eol_hours": 146.0,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 4
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::59",
+      "eol_hours": 136.45,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 2
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::61",
+      "eol_hours": 142.95,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": 131.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 4
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::79",
+      "eol_hours": 137.0,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 5
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::86",
+      "eol_hours": 145.05,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": 131.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 12,
+          "alerts": 5
+        }
+      }
+    },
+    {
+      "trajectory_key": "case3::94",
+      "eol_hours": 141.2,
+      "first_alert_hours": 125.95,
+      "first_confirmed_hours": 137.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::4",
+      "eol_hours": 123.8,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::17",
+      "eol_hours": 118.65,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::28",
+      "eol_hours": 123.15,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::31",
+      "eol_hours": 120.55,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::53",
+      "eol_hours": 124.0,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::61",
+      "eol_hours": 127.75,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 9
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::66",
+      "eol_hours": 127.0,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 9
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::70",
+      "eol_hours": 119.0,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::74",
+      "eol_hours": 118.85,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::76",
+      "eol_hours": 117.95,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::89",
+      "eol_hours": 124.95,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::94",
+      "eol_hours": 123.85,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::95",
+      "eol_hours": 118.05,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::96",
+      "eol_hours": 125.25,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case4::97",
+      "eol_hours": 121.75,
+      "first_alert_hours": 65.95,
+      "first_confirmed_hours": 77.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 2
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::2",
+      "eol_hours": 127.75,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 2
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::3",
+      "eol_hours": 123.65,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 1
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::6",
+      "eol_hours": 120.3,
+      "first_alert_hours": 95.95,
+      "first_confirmed_hours": 107.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 4
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::11",
+      "eol_hours": 119.8,
+      "first_alert_hours": null,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 0
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::22",
+      "eol_hours": 125.35,
+      "first_alert_hours": null,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 0
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::27",
+      "eol_hours": 124.8,
+      "first_alert_hours": null,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 0
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::33",
+      "eol_hours": 124.45,
+      "first_alert_hours": 101.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 2
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::38",
+      "eol_hours": 122.0,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 3
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::42",
+      "eol_hours": 124.2,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 1
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::55",
+      "eol_hours": 123.85,
+      "first_alert_hours": 113.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 2
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::59",
+      "eol_hours": 118.3,
+      "first_alert_hours": 113.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 1
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::73",
+      "eol_hours": 126.25,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 2
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::75",
+      "eol_hours": 124.8,
+      "first_alert_hours": 119.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 1
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::87",
+      "eol_hours": 118.65,
+      "first_alert_hours": 113.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 7,
+          "alerts": 1
+        }
+      }
+    },
+    {
+      "trajectory_key": "case5::98",
+      "eol_hours": 120.2,
+      "first_alert_hours": 113.95,
+      "first_confirmed_hours": null,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 8,
+          "alerts": 2
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::4",
+      "eol_hours": 131.15,
+      "first_alert_hours": 95.95,
+      "first_confirmed_hours": 107.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::11",
+      "eol_hours": 130.6,
+      "first_alert_hours": 95.95,
+      "first_confirmed_hours": 107.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::17",
+      "eol_hours": 134.75,
+      "first_alert_hours": 71.95,
+      "first_confirmed_hours": 107.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::18",
+      "eol_hours": 134.7,
+      "first_alert_hours": 71.95,
+      "first_confirmed_hours": 107.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::22",
+      "eol_hours": 135.7,
+      "first_alert_hours": 71.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::28",
+      "eol_hours": 135.9,
+      "first_alert_hours": 71.95,
+      "first_confirmed_hours": 107.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::33",
+      "eol_hours": 135.45,
+      "first_alert_hours": 71.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 1
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::48",
+      "eol_hours": 136.25,
+      "first_alert_hours": 77.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::54",
+      "eol_hours": 134.35,
+      "first_alert_hours": 101.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 6
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::57",
+      "eol_hours": 137.95,
+      "first_alert_hours": 89.95,
+      "first_confirmed_hours": 113.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 11,
+          "alerts": 8
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::59",
+      "eol_hours": 128.55,
+      "first_alert_hours": 89.95,
+      "first_confirmed_hours": 101.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 7
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::63",
+      "eol_hours": 137.65,
+      "first_alert_hours": 107.95,
+      "first_confirmed_hours": 119.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 5
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::78",
+      "eol_hours": 132.2,
+      "first_alert_hours": 77.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 10,
+          "alerts": 10
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::84",
+      "eol_hours": 130.1,
+      "first_alert_hours": 77.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 9
+        }
+      }
+    },
+    {
+      "trajectory_key": "case6::95",
+      "eol_hours": 128.8,
+      "first_alert_hours": 77.95,
+      "first_confirmed_hours": 89.95,
+      "phases": {
+        "stable_30_60": {
+          "windows": 5,
+          "alerts": 0
+        },
+        "transition_or_boundary": {
+          "windows": 2,
+          "alerts": 0
+        },
+        "post_70": {
+          "windows": 9,
+          "alerts": 9
+        }
+      }
+    }
+  ],
+  "evaluated_windows": 1515,
+  "alert_windows": 619,
+  "alert_window_rate": 0.4085808580858086,
+  "max_drifted_feature_ratio": 0.8653846153846154,
+  "feature_alert_rates": [
+    {
+      "feature": "Reactor Level",
+      "alert_windows": 657,
+      "alert_rate": 0.43366336633663366
+    },
+    {
+      "feature": "Stripper Level",
+      "alert_windows": 655,
+      "alert_rate": 0.43234323432343236
+    },
+    {
+      "feature": "Component F to Purge",
+      "alert_windows": 629,
+      "alert_rate": 0.4151815181518152
+    },
+    {
+      "feature": "Product Sep Level",
+      "alert_windows": 621,
+      "alert_rate": 0.4099009900990099
+    },
+    {
+      "feature": "A and C Feed",
+      "alert_windows": 613,
+      "alert_rate": 0.4046204620462046
+    },
+    {
+      "feature": "Component B to Purge",
+      "alert_windows": 605,
+      "alert_rate": 0.39933993399339934
+    },
+    {
+      "feature": "Component F to Reactor",
+      "alert_windows": 605,
+      "alert_rate": 0.39933993399339934
+    },
+    {
+      "feature": "Stripper",
+      "alert_windows": 596,
+      "alert_rate": 0.3933993399339934
+    },
+    {
+      "feature": "Component B to Reactor",
+      "alert_windows": 533,
+      "alert_rate": 0.35181518151815183
+    },
+    {
+      "feature": "Component E to Purge",
+      "alert_windows": 500,
+      "alert_rate": 0.33003300330033003
+    },
+    {
+      "feature": "Compressor Work",
+      "alert_windows": 498,
+      "alert_rate": 0.3287128712871287
+    },
+    {
+      "feature": "Reactor Coolant",
+      "alert_windows": 479,
+      "alert_rate": 0.31617161716171616
+    },
+    {
+      "feature": "Component E to Product",
+      "alert_windows": 417,
+      "alert_rate": 0.27524752475247527
+    },
+    {
+      "feature": "Purge Rate",
+      "alert_windows": 404,
+      "alert_rate": 0.26666666666666666
+    },
+    {
+      "feature": "Component E to Reactor",
+      "alert_windows": 403,
+      "alert_rate": 0.266006600660066
+    },
+    {
+      "feature": "A Feed",
+      "alert_windows": 400,
+      "alert_rate": 0.264026402640264
+    },
+    {
+      "feature": "Purge",
+      "alert_windows": 397,
+      "alert_rate": 0.262046204620462
+    },
+    {
+      "feature": "Stripper Temp",
+      "alert_windows": 396,
+      "alert_rate": 0.2613861386138614
+    },
+    {
+      "feature": "msv A Feed",
+      "alert_windows": 392,
+      "alert_rate": 0.25874587458745874
+    },
+    {
+      "feature": "Stripper Underflow",
+      "alert_windows": 388,
+      "alert_rate": 0.25610561056105613
+    },
+    {
+      "feature": "Separator Coolant Temp",
+      "alert_windows": 384,
+      "alert_rate": 0.25346534653465347
+    },
+    {
+      "feature": "Component F to Product",
+      "alert_windows": 377,
+      "alert_rate": 0.24884488448844885
+    },
+    {
+      "feature": "Recycle Flow",
+      "alert_windows": 376,
+      "alert_rate": 0.24818481848184817
+    },
+    {
+      "feature": "Separator",
+      "alert_windows": 359,
+      "alert_rate": 0.23696369636963696
+    },
+    {
+      "feature": "Reactor Coolant Temp",
+      "alert_windows": 339,
+      "alert_rate": 0.22376237623762377
+    },
+    {
+      "feature": "Product Sep Underflow",
+      "alert_windows": 331,
+      "alert_rate": 0.21848184818481847
+    },
+    {
+      "feature": "Component A to Purge",
+      "alert_windows": 328,
+      "alert_rate": 0.2165016501650165
+    },
+    {
+      "feature": "Reactor Feed Rate",
+      "alert_windows": 315,
+      "alert_rate": 0.2079207920792079
+    },
+    {
+      "feature": "msv A and C Feed",
+      "alert_windows": 312,
+      "alert_rate": 0.20594059405940593
+    },
+    {
+      "feature": "Product Sep Temp",
+      "alert_windows": 311,
+      "alert_rate": 0.20528052805280528
+    },
+    {
+      "feature": "D feed",
+      "alert_windows": 309,
+      "alert_rate": 0.20396039603960395
+    },
+    {
+      "feature": "Component C to Reactor",
+      "alert_windows": 281,
+      "alert_rate": 0.18547854785478549
+    },
+    {
+      "feature": "E Feed",
+      "alert_windows": 281,
+      "alert_rate": 0.18547854785478549
+    },
+    {
+      "feature": "msv E Feed",
+      "alert_windows": 267,
+      "alert_rate": 0.17623762376237623
+    },
+    {
+      "feature": "Component C to Purge",
+      "alert_windows": 265,
+      "alert_rate": 0.17491749174917492
+    },
+    {
+      "feature": "Component A to Reactor",
+      "alert_windows": 261,
+      "alert_rate": 0.17227722772277226
+    },
+    {
+      "feature": "Component D to Purge",
+      "alert_windows": 215,
+      "alert_rate": 0.1419141914191419
+    },
+    {
+      "feature": "Stripper Pressure",
+      "alert_windows": 204,
+      "alert_rate": 0.13465346534653466
+    },
+    {
+      "feature": "Component H to Purge",
+      "alert_windows": 201,
+      "alert_rate": 0.13267326732673268
+    },
+    {
+      "feature": "Component G to Purge",
+      "alert_windows": 186,
+      "alert_rate": 0.12277227722772277
+    },
+    {
+      "feature": "Component D to Reactor",
+      "alert_windows": 128,
+      "alert_rate": 0.08448844884488449
+    },
+    {
+      "feature": "msv D Feed",
+      "alert_windows": 114,
+      "alert_rate": 0.07524752475247524
+    },
+    {
+      "feature": "Component H to Product",
+      "alert_windows": 109,
+      "alert_rate": 0.07194719471947195
+    },
+    {
+      "feature": "Condenser Coolant",
+      "alert_windows": 89,
+      "alert_rate": 0.058745874587458745
+    },
+    {
+      "feature": "Component G to Product",
+      "alert_windows": 78,
+      "alert_rate": 0.05148514851485148
+    },
+    {
+      "feature": "Component D to Product",
+      "alert_windows": 72,
+      "alert_rate": 0.047524752475247525
+    },
+    {
+      "feature": "Recycle",
+      "alert_windows": 49,
+      "alert_rate": 0.03234323432343234
+    },
+    {
+      "feature": "Product Sep Pressure",
+      "alert_windows": 26,
+      "alert_rate": 0.017161716171617162
+    },
+    {
+      "feature": "Reactor Temperature",
+      "alert_windows": 18,
+      "alert_rate": 0.011881188118811881
+    },
+    {
+      "feature": "Reactor Pressure",
+      "alert_windows": 17,
+      "alert_rate": 0.011221122112211221
+    },
+    {
+      "feature": "Stripper Steam Flow",
+      "alert_windows": 7,
+      "alert_rate": 0.0046204620462046205
+    },
+    {
+      "feature": "Steam",
+      "alert_windows": 0,
+      "alert_rate": 0.0
+    }
+  ],
+  "status_counts": {
+    "NORMAL": 795,
+    "CAUTION": 101,
+    "DRIFT": 195,
+    "CONFIRMED_DRIFT": 424
+  },
+  "phases": {
+    "stable_30_60": {
+      "windows": 450,
+      "alerts": 0,
+      "status_counts": {
+        "NORMAL": 450
+      },
+      "alert_window_rate": 0.0
+    },
+    "transition_or_boundary": {
+      "windows": 180,
+      "alerts": 52,
+      "status_counts": {
+        "NORMAL": 110,
+        "CAUTION": 18,
+        "DRIFT": 52
+      },
+      "alert_window_rate": 0.28888888888888886
+    },
+    "post_70": {
+      "windows": 885,
+      "alerts": 567,
+      "status_counts": {
+        "NORMAL": 235,
+        "CAUTION": 83,
+        "DRIFT": 143,
+        "CONFIRMED_DRIFT": 424
+      },
+      "alert_window_rate": 0.6406779661016949
+    }
+  },
+  "per_case": {
+    "case1": {
+      "trajectories": 15,
+      "windows": 274,
+      "alerts": 98
+    },
+    "case2": {
+      "trajectories": 15,
+      "windows": 272,
+      "alerts": 192
+    },
+    "case3": {
+      "trajectories": 15,
+      "windows": 272,
+      "alerts": 53
+    },
+    "case4": {
+      "trajectories": 15,
+      "windows": 222,
+      "alerts": 139
+    },
+    "case5": {
+      "trajectories": 15,
+      "windows": 224,
+      "alerts": 22
+    },
+    "case6": {
+      "trajectories": 15,
+      "windows": 251,
+      "alerts": 115
+    }
+  },
+  "interpretation": "전체 수명 경보율은 오탐률이 아님. stable_30_60만 안정 구간 경보율; post_70은 생성 설명 기준 열화 이후 경보율이며 정확도/재현율이 아님. 실제 60초 runtime 검사와 다른 가상 시간 평가."
+}

@@ -24,6 +24,12 @@ class DriftEventSchemaTests(unittest.TestCase):
         validate_drift_event(event)
         self.assertIsNone(event["prediction_context"])
         self.assertEqual(event["status"], "NORMAL")
+        self.assertNotIn("calibration_sha256", event)
+        event["calibration_sha256"] = "a" * 64
+        validate_drift_event(event)
+        event["calibration_sha256"] = "invalid"
+        with self.assertRaises(ValueError):
+            validate_drift_event(event)
 
     def test_rejects_unknown_status(self) -> None:
         result = DriftResult("UNKNOWN", 0, 52, 0.0, 0, [])

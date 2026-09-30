@@ -1,0 +1,24 @@
+{
+  "tag": "f4ffd5c77c4c",
+  "success": true,
+  "schema_errors": 0,
+  "event_count": 242,
+  "states": {
+    "INSUFFICIENT_DATA": 238,
+    "NORMAL": 1,
+    "DRIFT": 2,
+    "CONFIRMED_DRIFT": 1
+  },
+  "stable_last_status": "NORMAL",
+  "shifted_last_status": "CONFIRMED_DRIFT",
+  "retraining_requests": 0,
+  "recovery": {
+    "failed_input_offset": 242,
+    "committed_after_failure": 242,
+    "retried_sequence": 122,
+    "retry_status": "INSUFFICIENT_DATA",
+    "recovered_last_status": "CONFIRMED_DRIFT",
+    "event_count_total": 364,
+    "semantics": "at-least-once; window rewarm after restart"
+  }
+}

@@ -1,0 +1,53 @@
+# TEP-DigitalTwin 작업 진행표
+
+기준일: 2026-09-30
+
+통합 브랜치: `origin/dev` (`0380467`, 원격 조회 확인). 아래 17번 변경은 `feat/drift-validation`에서 검증 중이며 아직 dev 미병합.
+최근 병합: PR #24(실시간 추론), PR #25(Kafka 영구 저장), PR #26(Drift runtime)
+
+상태 표기: ✅ 완료 · 🟡 부분 완료/검증 필요 · ⬜ 미착수
+
+| 번호 | 담당 | 현재 상태 | 완료된 범위 | 아직 필요한 작업 |
+|---:|---|---|---|---|
+| 01 | 공통 | ✅ | 프로젝트 범위·역할·일정 문서화 | 문서 최신화만 필요 |
+| 02 | 공통 | ✅ | TEP 데이터 구조·전처리 기준 정리 | 없음 |
+| 03 | 공통 | ✅ | train/validation/test 및 trajectory 분할 기준 확정 | 없음 |
+| 04 | 공통 | ✅ | baseline 모델과 비교 기준 산출 | 없음 |
+| 05 | 공통 | ✅ | 728개 temporal feature 생성·검증 | 없음 |
+| 06 | 공통 | ✅ | Production 4종 XGBoost 모델 v1.0.0 산출 | 운영 재학습 모델은 별도 |
+| 07 | 공통 | ✅ | 저장소 구조·실행 문서 정리 | 없음 |
+| 08 | B | 🟡 | Docker Compose, 집컴 dev Kafka/Inference/Monitor 복구, 영구 볼륨·격리 broker 재생성 보존 실증 | 집컴 재부팅·API 포함 전체 스택 검증 |
+| 09 | B | 🟡 | 수동 배포·ValidateOnly·runtime 감사 및 단계 보고서(독립 ops PR), 집컴 Python/Web 검증 | API 포함 전체 배포 acceptance |
+| 10 | B | 🟡 | dev Poll SCM·로그인 실행기, 승인된 workspace 스크립트/보고서 archive 설정 저장 | ops PR 병합 후 실제 자동 배포 및 API 전체 체인 |
+| 11 | A | 🟡 | Producer/Consumer·Schema·Kafka replay 구현, 실제 2,929건 replay | 실패·재시도·중복/순서 보장 검증 |
+| 12 | A | 🟡 | 실시간 추론 병합, 2,929건 중 2,909건 예측 확인 | reliable delivery·API 연동 |
+| 13 | A | ⬜ | `src/api/main.py` 없음 | `/v1/predict` 및 운영 API 구현·검증 |
+| 14 | C | 🟡 | React/Vite 대시보드·mock stream·API client | 실제 API 연결·라이브 검증 |
+| 15 | C | 🟡 | Unity prefab/mock·WebGL bridge·Prediction 모델 | API 연결·오류 UI·자동/장시간/Windows 검증 |
+| 16 | A/B/C | 🟡 | 서비스 간 일부 계약·Jenkins checklist | API→Inference→Kafka→Web/Unity 전체 통합 |
+| 17 | B | 🟡 | train 기준 후보, validation/test 안정 경보 각각 0/450, 실제 60초 판정, 발행 실패 offset 보존 및 Monitor 재시작 복구 | 운영 승인·적용, broker 재시작 및 장시간 부하·중복 검증 |
+| 18 | C | 보류 | 자동 재학습 연계 보류 결정(파이프라인 미구현) | 필요 데이터·승인 기준 확보 후 범위 재확정 |
+| 19 | C | ⬜ | candidate 평가·승격 미구현 | 평가 기준·승격/거부·rollback 계약 |
+| 20 | B | ⬜ | Production 모델 hot application/rollback 미구현 | 19번 계약 이후 적용 |
+| 21 | B | ⬜ | 상세 작업 문서 미확정 | 요구사항 확인 후 범위 확정 |
+| 22 | 공통 | 🟡 | 단위·고정 데이터 테스트 일부 통과 | 장애 복구·통합 테스트·운영 시나리오 |
+| 23 | 공통 | ⬜ | 최종 통합 미착수 | 전체 live chain 및 acceptance |
+| 24 | 공통 | 🟡 | 핵심 설계/운영 문서 존재 | 상태·증적을 본 표와 동기화 |
+
+## 이번 작업 순서
+
+1. 완료: 17번 평가를 안정·전환·열화 이후로 분리. 과거 99.56%의 정상성 해석 정정.
+2. 완료: train 2,100개 안정 창으로 기준 후보 생성. validation/test 및 격리 Kafka runtime 검증(자동 재학습 비활성).
+3. 이후 B 작업: Kafka 발행 실패·재시작 복구 검증, API 준비 후 09·10·16 전체 통합.
+4. A/C 의존: 13 API 구현과 14·15 실제 연결. 19·20 모델 승격·적용은 계약 확정 대기.
+
+결과: `reports/17-drift/validation-phases-2026-09-30.md`, `reports/17-drift/calibration-summary-2026-09-30.md`.
+
+운영 후속은 최신 dev에서 독립 `feat/ops-verification`으로 작업했다. 17번 미병합 코드를
+포함하지 않는다. 운영 검증 보고서는 해당 브랜치 `reports/08-operations/verification-2026-09-30.md`.
+PR #27·#28 병합은 사용자가 진행한다. 새 기준 운영 적용, 병합 후 실제 dev Poll SCM 배포,
+집컴 재부팅·로그인 실증을 완료로 표시하지 않는다. 자동 로그인 설정은 확인되지 않았으므로
+재부팅 후 Docker/사용자 실행기 복구에는 사용자 로그인이 필요할 수 있다.
+
+17번 평가는 “운영 Data Drift 오탐률 통과”를 미리 가정하지 않는다. 현재 TEP에는
+별도 운영 Drift label이 없으므로 재학습 Trigger는 기본 비활성화한다.

@@ -1,0 +1,348 @@
+{
+  "schema_version": "2.0",
+  "evaluated_at": "2026-09-30T00:26:14+00:00",
+  "evaluation_type": "operating_state_phase_evaluation",
+  "split": "validation",
+  "reference_version": "v1.0.0",
+  "reference_sha256": "954f22acf9e2a08db7a4f5860b120a91415ec5e22db948cb03a89cf281d2c5b8",
+  "manifest_sha256": "dae262bb20fa1d3578394879b9a3f9cea971e6136a267a13e16022e82afe7504",
+  "minimum_timestamp_hours": 30.0,
+  "window_size": 120,
+  "min_samples": 120,
+  "check_interval_seconds": 21600.0,
+  "simulation_step_seconds": 180.0,
+  "trajectory_count": 90,
+  "evaluated_windows": 1513,
+  "alert_windows": 1497,
+  "alert_window_rate": 0.9894249834765367,
+  "max_drifted_feature_ratio": 0.9615384615384616,
+  "feature_alert_rates": [
+    {
+      "feature": "Component E to Product",
+      "alert_windows": 1413,
+      "alert_rate": 0.9339061467283543
+    },
+    {
+      "feature": "Component H to Product",
+      "alert_windows": 1369,
+      "alert_rate": 0.9048248512888302
+    },
+    {
+      "feature": "Component F to Product",
+      "alert_windows": 1364,
+      "alert_rate": 0.9015201586252478
+    },
+    {
+      "feature": "Separator",
+      "alert_windows": 1303,
+      "alert_rate": 0.8612029081295439
+    },
+    {
+      "feature": "Component B to Purge",
+      "alert_windows": 1294,
+      "alert_rate": 0.8552544613350959
+    },
+    {
+      "feature": "Component D to Product",
+      "alert_windows": 1289,
+      "alert_rate": 0.8519497686715135
+    },
+    {
+      "feature": "Component G to Product",
+      "alert_windows": 1256,
+      "alert_rate": 0.8301387970918704
+    },
+    {
+      "feature": "Stripper",
+      "alert_windows": 1252,
+      "alert_rate": 0.8274950429610046
+    },
+    {
+      "feature": "Compressor Work",
+      "alert_windows": 1244,
+      "alert_rate": 0.822207534699273
+    },
+    {
+      "feature": "Stripper Temp",
+      "alert_windows": 1215,
+      "alert_rate": 0.8030403172504957
+    },
+    {
+      "feature": "A Feed",
+      "alert_windows": 1214,
+      "alert_rate": 0.8023793787177792
+    },
+    {
+      "feature": "Component F to Purge",
+      "alert_windows": 1194,
+      "alert_rate": 0.7891606080634501
+    },
+    {
+      "feature": "Component F to Reactor",
+      "alert_windows": 1193,
+      "alert_rate": 0.7884996695307337
+    },
+    {
+      "feature": "msv A Feed",
+      "alert_windows": 1191,
+      "alert_rate": 0.7871777924653007
+    },
+    {
+      "feature": "Purge",
+      "alert_windows": 1179,
+      "alert_rate": 0.7792465300727033
+    },
+    {
+      "feature": "E Feed",
+      "alert_windows": 1168,
+      "alert_rate": 0.7719762062128223
+    },
+    {
+      "feature": "D feed",
+      "alert_windows": 1163,
+      "alert_rate": 0.7686715135492399
+    },
+    {
+      "feature": "Purge Rate",
+      "alert_windows": 1149,
+      "alert_rate": 0.7594183740912095
+    },
+    {
+      "feature": "Component A to Purge",
+      "alert_windows": 1136,
+      "alert_rate": 0.7508261731658956
+    },
+    {
+      "feature": "Component B to Reactor",
+      "alert_windows": 1129,
+      "alert_rate": 0.7461996034368804
+    },
+    {
+      "feature": "Product Sep Temp",
+      "alert_windows": 1106,
+      "alert_rate": 0.7309980171844018
+    },
+    {
+      "feature": "Separator Coolant Temp",
+      "alert_windows": 1100,
+      "alert_rate": 0.7270323859881032
+    },
+    {
+      "feature": "Stripper Level",
+      "alert_windows": 1077,
+      "alert_rate": 0.7118307997356246
+    },
+    {
+      "feature": "Component E to Purge",
+      "alert_windows": 1050,
+      "alert_rate": 0.6939854593522803
+    },
+    {
+      "feature": "Component C to Purge",
+      "alert_windows": 1028,
+      "alert_rate": 0.6794448116325181
+    },
+    {
+      "feature": "Component E to Reactor",
+      "alert_windows": 992,
+      "alert_rate": 0.6556510244547257
+    },
+    {
+      "feature": "A and C Feed",
+      "alert_windows": 989,
+      "alert_rate": 0.6536682088565764
+    },
+    {
+      "feature": "Reactor Coolant Temp",
+      "alert_windows": 971,
+      "alert_rate": 0.64177131526768
+    },
+    {
+      "feature": "Product Sep Level",
+      "alert_windows": 921,
+      "alert_rate": 0.6087243886318572
+    },
+    {
+      "feature": "Component G to Purge",
+      "alert_windows": 885,
+      "alert_rate": 0.5849306014540647
+    },
+    {
+      "feature": "Reactor Level",
+      "alert_windows": 877,
+      "alert_rate": 0.5796430931923331
+    },
+    {
+      "feature": "Component H to Purge",
+      "alert_windows": 842,
+      "alert_rate": 0.5565102445472571
+    },
+    {
+      "feature": "Component A to Reactor",
+      "alert_windows": 830,
+      "alert_rate": 0.5485789821546596
+    },
+    {
+      "feature": "Reactor Coolant",
+      "alert_windows": 781,
+      "alert_rate": 0.5161929940515532
+    },
+    {
+      "feature": "Stripper Pressure",
+      "alert_windows": 759,
+      "alert_rate": 0.5016523463317911
+    },
+    {
+      "feature": "Component C to Reactor",
+      "alert_windows": 727,
+      "alert_rate": 0.48050231328486454
+    },
+    {
+      "feature": "Product Sep Underflow",
+      "alert_windows": 707,
+      "alert_rate": 0.46728354263053534
+    },
+    {
+      "feature": "Recycle Flow",
+      "alert_windows": 672,
+      "alert_rate": 0.44415069398545937
+    },
+    {
+      "feature": "Component D to Purge",
+      "alert_windows": 667,
+      "alert_rate": 0.44084600132187707
+    },
+    {
+      "feature": "Reactor Feed Rate",
+      "alert_windows": 652,
+      "alert_rate": 0.43093192333113023
+    },
+    {
+      "feature": "Component D to Reactor",
+      "alert_windows": 647,
+      "alert_rate": 0.42762723066754793
+    },
+    {
+      "feature": "msv E Feed",
+      "alert_windows": 608,
+      "alert_rate": 0.4018506278916061
+    },
+    {
+      "feature": "msv A and C Feed",
+      "alert_windows": 605,
+      "alert_rate": 0.3998678122934567
+    },
+    {
+      "feature": "Stripper Underflow",
+      "alert_windows": 537,
+      "alert_rate": 0.3549239920687376
+    },
+    {
+      "feature": "msv D Feed",
+      "alert_windows": 524,
+      "alert_rate": 0.34633179114342366
+    },
+    {
+      "feature": "Product Sep Pressure",
+      "alert_windows": 518,
+      "alert_rate": 0.34236615994712494
+    },
+    {
+      "feature": "Reactor Pressure",
+      "alert_windows": 513,
+      "alert_rate": 0.33906146728354264
+    },
+    {
+      "feature": "Condenser Coolant",
+      "alert_windows": 396,
+      "alert_rate": 0.2617316589557171
+    },
+    {
+      "feature": "Recycle",
+      "alert_windows": 92,
+      "alert_rate": 0.06080634500991408
+    },
+    {
+      "feature": "Reactor Temperature",
+      "alert_windows": 89,
+      "alert_rate": 0.058823529411764705
+    },
+    {
+      "feature": "Stripper Steam Flow",
+      "alert_windows": 25,
+      "alert_rate": 0.016523463317911435
+    },
+    {
+      "feature": "Steam",
+      "alert_windows": 0,
+      "alert_rate": 0.0
+    }
+  ],
+  "status_counts": {
+    "DRIFT": 190,
+    "CAUTION": 16,
+    "CONFIRMED_DRIFT": 1307
+  },
+  "phases": {
+    "stable_30_60": {
+      "windows": 450,
+      "alerts": 434,
+      "status_counts": {
+        "DRIFT": 187,
+        "CAUTION": 16,
+        "CONFIRMED_DRIFT": 247
+      },
+      "alert_window_rate": 0.9644444444444444
+    },
+    "transition_or_boundary": {
+      "windows": 180,
+      "alerts": 180,
+      "status_counts": {
+        "CONFIRMED_DRIFT": 177,
+        "DRIFT": 3
+      },
+      "alert_window_rate": 1.0
+    },
+    "post_70": {
+      "windows": 883,
+      "alerts": 883,
+      "status_counts": {
+        "CONFIRMED_DRIFT": 883
+      },
+      "alert_window_rate": 1.0
+    }
+  },
+  "per_case": {
+    "case1": {
+      "trajectories": 15,
+      "windows": 270,
+      "alerts": 258
+    },
+    "case2": {
+      "trajectories": 15,
+      "windows": 269,
+      "alerts": 269
+    },
+    "case3": {
+      "trajectories": 15,
+      "windows": 276,
+      "alerts": 272
+    },
+    "case4": {
+      "trajectories": 15,
+      "windows": 226,
+      "alerts": 226
+    },
+    "case5": {
+      "trajectories": 15,
+      "windows": 223,
+      "alerts": 223
+    },
+    "case6": {
+      "trajectories": 15,
+      "windows": 249,
+      "alerts": 249
+    }
+  },
+  "interpretation": "전체 수명 경보율은 오탐률이 아님. stable_30_60만 안정 구간 경보율; post_70은 생성 설명 기준 열화 이후 경보율이며 정확도/재현율이 아님. 실제 60초 runtime 검사와 다른 가상 시간 평가."
+}

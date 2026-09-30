@@ -1,0 +1,15 @@
+{
+  "tag": "616453b825b9",
+  "success": true,
+  "schema_errors": 0,
+  "event_count": 242,
+  "states": {
+    "INSUFFICIENT_DATA": 238,
+    "NORMAL": 1,
+    "DRIFT": 2,
+    "CONFIRMED_DRIFT": 1
+  },
+  "stable_last_status": "NORMAL",
+  "shifted_last_status": "CONFIRMED_DRIFT",
+  "retraining_requests": 0
+}
