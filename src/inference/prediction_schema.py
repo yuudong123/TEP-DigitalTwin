@@ -24,6 +24,8 @@ def validate_prediction(message: dict[str, Any]) -> None:
     """웹/API가 안전하게 사용할 수 있는 Prediction 메시지인지 확인한다."""
 
     # 화면과 API가 반드시 필요로 하는 최상위 필드가 모두 있는지 확인한다.
+    if not isinstance(message, Mapping):
+        raise ValueError("Prediction must be an object")
     required = {
         "schema_version", "model_version", "trajectory_key",
         "timestamp_hours", "rul", "risk", "status",
@@ -32,6 +34,10 @@ def validate_prediction(message: dict[str, Any]) -> None:
     missing = sorted(required - message.keys())
     if missing:
         raise ValueError(f"Prediction 필수 필드 누락: {missing}")
+    if message['schema_version'] != '1.0':
+        raise ValueError('Unsupported Prediction schema version')
+    if not isinstance(message['model_version'], str) or not message['model_version']:
+        raise ValueError('model_version must be a non-empty string')
     if message["status"] not in STATUSES:
         raise ValueError(f"잘못된 status: {message['status']}")
     if message["explanation_model"] not in RISK_TARGETS:
@@ -59,8 +65,11 @@ def validate_prediction(message: dict[str, Any]) -> None:
             raise ValueError(f"{target}.score는 0과 1 사이여야 합니다.")
         if not 0.0 <= float(item["threshold"]) <= 1.0:
             raise ValueError(f"{target}.threshold는 0과 1 사이여야 합니다.")
-    if not all(math.isfinite(float(value)) for value in numbers):
+    if not all(not isinstance(value, bool) and isinstance(value, (int, float))
+               and math.isfinite(value) for value in numbers):
         raise ValueError("Prediction에 NaN 또는 무한대가 있습니다.")
+    if message['timestamp_hours'] < 0 or message['rul']['hours'] < 0:
+        raise ValueError('Prediction time and RUL must be non-negative')
 
     factors = message["top_risk_factors"]
     if not isinstance(factors, list) or len(factors) > 5:
@@ -77,5 +86,8 @@ def validate_prediction(message: dict[str, Any]) -> None:
             raise ValueError(f"위험요인 필드 누락: {sorted(missing_factor_fields)}")
         if factor["rank"] != expected_rank:
             raise ValueError("위험요인 rank가 1부터 순서대로 이어져야 합니다.")
+        if any(not isinstance(factor[name], str) or not factor[name]
+               for name in ('feature', 'source_feature', 'transform')):
+            raise ValueError('Risk factor names must be non-empty strings')
         if not math.isfinite(float(factor["shap_value"])):
             raise ValueError("위험요인 shap_value는 유한한 숫자여야 합니다.")

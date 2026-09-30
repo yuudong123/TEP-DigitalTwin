@@ -119,6 +119,27 @@ class InferenceRuntimeTests(unittest.TestCase):
             "CRITICAL", "failure_within_1h"
         ))
 
+    def test_gap_duplicate_and_nonfinite_recovery(self):
+        for discontinuity in (0, 22, 5):
+            buffer = TrajectoryFeatureBuffer(self.ordered_features)
+            for sequence, (_, row) in enumerate(self.trajectory.iterrows()):
+                buffer.add(dict(trajectory_key='case1::1', sequence=sequence,
+                                timestamp_hours=sequence*.05,
+                                values={name: float(row[name]) for name in self.base_features}))
+            message = dict(trajectory_key='case1::1', sequence=discontinuity,
+                           timestamp_hours=discontinuity*.05,
+                           values={name: 1.0 for name in self.base_features})
+            result = buffer.add(message)
+            self.assertFalse(result.ready)
+            self.assertEqual(result.buffered_rows, 1)
+            for index in range(1, 21):
+                result = buffer.add(dict(message, sequence=discontinuity+index,
+                                         timestamp_hours=(discontinuity+index)*.05))
+            self.assertTrue(result.ready)
+            invalid = dict(message, values=dict(message['values'], **{self.base_features[0]: float('nan')}))
+            with self.assertRaises(ValueError):
+                buffer.add(invalid)
+
     def test_prediction_rejects_probability_over_one(self):
         risk = {
             target: {"score": 0.2, "threshold": 0.5, "alert": False}
