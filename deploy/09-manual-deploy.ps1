@@ -86,6 +86,10 @@ try {
     $webDir = Join-Path $SourceDir 'web'
     if (Test-Path -LiteralPath (Join-Path $webDir 'package.json')) {
         $npm = (Get-Command npm.cmd -ErrorAction Stop).Source
+        $previousWebSource = $env:VITE_PREDICTION_SOURCE
+        $previousWebUrl = $env:VITE_PREDICTION_API_URL
+        $env:VITE_PREDICTION_SOURCE = 'api'
+        $env:VITE_PREDICTION_API_URL = '/api/predictions/latest'
         Push-Location $webDir
         try {
             & $npm ci --no-audit --no-fund
@@ -96,7 +100,11 @@ try {
             if ($LASTEXITCODE -ne 0) { throw 'Web tests failed.' }
             & $npm run build
             if ($LASTEXITCODE -ne 0) { throw 'Web build failed.' }
-        } finally { Pop-Location }
+        } finally {
+            $env:VITE_PREDICTION_SOURCE = $previousWebSource
+            $env:VITE_PREDICTION_API_URL = $previousWebUrl
+            Pop-Location
+        }
     }
 
     if ($ValidateOnly) {
