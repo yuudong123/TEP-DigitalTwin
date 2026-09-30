@@ -5,6 +5,8 @@ import { RiskPanel } from './components/RiskPanel'
 import { RiskFactorList } from './components/RiskFactorList'
 import { UnityDigitalTwin } from './components/UnityDigitalTwin'
 import { StreamControls } from './components/StreamControls'
+import { ReplayControls } from './components/ReplayControls'
+import { OperatingStatePanel } from './components/OperatingStatePanel'
 import { usePredictionStream } from './hooks/usePredictionStream'
 import './App.css'
 
@@ -41,6 +43,9 @@ function App() {
         onToggle={stream.toggle}
         onRestart={stream.restart}
       />
+
+      {stream.mode === 'api' && <ReplayControls />}
+      {stream.mode === 'api' && prediction && <OperatingStatePanel key={prediction.trajectory_key} trajectoryKey={prediction.trajectory_key} />}
 
       {prediction ? (
         <>

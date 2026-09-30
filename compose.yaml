@@ -96,6 +96,7 @@ services:
     volumes:
       - ./models:/app/models:ro
       - ./logs:/app/logs
+      - ./data/raw/TEP:/app/data/raw/TEP:ro
 
     restart: unless-stopped
 

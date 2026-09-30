@@ -29,6 +29,7 @@ export function StreamControls({
     mock: 'LIVE MOCK',
     connecting: 'API CONNECTING',
     connected: 'API CONNECTED',
+    stale: 'DATA STALE · 새 예측 없음',
     error: 'API ERROR',
     paused: 'PAUSED',
   }[connectionState]

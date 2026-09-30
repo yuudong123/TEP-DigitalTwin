@@ -25,7 +25,9 @@ function isRiskEntry(value: unknown): value is RiskEntry {
   return (
     isRecord(value) &&
     isFiniteNumber(value.score) &&
+    value.score >= 0 && value.score <= 1 &&
     isFiniteNumber(value.threshold) &&
+    value.threshold >= 0 && value.threshold <= 1 &&
     typeof value.alert === 'boolean'
   )
 }
@@ -47,18 +49,21 @@ export function isPrediction(value: unknown): value is Prediction {
   const risk = value.risk
 
   return (
-    typeof value.schema_version === 'string' &&
+    value.schema_version === '1.0' &&
     typeof value.model_version === 'string' &&
     typeof value.trajectory_key === 'string' &&
     isFiniteNumber(value.timestamp_hours) &&
+    value.timestamp_hours >= 0 &&
     isFiniteNumber(value.rul.hours) &&
+    value.rul.hours >= 0 &&
     riskHorizons.every((horizon) => isRiskEntry(risk[horizon])) &&
     typeof value.status === 'string' &&
     statuses.includes(value.status as Status) &&
     typeof value.explanation_model === 'string' &&
     riskHorizons.includes(value.explanation_model as RiskHorizon) &&
     Array.isArray(value.top_risk_factors) &&
-    value.top_risk_factors.every(isRiskFactor)
+    value.top_risk_factors.length <= 5 &&
+    value.top_risk_factors.every((factor, index) => isRiskFactor(factor) && factor.rank === index + 1)
   )
 }
 
@@ -66,11 +71,12 @@ export async function fetchLatestPrediction(
   url: string,
   timeoutMs: number,
   signal?: AbortSignal,
-): Promise<Prediction> {
+): Promise<{ prediction: Prediction; receivedAt: Date }> {
   const timeoutController = new AbortController()
   const timeout = window.setTimeout(() => timeoutController.abort(), timeoutMs)
   const abort = () => timeoutController.abort()
   signal?.addEventListener('abort', abort, { once: true })
+  if (signal?.aborted) abort()
 
   try {
     const response = await fetch(url, {
@@ -82,7 +88,9 @@ export async function fetchLatestPrediction(
 
     const body: unknown = await response.json()
     if (!isPrediction(body)) throw new Error('API 응답이 Prediction 형식과 다릅니다.')
-    return body
+    const receivedAt = new Date(response.headers.get('X-Prediction-Received-At') ?? '')
+    if (!Number.isFinite(receivedAt.getTime())) throw new Error('API 수신 시각이 없습니다.')
+    return { prediction: body, receivedAt }
   } catch (error) {
     if (timeoutController.signal.aborted && !signal?.aborted) {
       throw new Error(`API 응답 시간이 ${timeoutMs}ms를 초과했습니다.`)
