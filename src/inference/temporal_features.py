@@ -143,22 +143,21 @@ class TrajectoryFeatureBuffer:
         if missing:
             raise ValueError(f"Sensor 메시지에 기본 Feature가 없습니다: {missing[:5]}")
 
+        row = {feature: float(values[feature]) for feature in self.base_features}
+        if not np.isfinite(list(row.values())).all() or not np.isfinite(timestamp):
+            raise ValueError("Sensor values and timestamp must be finite")
+
         # 메시지 누락이나 순서 뒤바뀜이 있으면 잘못된 시간 Feature가 만들어지므로
         # sequence와 timestamp가 직전 메시지에 이어지는지 확인한다.
         if key in self._last_sequence:
             expected_sequence = self._last_sequence[key] + 1
             expected_time = self._last_time[key] + EXPECTED_INTERVAL_HOURS
-            if sequence != expected_sequence or not np.isclose(timestamp, expected_time, atol=1e-6):
+            if sequence != expected_sequence or not np.isclose(timestamp, expected_time, atol=1e-6, rtol=0):
                 # 서로 다른 재생 실행이 같은 trajectory key로 다시 시작될 수 있다.
-                if sequence == 0:
-                    self.reset(key)
-                else:
-                    raise ValueError(
-                        f"연속되지 않은 메시지: {key}, sequence={sequence}, "
-                        f"expected={expected_sequence}, time={timestamp}"
-                    )
+                # Rewarm after every discontinuity; otherwise one missing row
+                # permanently wedges this trajectory's buffer.
+                self.reset(key)
 
-        row = {feature: float(values[feature]) for feature in self.base_features}
         self._rows[key].append(row)
         self._last_sequence[key] = sequence
         self._last_time[key] = timestamp

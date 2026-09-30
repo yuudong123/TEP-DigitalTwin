@@ -4,10 +4,10 @@ import { predictionSequence } from '../mock/predictionSequence'
 import { fetchLatestPrediction } from '../services/predictionApi'
 import type { Prediction } from '../types/prediction'
 
-export type PredictionConnectionState = 'mock' | 'connecting' | 'connected' | 'error' | 'paused'
+export type PredictionConnectionState = 'mock' | 'connecting' | 'connected' | 'stale' | 'error' | 'paused'
 
 export function usePredictionStream() {
-  const { mode, apiUrl, pollIntervalMs, timeoutMs } = predictionSourceConfig
+  const { mode, apiUrl, pollIntervalMs, timeoutMs, staleAfterMs } = predictionSourceConfig
   const [index, setIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [prediction, setPrediction] = useState<Prediction | null>(() =>
@@ -50,9 +50,9 @@ export function usePredictionStream() {
       try {
         const next = await fetchLatestPrediction(apiUrl, timeoutMs, controller.signal)
         if (controller.signal.aborted) return
-        setPrediction(next)
-        setLastReceivedAt(new Date())
-        setConnectionState('connected')
+        setPrediction(next.prediction)
+        setLastReceivedAt(next.receivedAt)
+        setConnectionState(Date.now() - next.receivedAt.getTime() > staleAfterMs ? 'stale' : 'connected')
         setErrorMessage(null)
       } catch (error) {
         if (controller.signal.aborted) return
@@ -69,7 +69,7 @@ export function usePredictionStream() {
       controller.abort()
       window.clearInterval(timer)
     }
-  }, [apiUrl, isPlaying, mode, pollIntervalMs, retryKey, timeoutMs])
+  }, [apiUrl, isPlaying, mode, pollIntervalMs, retryKey, timeoutMs, staleAfterMs])
 
   const toggle = useCallback(() => setIsPlaying((playing) => !playing), [])
   const restart = useCallback(() => {

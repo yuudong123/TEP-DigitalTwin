@@ -51,9 +51,13 @@ try {
     $envYaml = ConvertTo-Json ($envFile.Replace('\', '/')) -Compress
     $modelsYaml = ConvertTo-Json ((Join-Path $RuntimeDir 'models').Replace('\', '/')) -Compress
     $logsYaml = ConvertTo-Json ((Join-Path $RuntimeDir 'logs').Replace('\', '/')) -Compress
+    $rawYaml = ConvertTo-Json ((Join-Path $RuntimeDir 'data\raw\TEP').Replace('\', '/')) -Compress
     $yaml = "services:`n"
     foreach ($service in @('api', 'inference', 'monitor')) {
         $yaml += "  ${service}:`n    env_file: !override`n      - $envYaml`n    volumes:`n      - type: bind`n        source: $modelsYaml`n        target: /app/models`n        read_only: true`n      - type: bind`n        source: $logsYaml`n        target: /app/logs`n"
+        if ($service -eq 'api') {
+            $yaml += "      - type: bind`n        source: $rawYaml`n        target: /app/data/raw/TEP`n        read_only: true`n"
+        }
     }
     [IO.File]::WriteAllText($overrideFile, $yaml, (New-Object Text.UTF8Encoding($false)))
     $composeArgs = @('compose', '--project-name', $ProjectName, '--project-directory', $SourceDir, '--env-file', $envFile, '-f', $composeFile, '-f', $overrideFile)
@@ -88,6 +92,8 @@ try {
             if ($LASTEXITCODE -ne 0) { throw 'Web dependency installation failed.' }
             & $npm run lint
             if ($LASTEXITCODE -ne 0) { throw 'Web lint failed.' }
+            & $npm test
+            if ($LASTEXITCODE -ne 0) { throw 'Web tests failed.' }
             & $npm run build
             if ($LASTEXITCODE -ne 0) { throw 'Web build failed.' }
         } finally { Pop-Location }

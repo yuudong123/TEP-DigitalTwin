@@ -18,6 +18,7 @@ from confluent_kafka import Consumer, KafkaError, Producer
 from dotenv import load_dotenv
 
 from kafka.message_schema import validate_sensor_message
+from kafka.delivery import publish_json
 
 from .model_loader import ProductionPredictor
 from .temporal_features import TrajectoryFeatureBuffer
@@ -131,15 +132,7 @@ def main() -> None:
                 buffered.timestamp_hours,
             )
             # 4) 결과를 tep-predictions 토픽에 JSON으로 발행한다.
-            producer.produce(
-                topic=prediction_topic,
-                key=buffered.trajectory_key.encode("utf-8"),
-                value=json.dumps(
-                    prediction, ensure_ascii=False, allow_nan=False
-                ).encode("utf-8"),
-            )
-            if producer.flush(10) != 0:
-                raise RuntimeError("Prediction 메시지 발행 제한 시간을 초과했습니다.")
+            publish_json(producer, prediction_topic, buffered.trajectory_key, prediction)
             # 5) Prediction 발행까지 성공한 Sensor 메시지만 처리 완료로 기록한다.
             consumer.commit(message=kafka_message, asynchronous=False)
             print(

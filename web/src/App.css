@@ -176,6 +176,27 @@
   filter: brightness(1.08);
 }
 
+.replay-controls { flex-wrap: wrap; align-items: flex-start; }
+.replay-controls .stream-state, .operating-state .stream-state {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.replay-controls .stream-actions { flex-wrap: wrap; flex-shrink: 0; }
+.stream-actions button { white-space: nowrap; }
+.stream-actions button:disabled { opacity: .45; cursor: not-allowed; }
+.replay-controls label { display: flex; flex-wrap: wrap; gap: 8px; }
+.replay-controls input, .replay-controls select {
+  max-width: 220px;
+  padding: 4px 8px;
+  color: var(--text);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+.stream-controls--stale { border-color: var(--status-caution); }
+.operating-state small, .replay-controls small { opacity: .75; }
+
 @keyframes stream-pulse {
   50% {
     opacity: 0.55;
