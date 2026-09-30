@@ -57,7 +57,7 @@ Jenkins는 별도 checkout을 빌드하므로 로컬 개발 폴더의 미커밋 
 AC 전원에서 절전·최대절전 대기시간을 0으로 설정했고 하이브리드 절전도 해제했다.
 DC 설정과 화면 꺼짐 시간은 변경하지 않았다. 최대절전 기능 자체를 삭제하지 않았다.
 Docker Desktop 로그인 자동 시작 설정 및 사용자 시작 항목을 설정했다.
-Jenkins 실행기는 `10-jenkins-cicd.md`의 로그인 자동 시작 등록이 추가로 필요하다.
+Jenkins 실행기의 로그인 자동 시작 등록과 Running은 2026-09-30 확인했다.
 PC 재부팅 검증은 하지 않았으며, 로그아웃하면 사용자 실행기는 중단된다.
 
 ## 2026-09-11 검증
@@ -89,3 +89,23 @@ Jenkins IP 주소: http://100.127.7.26:8080
 포트 8000은 API/Web 구현 전이라 현재 연결되지 않는 것이 정상이다.
 Tailscale 장치 키 만료 예정일은 2027-03-10이며, 그 전에 갱신하거나
 관리 콘솔에서 만료 정책을 검토해야 한다.
+
+## 추가 검증 도구 (2026-09-30)
+
+```powershell
+.\deploy\09-manual-deploy.ps1 -ValidateOnly
+.\.venv\Scripts\python.exe deploy/runtime_status.py --root . --output logs/runtime-audit.json
+```
+
+ValidateOnly는 Compose 구성, Python compileall/pip check/pytest, Web npm ci/lint/build를 검증한다.
+패키지 설치·임시 override·lock·보고서 생성은 수행하지만 컨테이너를 변경하지 않는다.
+종료 0은 이 모드에서는 사전검증 통과이지 배포 성공이 아니다.
+성공/실패 단계·commit은 소스의 `reports/deployment/last-attempt.json`에 기록하고
+실패한 운영 배포에서는 상태와 최근 서비스 로그도 출력한다. 환경값은 보고서에 넣지 않는다.
+
+runtime_status.py는 읽기 전용으로 Kafka healthy/영구 볼륨, 구현 서비스 상태,
+Monitor 재학습 비활성화를 확인한다. 종료 0은 컨테이너 준비, 2는 구현 서비스 준비·미구현 존재,
+1은 실제 상태 오류다. 전체 기능 통합·장시간·재부팅 검증을 대체하지 않는다.
+
+2026-09-30 기존 dev 기준의 Kafka·Inference·Monitor를 복구하고 재시작 0을 확인했다.
+17번 기준 후보는 별도 PR에 있어 운영에 아직 적용하지 않았다. API 실행 파일도 없다.

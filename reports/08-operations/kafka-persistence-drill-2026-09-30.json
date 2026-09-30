@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "isolated": true,
+  "test_volume": "tep-persistence-check-ed3a4f3472cb-data",
+  "scope": "container recreation; not host reboot or production-volume recovery",
+  "committed_sequence": 0,
+  "resumed_sequences": [
+    1,
+    2
+  ],
+  "topic_preserved": true,
+  "messages_preserved": true,
+  "offset_preserved": true,
+  "test_resources_removed": true
+}

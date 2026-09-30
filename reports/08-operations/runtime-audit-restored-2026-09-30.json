@@ -1,0 +1,29 @@
+{
+  "time": "2026-09-30T07:29:58.854324+00:00",
+  "services": {
+    "kafka": {
+      "running": true,
+      "health": "healthy",
+      "restart_count": 0
+    },
+    "inference": {
+      "running": true,
+      "health": null,
+      "restart_count": 0
+    },
+    "monitor": {
+      "running": true,
+      "health": null,
+      "restart_count": 0,
+      "retraining_disabled": true
+    }
+  },
+  "pending_entrypoints": [
+    "api"
+  ],
+  "issues": [],
+  "full_runtime_ready": false,
+  "implemented_runtime_ready": true,
+  "scope": "container readiness only; not application E2E or reboot proof",
+  "revision": "03804678172cc6ba339945712199613df71f352d"
+}

@@ -3,7 +3,8 @@
 param(
     [string]$SourceDir,
     [string]$RuntimeDir,
-    [string]$ProjectName = 'tep_digitaltwin'
+    [string]$ProjectName = 'tep_digitaltwin',
+    [switch]$ValidateOnly
 )
 $ErrorActionPreference = 'Stop'
 if (-not $SourceDir) { $SourceDir = Split-Path $PSScriptRoot -Parent }
@@ -12,6 +13,12 @@ $lock = $null
 $overrideFile = $null
 $composeArgs = $null
 $exitCode = 1
+$revision = $null
+$ready = @()
+$pending = @()
+$stage = 'preflight'
+$reportFile = $null
+$attemptTime = (Get-Date).ToString('o')
 
 function Invoke-Docker {
     param([string[]]$DockerArgs)
@@ -22,6 +29,11 @@ function Invoke-Docker {
 try {
     $SourceDir = (Resolve-Path -LiteralPath $SourceDir).Path
     $RuntimeDir = (Resolve-Path -LiteralPath $RuntimeDir).Path
+    $reportDir = Join-Path $SourceDir 'reports\deployment'
+    $null = New-Item -ItemType Directory -Path $reportDir -Force
+    $reportFile = Join-Path $reportDir 'last-attempt.json'
+    $revision = (& git -C $SourceDir rev-parse HEAD | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0) { throw 'Cannot determine source Git revision.' }
     $composeFile = Join-Path $SourceDir 'compose.yaml'
     $envFile = Join-Path $RuntimeDir '.env'
     foreach ($required in @($composeFile, $envFile, (Join-Path $RuntimeDir 'models'))) {
@@ -49,6 +61,7 @@ try {
     Invoke-Docker -DockerArgs ($composeArgs + @('config', '--quiet'))
 
     $tests = @(Get-ChildItem (Join-Path $SourceDir 'tests') -Filter 'test_*.py' -Recurse -File -ErrorAction SilentlyContinue)
+    $stage = 'python-validation'
     if ($tests.Count -gt 0) {
         $python = Join-Path $RuntimeDir '.venv\Scripts\python.exe'
         if (-not (Test-Path -LiteralPath $python)) { throw 'Tests exist, but the host Python environment is missing.' }
@@ -56,11 +69,38 @@ try {
         try {
             & $python -m pip install -r (Join-Path $SourceDir 'requirements.txt')
             if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
+            & $python -m compileall -q src kafka tests deploy
+            if ($LASTEXITCODE -ne 0) { throw 'Python source compilation failed.' }
+            & $python -m pip check
+            if ($LASTEXITCODE -ne 0) { throw 'Dependency consistency check failed.' }
             & $python -m pytest tests
             if ($LASTEXITCODE -ne 0) { throw "Tests failed (exit $LASTEXITCODE)." }
         } finally { Pop-Location }
     } else { Write-Host '[TEST] No pytest test files yet; no tests were run.' }
 
+    $stage = 'web-validation'
+    $webDir = Join-Path $SourceDir 'web'
+    if (Test-Path -LiteralPath (Join-Path $webDir 'package.json')) {
+        $npm = (Get-Command npm.cmd -ErrorAction Stop).Source
+        Push-Location $webDir
+        try {
+            & $npm ci --no-audit --no-fund
+            if ($LASTEXITCODE -ne 0) { throw 'Web dependency installation failed.' }
+            & $npm run lint
+            if ($LASTEXITCODE -ne 0) { throw 'Web lint failed.' }
+            & $npm run build
+            if ($LASTEXITCODE -ne 0) { throw 'Web build failed.' }
+        } finally { Pop-Location }
+    }
+
+    if ($ValidateOnly) {
+        [ordered]@{ time = $attemptTime; revision = $revision; validationOnly = $true; stage = 'validated'; exitCode = 0; fullDeployment = $false } |
+            ConvertTo-Json | Set-Content -LiteralPath $reportFile -Encoding UTF8
+        Write-Host '[VALIDATED] Tests and build checks passed. No containers were changed.'
+        exit 0
+    }
+
+    $stage = 'image-build'
     Write-Host '[BUILD] Building all three application images'
     Invoke-Docker -DockerArgs ($composeArgs + @('build'))
 
@@ -77,6 +117,7 @@ try {
         Invoke-Docker -DockerArgs ($composeArgs + @('stop') + $pending)
     }
     Write-Host ('[DEPLOY] Starting implemented services: ' + ($ready -join ', '))
+    $stage = 'service-start'
     Invoke-Docker -DockerArgs ($composeArgs + @('up', '--detach', '--wait', '--wait-timeout', '180') + $ready)
     $before = @{}
     foreach ($service in $ready) {
@@ -95,14 +136,24 @@ try {
         Write-Host "[VERIFIED] $service is running with no new restarts."
     }
     Invoke-Docker -DockerArgs ($composeArgs + @('ps', '--all'))
-    $revision = (& git -C $SourceDir rev-parse HEAD | Out-String).Trim()
-    if ($LASTEXITCODE -ne 0) { throw 'Cannot determine deployed Git revision.' }
     $report = [ordered]@{ time = (Get-Date).ToString('o'); revision = $revision; source = $SourceDir; runtime = $RuntimeDir; running = $ready; pending = $pending; fullDeployment = ($pending.Count -eq 0) }
     $report | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $RuntimeDir 'logs\last-deployment.json') -Encoding UTF8
     $exitCode = if ($pending.Count -gt 0) { 2 } else { 0 }
+    $report['validationOnly'] = $false
+    $report['exitCode'] = $exitCode
+    $report['stage'] = 'service-verified'
+    $report | ConvertTo-Json | Set-Content -LiteralPath $reportFile -Encoding UTF8
 } catch {
     Write-Host ('[ERROR] ' + $_.Exception.Message)
-    if ($composeArgs) { & docker @composeArgs ps --all }
+    if ($reportFile) {
+        # 경로·단계·commit만 기록한다. 환경값/secret/원문 예외는 보고서에 넣지 않는다.
+        [ordered]@{ time = $attemptTime; revision = $revision; validationOnly = [bool]$ValidateOnly; stage = $stage; exitCode = 1; fullDeployment = $false } |
+            ConvertTo-Json | Set-Content -LiteralPath $reportFile -Encoding UTF8
+    }
+    if ($composeArgs) {
+        & docker @composeArgs ps --all
+        if (-not $ValidateOnly) { & docker @composeArgs logs --tail 50 kafka inference monitor api }
+    }
 } finally {
     if ($overrideFile -and (Test-Path -LiteralPath $overrideFile)) { Remove-Item -LiteralPath $overrideFile }
     if ($lock) { $lock.Dispose() }
