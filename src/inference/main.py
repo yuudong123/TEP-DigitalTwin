@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 from kafka.message_schema import validate_sensor_message
 from kafka.delivery import publish_json
 
-from .model_loader import ProductionPredictor
+from .managed_model import model_from_environment
 from .temporal_features import TrajectoryFeatureBuffer
 
 
@@ -69,7 +69,7 @@ def main() -> None:
     ))
 
     # 서비스 시작 시 모델을 로딩하고 trajectory별 메모리 버퍼를 준비한다.
-    predictor = ProductionPredictor(model_dir)
+    predictor = model_from_environment(model_dir, 'inference')
     buffer = TrajectoryFeatureBuffer(predictor.features)
     # Sensor Consumer: 아직 처리하지 않은 센서 메시지를 읽는다.
     # 자동 커밋을 끄고 정상 처리 후에만 아래에서 직접 커밋한다.

@@ -25,8 +25,8 @@ class PredictionRuntime:
 
     def start(self):
         # Lazy import keeps contract tests independent of native model binaries.
-        from src.inference.model_loader import ProductionPredictor
-        self.predictor = ProductionPredictor(self.settings.model_dir)
+        from src.inference.managed_model import model_from_environment
+        self.predictor = model_from_environment(self.settings.model_dir, 'api')
         for topic in (self.settings.prediction_topic, self.settings.monitor_topic):
             ensure_topic(self.settings.bootstrap, topic)
         self.thread = threading.Thread(target=self.consume, daemon=True, name='api-kafka')
