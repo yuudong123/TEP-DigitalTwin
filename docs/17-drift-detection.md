@@ -240,7 +240,7 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 
 2026-09-30 추가 검증:
 
-- 집컴 전체 Python 테스트 57개 통과.
+- 집컴 전체 Python 테스트 최종 64개 통과.
 - 보정 후보의 validation/test 안정 창은 각각 0/450 경보. 70시간 이후는
   각각 572/883(64.78%), 567/885(64.07%) 경보. 고장 재현율이나 정확도가 아니다.
 - 실제 Kafka와 Monitor 컨테이너의 격리 topic에서 242개 Event 수신,

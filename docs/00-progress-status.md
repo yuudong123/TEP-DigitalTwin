@@ -16,9 +16,9 @@
 | 05 | 공통 | ✅ | 728개 temporal feature 생성·검증 | 없음 |
 | 06 | 공통 | ✅ | Production 4종 XGBoost 모델 v1.0.0 산출 | 운영 재학습 모델은 별도 |
 | 07 | 공통 | ✅ | 저장소 구조·실행 문서 정리 | 없음 |
-| 08 | B | 🟡 | Docker Compose, Kafka/Inference/Monitor 실행 및 Kafka 영구 볼륨 구성 | 재부팅 복구·전체 스택 가동 검증 |
-| 09 | B | 🟡 | 수동 배포 스크립트·runtime 보고서 구현 | 실제 운영 배포 성공 증적 정리 |
-| 10 | B | 🟡 | Jenkins dev 감시·자동 배포 연결 | API 포함 전체 체인 성공 검증 |
+| 08 | B | 🟡 | Docker Compose, 집컴 dev Kafka/Inference/Monitor 복구, 영구 볼륨·격리 broker 재생성 보존 실증 | 집컴 재부팅·API 포함 전체 스택 검증 |
+| 09 | B | 🟡 | 수동 배포·ValidateOnly·runtime 감사 및 단계 보고서(독립 ops PR), 집컴 Python/Web 검증 | API 포함 전체 배포 acceptance |
+| 10 | B | 🟡 | dev Poll SCM·로그인 실행기, 승인된 workspace 스크립트/보고서 archive 설정 저장 | ops PR 병합 후 실제 자동 배포 및 API 전체 체인 |
 | 11 | A | 🟡 | Producer/Consumer·Schema·Kafka replay 구현, 실제 2,929건 replay | 실패·재시도·중복/순서 보장 검증 |
 | 12 | A | 🟡 | 실시간 추론 병합, 2,929건 중 2,909건 예측 확인 | reliable delivery·API 연동 |
 | 13 | A | ⬜ | FastAPI 구현 | `/v1/predict` 및 운영 API 구현·검증 |
@@ -42,6 +42,9 @@
 4. A/C 의존: 13 API 구현과 14·15 실제 연결. 19·20 모델 승격·적용은 계약 확정 대기.
 
 결과: `reports/17-drift/validation-phases-2026-09-30.md`, `reports/17-drift/calibration-summary-2026-09-30.md`.
+
+운영 후속은 최신 dev에서 독립 `feat/ops-verification`으로 작업했다. 17번 미병합 코드를
+포함하지 않는다. 운영 검증 보고서는 해당 브랜치 `reports/08-operations/verification-2026-09-30.md`.
 
 17번 평가는 “운영 Data Drift 오탐률 통과”를 미리 가정하지 않는다. 현재 TEP에는
 별도 운영 Drift label이 없으므로 재학습 Trigger는 기본 비활성화한다.

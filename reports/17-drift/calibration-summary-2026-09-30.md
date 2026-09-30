@@ -32,7 +32,7 @@ SHA-256: `5e99120bdaf854e703c98ff8fca54f59e38544c3d57f818ef912d47713e600b1`.
 
 ## 실제 runtime 및 안전성
 
-- 집컴 전체 Python 테스트: 57 passed.
+- 집컴 전체 Python 테스트: 최종 64 passed (설정의 NaN/무한대·초기 구간 혼입 방지 포함).
 - 기존 영구 볼륨 `tep-kafka-data`를 사용하는 Kafka healthy 확인 후 격리 검증.
 - UUID 전용 topic/container로 실제 센서 242개를 처리하고 Event 242개 수신.
 - 마지막 정상 상태 NORMAL, 인위적으로 크게 이동한 입력 CONFIRMED_DRIFT.
@@ -40,8 +40,6 @@ SHA-256: `5e99120bdaf854e703c98ff8fca54f59e38544c3d57f818ef912d47713e600b1`.
 - smoke의 검사 주기는 0초로 운영 기본 60초 및 장시간 성능을 입증하지 않는다.
 - 발행 callback 성공 확인 후 offset commit. timeout/terminal failure는 commit 없이 종료.
 - at-least-once이므로 중복 가능. 메모리 창/연속 상태는 재시작 시 다시 준비한다.
-
-## 남은 승인·검증
 
 ## 추가 실제 복구·주기 검증
 
