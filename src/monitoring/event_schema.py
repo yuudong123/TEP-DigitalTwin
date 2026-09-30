@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from datetime import datetime
+import re
 from typing import Any
 from uuid import uuid4
 
@@ -35,6 +36,7 @@ def build_drift_event(
     retraining_requested: bool = False,
     reason: str = "",
     detected_at: datetime | None = None,
+    calibration_sha256: str | None = None,
 ) -> dict[str, Any]:
     actual_detected_at = detected_at or datetime.now().astimezone()
     if actual_detected_at.tzinfo is None:
@@ -65,6 +67,8 @@ def build_drift_event(
         "retraining_requested": retraining_requested,
         "reason": reason,
     }
+    if calibration_sha256 is not None:
+        event["calibration_sha256"] = calibration_sha256
     validate_drift_event(event)
     return event
 
@@ -85,6 +89,10 @@ def validate_drift_event(event: Mapping[str, Any]) -> None:
         raise ValueError("지원하지 않는 Drift event schema입니다.")
     if event["status"] not in ALLOWED_STATUSES:
         raise ValueError("지원하지 않는 Drift 상태입니다.")
+    if "calibration_sha256" in event:
+        digest = event["calibration_sha256"]
+        if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+            raise ValueError("calibration_sha256 must be a lowercase SHA-256 digest")
     if not isinstance(event["sequence"], int) or isinstance(event["sequence"], bool):
         raise ValueError("sequence는 정수여야 합니다.")
     if not 0.0 <= float(event["drifted_feature_ratio"]) <= 1.0:

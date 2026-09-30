@@ -143,6 +143,7 @@ class DriftMonitor:
         min_samples: int = 20,
         thresholds: DriftThresholds | None = None,
         feature_limits_by_case: Mapping[str, Mapping[str, Mapping[str, float]]] | None = None,
+        calibration_sha256: str | None = None,
         clock: Any = time.monotonic,
     ) -> None:
         if not math.isfinite(check_interval_seconds) or check_interval_seconds < 0:
@@ -169,6 +170,7 @@ class DriftMonitor:
         self.detectors: dict[str, DriftDetector] = {}
         self.thresholds = thresholds
         self.feature_limits_by_case = feature_limits_by_case
+        self.calibration_sha256 = calibration_sha256
         self.trigger = RetrainingTrigger(
             retraining_state_path,
             enabled=retraining_enabled,
@@ -276,6 +278,7 @@ class DriftMonitor:
             result=result,
             retraining_requested=retraining_requested,
             reason=reason,
+            calibration_sha256=self.calibration_sha256,
         )
 
 
@@ -306,13 +309,17 @@ def main() -> None:
     reference_version, references = load_reference(settings.reference_path)
     features = list(next(iter(references.values())).keys())
     feature_limits = None
+    calibration_sha256 = None
     calibration_path = getattr(settings, "calibration_path", None)
     if calibration_path:
-        from .calibration import load_limits
+        from .calibration import file_sha256, load_limits
+        calibration_sha256 = file_sha256(calibration_path)
         feature_limits = load_limits(
             calibration_path, settings.reference_path,
             PROJECT_ROOT / "data/metadata/split_manifest.csv", 120,
         )
+        if file_sha256(calibration_path) != calibration_sha256:
+            raise ValueError("Calibration profile changed while loading")
         if settings.retraining_enabled:
             raise ValueError("Calibrated operating-state monitoring cannot request retraining")
     ensure_topic(settings.bootstrap_servers, settings.drift_topic)
@@ -327,6 +334,7 @@ def main() -> None:
         retraining_enabled=settings.retraining_enabled,
         retraining_state_path=settings.retraining_state_path,
         feature_limits_by_case=feature_limits,
+        calibration_sha256=calibration_sha256,
         min_samples=120 if feature_limits is not None else 20,
     )
     consumer = Consumer({

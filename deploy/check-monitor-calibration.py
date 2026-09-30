@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 import csv
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -129,10 +130,13 @@ def check(root: Path, raw_dir: Path, profile: Path, docker: Path, output: Path,
             raise RuntimeError("Stable/positive-control status check failed")
         if any(event["retraining_requested"] for event in events):
             raise RuntimeError("Unexpected retraining request")
+        profile_hash = hashlib.sha256(profile.read_bytes()).hexdigest()
+        if any(event.get("calibration_sha256") != profile_hash for event in events):
+            raise RuntimeError("Event calibration identity does not match loaded profile")
         result.update(success=True, event_count=len(events),
                       states=dict(Counter(event["status"] for event in events)),
                       stable_last_status=normal[-1]["status"], shifted_last_status=shifted[-1]["status"],
-                      retraining_requests=0)
+                      retraining_requests=0, calibration_sha256=profile_hash)
         if recovery:
             result["success"] = False
             # 전용 출력 topic의 최대 메시지 크기를 1 byte로 낮춰 발행 거부를 유도한다.
@@ -195,6 +199,37 @@ def check(root: Path, raw_dir: Path, profile: Path, docker: Path, output: Path,
                 "retried_sequence": retried["sequence"], "retry_status": retried["status"],
                 "recovered_last_status": events[-1]["status"], "event_count_total": len(events),
                 "semantics": "at-least-once; window rewarm after restart",
+            })
+            result["success"] = False
+            # 중복 입력은 조용히 계속 판정하지 않고 창을 다시 준비한다.
+            send(True, 243)
+            if producer.flush(20) or errors:
+                raise RuntimeError("Duplicate-control delivery failed")
+            receive(365)
+            duplicate = events[-1]
+            if (duplicate["status"] != "INSUFFICIENT_DATA"
+                or duplicate["reason"] != "sequence_not_increasing"):
+                raise RuntimeError("Duplicate sequence did not safely reset the window")
+            for sequence in range(244, 365):
+                send(True, sequence)
+            if producer.flush(20) or errors:
+                raise RuntimeError("Duplicate recovery input delivery failed")
+            receive(486)
+            if events[-1]["status"] != "CONFIRMED_DRIFT":
+                raise RuntimeError("Window did not recover after duplicate input")
+            for sequence, reason in ((366, "sequence_gap"), (365, "sequence_not_increasing")):
+                send(True, sequence)
+                if producer.flush(20) or errors:
+                    raise RuntimeError("Ordering-control delivery failed")
+                receive(len(events) + 1)
+                if events[-1]["status"] != "INSUFFICIENT_DATA" or events[-1]["reason"] != reason:
+                    raise RuntimeError("Gap/reordered sequence did not safely reset")
+            if any(event["retraining_requested"] for event in events):
+                raise RuntimeError("Recovery requested retraining unexpectedly")
+            result.update(success=True, ordering={
+                "duplicate_reset": duplicate["reason"], "recovery_status": "CONFIRMED_DRIFT",
+                "gap_reset": "sequence_gap", "reordered_reset": "sequence_not_increasing",
+                "event_count_total": len(events), "retraining_requests": 0,
             })
     finally:
         if consumer:

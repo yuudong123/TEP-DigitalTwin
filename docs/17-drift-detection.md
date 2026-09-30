@@ -31,6 +31,8 @@ Run-to-Failure 열화 및 운전상태 변화의 관찰 근거를 남긴다.
 추가 상태 변수이므로 1차 Drift 판정에서도 제외한다.
 
 출력은 `tep-drift-events` topic의 Drift Event Schema v1.0 메시지다.
+기준 후보 사용 시 선택 필드 `calibration_sha256`에 실제 후보 파일 해시를 포함한다.
+기존 필수 필드·상태값은 유지하며, 기존 규칙 Event에는 이 필드가 없다.
 
 ## 3. 기준 데이터와 적용 범위
 
@@ -252,6 +254,9 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - 추가: 실제 60초 설정의 판정 간격 61.016초 2회 확인. UUID topic 발행 거부 시
   입력 offset 242 보존, 재시작 후 해당 입력 재처리·창 재준비·CONFIRMED_DRIFT 회복 확인.
   증적은 `timing-smoke-2026-09-30.json`, `recovery-smoke-2026-09-30.json`.
+- 중복·누락·역전 입력도 실제 Kafka에서 안전한 창 초기화와 회복 확인(488개 Event).
+  후보 Event의 선택 calibration_sha256 필드도 검증했다.
+  증적: `recovery-identified-smoke-2026-09-30.json`.
 
 기존 평가 결과(2026-09-23, 해석 정정 2026-09-30):
 

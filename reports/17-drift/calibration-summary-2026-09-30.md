@@ -49,6 +49,10 @@ SHA-256: `5e99120bdaf854e703c98ff8fca54f59e38544c3d57f818ef912d47713e600b1`.
   실패 입력 offset 242에서 commit 위치도 242로 유지(다음 읽을 위치), Monitor 종료 확인.
   제한 복원·재시작 후 sequence 122를 재처리하고 INSUFFICIENT_DATA로 안전하게 재준비.
   추가 입력 후 CONFIRMED_DRIFT 회복, 총 364개 Event. 운영 topic/volume은 변경하지 않았다.
+- `recovery-identified-smoke-2026-09-30.json`: 발행 실패·재시작에 더해 중복 sequence,
+  sequence 누락·역전 입력으로 창 초기화와 양성 대조군 회복 확인. 총 488개 Event,
+  재학습 요청 0, 모든 초기 판정 Event의 calibration_sha256이 후보 파일과 일치.
+  Event의 선택 해시 필드로 기존 규칙과 후보를 구분하며 필수 필드/상태는 유지했다.
 
 ## 남은 승인·검증 (갱신)
 
