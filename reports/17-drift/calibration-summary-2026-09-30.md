@@ -43,8 +43,19 @@ SHA-256: `5e99120bdaf854e703c98ff8fca54f59e38544c3d57f818ef912d47713e600b1`.
 
 ## 남은 승인·검증
 
+## 추가 실제 복구·주기 검증
+
+- `timing-smoke-2026-09-30.json`: 실제 60초 설정에서 연속 판정 사이 61.016초씩
+  두 번 관측, 242개 Event 및 최종 CONFIRMED_DRIFT. 약 2분 양성 대조이며 장시간 부하 검증은 아니다.
+- `recovery-smoke-2026-09-30.json`: UUID 출력 topic에만 크기 제한을 넣어 실제 발행 실패 유도.
+  실패 입력 offset 242에서 commit 위치도 242로 유지(다음 읽을 위치), Monitor 종료 확인.
+  제한 복원·재시작 후 sequence 122를 재처리하고 INSUFFICIENT_DATA로 안전하게 재준비.
+  추가 입력 후 CONFIRMED_DRIFT 회복, 총 364개 Event. 운영 topic/volume은 변경하지 않았다.
+
+## 남은 승인·검증 (갱신)
+
 1. 후보 기준 운영 승인 및 명시적 설정/재배포.
 2. 실제 60초 검사 주기 장시간 재생 및 수신 지연 검증.
-3. Kafka/Monitor 재시작, 중복, 미확정 offset 재처리의 실제 장애 복구 검증.
+3. Kafka broker 재시작 및 장시간 중복·재처리 검증. Monitor 발행 실패·재시작 복구는 위 격리 검증 완료.
 
 17번은 부분 완료다. 자동 재학습·모델 승격·hot apply는 이 검증의 범위가 아니다.

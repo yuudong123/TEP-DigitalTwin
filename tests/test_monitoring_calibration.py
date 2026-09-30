@@ -66,3 +66,18 @@ def test_candidate_profile_cannot_use_small_windows_or_retraining(samples, retra
             feature_limits_by_case={"case1": {"a": {"psi": .25, "ks": .15}}},
             retraining_enabled=retrain,
         )
+
+
+@pytest.mark.parametrize("setting", ["check_interval_seconds", "minimum_timestamp_hours"])
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), -1.])
+def test_runtime_rejects_nonfinite_or_negative_timing(setting, value):
+    with pytest.raises(ValueError):
+        DriftMonitor(features=["a"], references={"case1": {"a": [0., 1.]}},
+                     reference_version="v-test", model_version="v-test", **{setting: value})
+
+
+def test_calibrated_runtime_cannot_include_startup_interval():
+    with pytest.raises(ValueError, match="pre-30h"):
+        DriftMonitor(features=["a"], references={"case1": {"a": [0., 1.]}},
+                     reference_version="v-test", model_version="v-test", min_samples=120,
+                     minimum_timestamp_hours=0, feature_limits_by_case={})

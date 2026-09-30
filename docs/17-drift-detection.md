@@ -249,6 +249,9 @@ Inference 결과가 아직 없으면 `prediction_context`는 `null`로 전송한
 - broker delivery callback 성공을 확인한 뒤에만 입력 offset commit.
   발행 실패 시 종료하고 해당 offset을 남긴다. 중복 가능하며 창 상태는 재시작 후 다시 준비한다.
 - 상세 증적: `reports/17-drift/calibration-summary-2026-09-30.md`.
+- 추가: 실제 60초 설정의 판정 간격 61.016초 2회 확인. UUID topic 발행 거부 시
+  입력 offset 242 보존, 재시작 후 해당 입력 재처리·창 재준비·CONFIRMED_DRIFT 회복 확인.
+  증적은 `timing-smoke-2026-09-30.json`, `recovery-smoke-2026-09-30.json`.
 
 기존 평가 결과(2026-09-23, 해석 정정 2026-09-30):
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 import json
+import math
 import os
 from pathlib import Path
 import signal
@@ -144,11 +145,13 @@ class DriftMonitor:
         feature_limits_by_case: Mapping[str, Mapping[str, Mapping[str, float]]] | None = None,
         clock: Any = time.monotonic,
     ) -> None:
-        if check_interval_seconds < 0:
+        if not math.isfinite(check_interval_seconds) or check_interval_seconds < 0:
             raise ValueError("check_interval_seconds는 0 이상이어야 합니다.")
-        if minimum_timestamp_hours < 0:
+        if not math.isfinite(minimum_timestamp_hours) or minimum_timestamp_hours < 0:
             raise ValueError("minimum_timestamp_hours는 0 이상이어야 합니다.")
         if feature_limits_by_case is not None:
+            if minimum_timestamp_hours < 30:
+                raise ValueError("Calibrated monitoring must exclude the pre-30h interval")
             if min_samples != 120 or window_size != 120:
                 raise ValueError("Calibrated monitoring requires complete 120-sample windows")
             if retraining_enabled:

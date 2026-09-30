@@ -25,7 +25,7 @@
 | 14 | C | 🟡 | React/Vite 대시보드·mock stream·API client | 실제 API 연결·라이브 검증 |
 | 15 | C | 🟡 | Unity prefab/mock·WebGL bridge·Prediction 모델 | API 연결·오류 UI·자동/장시간/Windows 검증 |
 | 16 | A/B/C | 🟡 | 서비스 간 일부 계약·Jenkins checklist | API→Inference→Kafka→Web/Unity 전체 통합 |
-| 17 | B | 🟡 | train 전용 기준 후보, validation/test 안정 구간 각각 0/450 경보, Kafka 실제 242개 Event 검증, 발행 성공 후 commit | 운영 기준 승인·적용, 60초 주기 장시간·재시작/중복 복구 검증 |
+| 17 | B | 🟡 | train 기준 후보, validation/test 안정 경보 각각 0/450, 실제 60초 판정, 발행 실패 offset 보존 및 Monitor 재시작 복구 | 운영 승인·적용, broker 재시작 및 장시간 부하·중복 검증 |
 | 18 | C | 보류 | 자동 재학습 연계 보류 결정(파이프라인 미구현) | 필요 데이터·승인 기준 확보 후 범위 재확정 |
 | 19 | C | ⬜ | candidate 평가·승격 미구현 | 평가 기준·승격/거부·rollback 계약 |
 | 20 | B | ⬜ | Production 모델 hot application/rollback 미구현 | 19번 계약 이후 적용 |
