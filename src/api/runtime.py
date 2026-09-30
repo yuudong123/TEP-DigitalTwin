@@ -2,6 +2,7 @@
 import json
 import logging
 import threading
+import time
 
 from confluent_kafka import Consumer, KafkaError
 from kafka.topic_admin import ensure_topic
@@ -20,6 +21,7 @@ class PredictionRuntime:
         self.invalid_messages = 0
         self.predict_lock = threading.Lock()
         self.predictor = None
+        self.assigned = False
 
     def start(self):
         # Lazy import keeps contract tests independent of native model binaries.
@@ -37,10 +39,18 @@ class PredictionRuntime:
             'auto.offset.reset': 'earliest', 'enable.auto.commit': False,
         })
         consumer.subscribe([self.settings.prediction_topic, self.settings.monitor_topic],
-                           on_assign=lambda _c, _p: setattr(self, 'ready', True),
-                           on_revoke=lambda _c, _p: setattr(self, 'ready', False))
+                           on_assign=lambda _c, _p: setattr(self, 'assigned', True),
+                           on_revoke=lambda _c, _p: self.revoked())
+        last_probe = 0.0
         try:
             while not self.stop_event.is_set():
+                if time.monotonic() - last_probe > 5:
+                    last_probe = time.monotonic()
+                    try:
+                        consumer.list_topics(timeout=3)
+                        self.ready = self.assigned
+                    except Exception:
+                        self.ready = False
                 message = consumer.poll(1)
                 if message is None:
                     continue
@@ -73,6 +83,10 @@ class PredictionRuntime:
         finally:
             self.ready = False
             consumer.close()
+
+    def revoked(self):
+        self.assigned = False
+        self.ready = False
 
     def predict(self, history):
         from src.inference.temporal_features import TrajectoryFeatureBuffer
