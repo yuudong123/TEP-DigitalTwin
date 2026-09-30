@@ -99,6 +99,7 @@ def evaluate(
     min_samples: int = 120,
     check_interval_seconds: float = 21600.0,
     simulation_step_seconds: float = 180.0,
+    calibration_path: Path | None = None,
 ) -> dict[str, Any]:
     if not math.isfinite(check_interval_seconds) or check_interval_seconds < 0:
         raise ValueError("check_interval_seconds must be finite and nonnegative")
@@ -113,6 +114,10 @@ def evaluate(
     trajectories = _read_trajectories(raw_dir, selected)
     features = list(next(iter(references.values())).keys())
     simulated_clock = [0.0]
+    feature_limits = None
+    if calibration_path is not None:
+        from .calibration import load_limits
+        feature_limits = load_limits(calibration_path, reference_path, manifest_path, window_size)
     monitor = DriftMonitor(
         features=features,
         references=references,
@@ -127,6 +132,7 @@ def evaluate(
         window_size=window_size,
         min_samples=min_samples,
         clock=lambda: simulated_clock[0],
+        feature_limits_by_case=feature_limits,
     )
 
     status_counts: dict[str, int] = {}
@@ -139,18 +145,29 @@ def evaluate(
         for name in ("stable_30_60", "transition_or_boundary", "post_70")
     }
     feature_alert_counts = {feature: 0 for feature in features}
+    trajectory_results = []
     for (case_name, trajectory_id), rows in sorted(trajectories.items()):
         case_stats = per_case.setdefault(case_name, {"trajectories": 0, "windows": 0, "alerts": 0})
         case_stats["trajectories"] += 1
+        trajectory_stats = {
+            "trajectory_key": f"{case_name}::{trajectory_id}",
+            "eol_hours": float(rows[-1]["Time"]),
+            "first_alert_hours": None, "first_confirmed_hours": None,
+            "phases": {name: {"windows": 0, "alerts": 0} for name in phases},
+        }
+        trajectory_results.append(trajectory_stats)
         for sequence, row in enumerate(rows):
             simulated_clock[0] += simulation_step_seconds
             event = monitor.process(_sensor_message(case_name, trajectory_id, sequence, row))
             if event is None or event["status"] == "INSUFFICIENT_DATA":
                 continue
             bounds = event["window"]
-            phase = phases[window_phase(
+            phase_name = window_phase(
                 bounds["start_timestamp_hours"], bounds["end_timestamp_hours"]
-            )]
+            )
+            phase = phases[phase_name]
+            trajectory_phase = trajectory_stats["phases"][phase_name]
+            trajectory_phase["windows"] += 1
             status = str(event["status"])
             phase["windows"] += 1
             phase["status_counts"][status] = phase["status_counts"].get(status, 0) + 1
@@ -163,9 +180,14 @@ def evaluate(
                 if feature_result["drifted"]:
                     feature_alert_counts[feature_result["feature"]] += 1
             if status in ALERT_STATUSES:
+                trajectory_phase["alerts"] += 1
+                if trajectory_stats["first_alert_hours"] is None:
+                    trajectory_stats["first_alert_hours"] = event["timestamp_hours"]
                 phase["alerts"] += 1
                 alerts += 1
                 case_stats["alerts"] += 1
+            if status == "CONFIRMED_DRIFT" and trajectory_stats["first_confirmed_hours"] is None:
+                trajectory_stats["first_confirmed_hours"] = event["timestamp_hours"]
 
     for phase in phases.values():
         phase["alert_window_rate"] = (
@@ -179,6 +201,7 @@ def evaluate(
         "split": split,
         "reference_version": reference_version,
         "reference_sha256": _sha256(reference_path),
+        "calibration_sha256": _sha256(calibration_path) if calibration_path else None,
         "manifest_sha256": _sha256(manifest_path),
         "minimum_timestamp_hours": minimum_timestamp_hours,
         "window_size": window_size,
@@ -186,6 +209,9 @@ def evaluate(
         "check_interval_seconds": check_interval_seconds,
         "simulation_step_seconds": simulation_step_seconds,
         "trajectory_count": sum(item["trajectories"] for item in per_case.values()),
+        "trajectories_with_alert": sum(t["first_alert_hours"] is not None for t in trajectory_results),
+        "trajectories_with_confirmed": sum(t["first_confirmed_hours"] is not None for t in trajectory_results),
+        "trajectory_results": trajectory_results,
         "evaluated_windows": evaluated_windows,
         "alert_windows": alerts,
         "alert_window_rate": alerts / evaluated_windows if evaluated_windows else None,
@@ -216,6 +242,7 @@ def main() -> None:
     parser.add_argument("--check-interval-seconds", type=float, default=21600.0)
     parser.add_argument("--simulation-step-seconds", type=float, default=180.0)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--calibration", type=Path, help="Train에서 생성한 실험용 기준; 미지정 시 기존 규칙")
     args = parser.parse_args()
     result = evaluate(
         raw_dir=args.raw_dir,
@@ -224,6 +251,7 @@ def main() -> None:
         split=args.split,
         check_interval_seconds=args.check_interval_seconds,
         simulation_step_seconds=args.simulation_step_seconds,
+        calibration_path=args.calibration,
     )
     rendered = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
     if args.output:

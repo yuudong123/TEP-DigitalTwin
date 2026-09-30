@@ -121,3 +121,24 @@ def test_real_reference_file_has_six_cases_and_52_features():
 def test_retraining_is_disabled_by_default(monkeypatch):
     monkeypatch.delenv("RETRAIN_ENABLED", raising=False)
     assert settings_from_environment().retraining_enabled is False
+
+
+def test_calibration_path_is_explicit_and_optional(monkeypatch):
+    monkeypatch.setenv("DRIFT_CALIBRATION_PATH", "")
+    assert settings_from_environment().calibration_path is None
+    monkeypatch.setenv("DRIFT_CALIBRATION_PATH", "models/monitoring/custom.json")
+    assert settings_from_environment().calibration_path.name == "custom.json"
+
+
+def test_sequence_reset_removes_old_check_timer(tmp_path):
+    monitor = DriftMonitor(
+        features=["a", "b"], references={"case1": {"a": [0., 1.], "b": [.5, 1.5]}},
+        reference_version="v-test", model_version="v-test", minimum_timestamp_hours=0,
+        check_interval_seconds=60, clock=lambda: 100., window_size=3, min_samples=2,
+        thresholds=DriftThresholds(min_samples=2), retraining_state_path=tmp_path / "state.json",
+    )
+    monitor.process(message(0, 0.))
+    assert monitor.process(message(1, .05))["status"] == "NORMAL"
+    assert monitor.process(message(4, .2))["reason"] == "sequence_gap"
+    # 가상 시계가 같아도 재구성된 창은 이전 검사 타이머에 막히지 않는다.
+    assert monitor.process(message(5, .25)) is not None

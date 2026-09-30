@@ -1,0 +1,3000 @@
+{
+  "schema_version": "1.0",
+  "method": "train_stable_joint_psi_ks_p99",
+  "created_at": "2026-09-30T00:36:18.379853+00:00",
+  "split": "train",
+  "reference_version": "v1.0.0",
+  "reference_sha256": "954f22acf9e2a08db7a4f5860b120a91415ec5e22db948cb03a89cf281d2c5b8",
+  "manifest_sha256": "dae262bb20fa1d3578394879b9a3f9cea971e6136a267a13e16022e82afe7504",
+  "window_size": 120,
+  "stable_interval_hours": [
+    30,
+    60
+  ],
+  "quantile": 0.99,
+  "rule": "psi > limit AND ks > limit; no p-value gate",
+  "cases": {
+    "case1": {
+      "trajectory_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        11,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        38,
+        39,
+        40,
+        41,
+        43,
+        44,
+        46,
+        47,
+        49,
+        51,
+        52,
+        53,
+        56,
+        57,
+        58,
+        60,
+        61,
+        62,
+        63,
+        64,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        76,
+        77,
+        79,
+        80,
+        81,
+        82,
+        84,
+        85,
+        87,
+        88,
+        90,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        100
+      ],
+      "windows": 350,
+      "legacy_alert_windows": 294,
+      "legacy_alert_window_rate": 0.84,
+      "limits": {
+        "D feed": {
+          "psi": 6.714567823446362,
+          "ks": 0.5863333333333334
+        },
+        "E Feed": {
+          "psi": 6.269910169984417,
+          "ks": 0.6183333333333334
+        },
+        "A Feed": {
+          "psi": 2.8659704195793783,
+          "ks": 0.383
+        },
+        "A and C Feed": {
+          "psi": 1.3778378941392095,
+          "ks": 0.263
+        },
+        "Recycle": {
+          "psi": 0.25,
+          "ks": 0.16033333333333338
+        },
+        "Purge": {
+          "psi": 1.4275687336209795,
+          "ks": 0.23700000000000004
+        },
+        "Separator": {
+          "psi": 2.846108443227101,
+          "ks": 0.31899999999999995
+        },
+        "Stripper": {
+          "psi": 2.5075584563574758,
+          "ks": 0.28400000000000003
+        },
+        "Steam": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Coolant": {
+          "psi": 0.29999713673218553,
+          "ks": 0.17600000000000005
+        },
+        "Condenser Coolant": {
+          "psi": 1.460867366150392,
+          "ks": 0.19
+        },
+        "msv A Feed": {
+          "psi": 2.5532235772816962,
+          "ks": 0.387
+        },
+        "msv D Feed": {
+          "psi": 0.3740474039758838,
+          "ks": 0.23233333333333334
+        },
+        "msv E Feed": {
+          "psi": 0.47356309876202307,
+          "ks": 0.2643333333333333
+        },
+        "msv A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15066666666666662
+        },
+        "Recycle Flow": {
+          "psi": 0.25,
+          "ks": 0.15033333333333337
+        },
+        "Reactor Feed Rate": {
+          "psi": 0.28431317239110554,
+          "ks": 0.16466666666666663
+        },
+        "Reactor Pressure": {
+          "psi": 1.332776838231831,
+          "ks": 0.23033333333333333
+        },
+        "Reactor Level": {
+          "psi": 1.2076992512040035,
+          "ks": 0.24966666666666668
+        },
+        "Reactor Temperature": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge Rate": {
+          "psi": 1.5021881761992044,
+          "ks": 0.23233333333333334
+        },
+        "Product Sep Temp": {
+          "psi": 1.528443632877624,
+          "ks": 0.23199999999999998
+        },
+        "Product Sep Level": {
+          "psi": 1.3775128841341013,
+          "ks": 0.20999999999999996
+        },
+        "Product Sep Pressure": {
+          "psi": 1.551488203126311,
+          "ks": 0.234
+        },
+        "Product Sep Underflow": {
+          "psi": 0.4544764650912517,
+          "ks": 0.18366666666666664
+        },
+        "Stripper Level": {
+          "psi": 1.6419292741273641,
+          "ks": 0.2793333333333334
+        },
+        "Stripper Pressure": {
+          "psi": 0.7873413797805449,
+          "ks": 0.2313333333333334
+        },
+        "Stripper Underflow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Temp": {
+          "psi": 1.6388895518766247,
+          "ks": 0.2386666666666667
+        },
+        "Stripper Steam Flow": {
+          "psi": 0.25,
+          "ks": 0.15833333333333333
+        },
+        "Compressor Work": {
+          "psi": 1.5195851525327007,
+          "ks": 0.20833333333333337
+        },
+        "Reactor Coolant Temp": {
+          "psi": 1.2650631638385965,
+          "ks": 0.20533333333333334
+        },
+        "Separator Coolant Temp": {
+          "psi": 1.4784085768011475,
+          "ks": 0.241
+        },
+        "Component A to Reactor": {
+          "psi": 1.6418058922046255,
+          "ks": 0.2623333333333333
+        },
+        "Component B to Reactor": {
+          "psi": 1.4308455480275464,
+          "ks": 0.2696666666666666
+        },
+        "Component C to Reactor": {
+          "psi": 0.45362839967732455,
+          "ks": 0.2003333333333333
+        },
+        "Component D to Reactor": {
+          "psi": 1.4405256516860618,
+          "ks": 0.18033333333333335
+        },
+        "Component E to Reactor": {
+          "psi": 1.4466278374194552,
+          "ks": 0.22933333333333333
+        },
+        "Component F to Reactor": {
+          "psi": 1.3738602962237016,
+          "ks": 0.25766666666666665
+        },
+        "Component A to Purge": {
+          "psi": 1.5956721066093935,
+          "ks": 0.45666666666666667
+        },
+        "Component B to Purge": {
+          "psi": 4.35157044575236,
+          "ks": 0.5736666666666667
+        },
+        "Component C to Purge": {
+          "psi": 1.7869456637378884,
+          "ks": 0.33599999999999997
+        },
+        "Component D to Purge": {
+          "psi": 1.2480469561433458,
+          "ks": 0.20399999999999996
+        },
+        "Component E to Purge": {
+          "psi": 1.44969509911096,
+          "ks": 0.242
+        },
+        "Component F to Purge": {
+          "psi": 1.2977733540180376,
+          "ks": 0.27233333333333337
+        },
+        "Component G to Purge": {
+          "psi": 1.6066152808159162,
+          "ks": 0.2566666666666666
+        },
+        "Component H to Purge": {
+          "psi": 1.2617695017469273,
+          "ks": 0.18699999999999994
+        },
+        "Component D to Product": {
+          "psi": 2.667368039176269,
+          "ks": 0.2963333333333334
+        },
+        "Component E to Product": {
+          "psi": 3.87822278007683,
+          "ks": 0.35333333333333333
+        },
+        "Component F to Product": {
+          "psi": 3.9118111603977863,
+          "ks": 0.4666666666666666
+        },
+        "Component G to Product": {
+          "psi": 3.714729572927327,
+          "ks": 0.3153333333333333
+        },
+        "Component H to Product": {
+          "psi": 3.6766313564567716,
+          "ks": 0.33966666666666673
+        }
+      },
+      "diagnostics": {
+        "D feed": {
+          "median_psi": 0.5433882110245116,
+          "median_ks": 0.23099999999999998
+        },
+        "E Feed": {
+          "median_psi": 0.7621527061148139,
+          "median_ks": 0.2736666666666666
+        },
+        "A Feed": {
+          "median_psi": 0.39373975869173916,
+          "median_ks": 0.18700000000000006
+        },
+        "A and C Feed": {
+          "median_psi": 0.13720956061193534,
+          "median_ks": 0.10599999999999998
+        },
+        "Recycle": {
+          "median_psi": 0.06800275931194873,
+          "median_ks": 0.08866666666666667
+        },
+        "Purge": {
+          "median_psi": 0.1729739952872818,
+          "median_ks": 0.1293333333333333
+        },
+        "Separator": {
+          "median_psi": 0.2238525179803612,
+          "median_ks": 0.137
+        },
+        "Stripper": {
+          "median_psi": 0.21675543219967494,
+          "median_ks": 0.11116666666666668
+        },
+        "Steam": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Reactor Coolant": {
+          "median_psi": 0.11834302166363098,
+          "median_ks": 0.09733333333333333
+        },
+        "Condenser Coolant": {
+          "median_psi": 0.14531600774190348,
+          "median_ks": 0.11433333333333331
+        },
+        "msv A Feed": {
+          "median_psi": 0.3848600076404836,
+          "median_ks": 0.181
+        },
+        "msv D Feed": {
+          "median_psi": 0.10937207359945768,
+          "median_ks": 0.11199999999999999
+        },
+        "msv E Feed": {
+          "median_psi": 0.11862846370150618,
+          "median_ks": 0.1225
+        },
+        "msv A and C Feed": {
+          "median_psi": 0.07822462936603504,
+          "median_ks": 0.08333333333333326
+        },
+        "Recycle Flow": {
+          "median_psi": 0.1026643364514491,
+          "median_ks": 0.08966666666666667
+        },
+        "Reactor Feed Rate": {
+          "median_psi": 0.09603752657124405,
+          "median_ks": 0.10200000000000004
+        },
+        "Reactor Pressure": {
+          "median_psi": 0.16639763744295183,
+          "median_ks": 0.10599999999999997
+        },
+        "Reactor Level": {
+          "median_psi": 0.14548058918632678,
+          "median_ks": 0.11299999999999999
+        },
+        "Reactor Temperature": {
+          "median_psi": 0.07135946074302092,
+          "median_ks": 0.07366666666666671
+        },
+        "Purge Rate": {
+          "median_psi": 0.17120444046389607,
+          "median_ks": 0.12883333333333336
+        },
+        "Product Sep Temp": {
+          "median_psi": 0.1478484756317075,
+          "median_ks": 0.10099999999999998
+        },
+        "Product Sep Level": {
+          "median_psi": 0.15217038464322435,
+          "median_ks": 0.10366666666666667
+        },
+        "Product Sep Pressure": {
+          "median_psi": 0.17369014191519716,
+          "median_ks": 0.11016666666666666
+        },
+        "Product Sep Underflow": {
+          "median_psi": 0.11163577194740479,
+          "median_ks": 0.10300000000000001
+        },
+        "Stripper Level": {
+          "median_psi": 0.2012457310078606,
+          "median_ks": 0.1253333333333333
+        },
+        "Stripper Pressure": {
+          "median_psi": 0.22314690136372306,
+          "median_ks": 0.11766666666666664
+        },
+        "Stripper Underflow": {
+          "median_psi": 0.08172311300353047,
+          "median_ks": 0.08100000000000007
+        },
+        "Stripper Temp": {
+          "median_psi": 0.15736471865859475,
+          "median_ks": 0.11566666666666664
+        },
+        "Stripper Steam Flow": {
+          "median_psi": 0.08029457179340746,
+          "median_ks": 0.07433333333333336
+        },
+        "Compressor Work": {
+          "median_psi": 0.17482548669036652,
+          "median_ks": 0.11800000000000001
+        },
+        "Reactor Coolant Temp": {
+          "median_psi": 0.13304188229350056,
+          "median_ks": 0.10833333333333332
+        },
+        "Separator Coolant Temp": {
+          "median_psi": 0.1566724308774663,
+          "median_ks": 0.11333333333333334
+        },
+        "Component A to Reactor": {
+          "median_psi": 0.18672349865320337,
+          "median_ks": 0.11666666666666667
+        },
+        "Component B to Reactor": {
+          "median_psi": 0.2010274507500332,
+          "median_ks": 0.1281666666666667
+        },
+        "Component C to Reactor": {
+          "median_psi": 0.15009277255992895,
+          "median_ks": 0.10633333333333328
+        },
+        "Component D to Reactor": {
+          "median_psi": 0.13480388195080253,
+          "median_ks": 0.11066666666666668
+        },
+        "Component E to Reactor": {
+          "median_psi": 0.16935873019777725,
+          "median_ks": 0.12016666666666663
+        },
+        "Component F to Reactor": {
+          "median_psi": 0.1569491070659942,
+          "median_ks": 0.11233333333333334
+        },
+        "Component A to Purge": {
+          "median_psi": 0.22050478462280257,
+          "median_ks": 0.14899999999999997
+        },
+        "Component B to Purge": {
+          "median_psi": 0.2734107215799463,
+          "median_ks": 0.17600000000000005
+        },
+        "Component C to Purge": {
+          "median_psi": 0.22485353811359893,
+          "median_ks": 0.15766666666666668
+        },
+        "Component D to Purge": {
+          "median_psi": 0.17220708361382386,
+          "median_ks": 0.11666666666666668
+        },
+        "Component E to Purge": {
+          "median_psi": 0.16750546528866356,
+          "median_ks": 0.11233333333333334
+        },
+        "Component F to Purge": {
+          "median_psi": 0.17478469737785082,
+          "median_ks": 0.12633333333333335
+        },
+        "Component G to Purge": {
+          "median_psi": 0.2346279763154009,
+          "median_ks": 0.13066666666666668
+        },
+        "Component H to Purge": {
+          "median_psi": 0.14275361275750548,
+          "median_ks": 0.11033333333333334
+        },
+        "Component D to Product": {
+          "median_psi": 1.193868644108387,
+          "median_ks": 0.16666666666666663
+        },
+        "Component E to Product": {
+          "median_psi": 1.3686841898331548,
+          "median_ks": 0.18250000000000005
+        },
+        "Component F to Product": {
+          "median_psi": 0.39300925287360833,
+          "median_ks": 0.164
+        },
+        "Component G to Product": {
+          "median_psi": 1.2833436922916368,
+          "median_ks": 0.1506666666666667
+        },
+        "Component H to Product": {
+          "median_psi": 0.8389994424529711,
+          "median_ks": 0.16549999999999998
+        }
+      }
+    },
+    "case2": {
+      "trajectory_ids": [
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        16,
+        17,
+        18,
+        19,
+        21,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        46,
+        47,
+        48,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        64,
+        65,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        75,
+        76,
+        78,
+        80,
+        82,
+        83,
+        84,
+        85,
+        87,
+        88,
+        90,
+        91,
+        93,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "windows": 350,
+      "legacy_alert_windows": 350,
+      "legacy_alert_window_rate": 1.0,
+      "limits": {
+        "D feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "E Feed": {
+          "psi": 1.682969569615299,
+          "ks": 0.30266666666666664
+        },
+        "A Feed": {
+          "psi": 0.29686058614755645,
+          "ks": 0.20899999999999996
+        },
+        "A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Recycle": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge": {
+          "psi": 0.25,
+          "ks": 0.16766666666666663
+        },
+        "Separator": {
+          "psi": 2.5289538514502263,
+          "ks": 0.4073333333333333
+        },
+        "Stripper": {
+          "psi": 1.7119882506347246,
+          "ks": 0.42733333333333334
+        },
+        "Steam": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Coolant": {
+          "psi": 0.25,
+          "ks": 0.17033333333333334
+        },
+        "Condenser Coolant": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "msv A Feed": {
+          "psi": 0.25,
+          "ks": 0.20466666666666666
+        },
+        "msv D Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "msv E Feed": {
+          "psi": 0.25,
+          "ks": 0.17200000000000004
+        },
+        "msv A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Recycle Flow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Feed Rate": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Level": {
+          "psi": 0.41842293648403267,
+          "ks": 0.253
+        },
+        "Reactor Temperature": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge Rate": {
+          "psi": 0.25,
+          "ks": 0.15699999999999997
+        },
+        "Product Sep Temp": {
+          "psi": 1.8731813919506495,
+          "ks": 0.394
+        },
+        "Product Sep Level": {
+          "psi": 0.25,
+          "ks": 0.17099999999999999
+        },
+        "Product Sep Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Product Sep Underflow": {
+          "psi": 0.25,
+          "ks": 0.22266666666666668
+        },
+        "Stripper Level": {
+          "psi": 0.27188569784487326,
+          "ks": 0.17166666666666675
+        },
+        "Stripper Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Underflow": {
+          "psi": 0.25,
+          "ks": 0.16133333333333327
+        },
+        "Stripper Temp": {
+          "psi": 3.0078507775697236,
+          "ks": 0.41466666666666663
+        },
+        "Stripper Steam Flow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Compressor Work": {
+          "psi": 2.6530686479973387,
+          "ks": 0.3446666666666667
+        },
+        "Reactor Coolant Temp": {
+          "psi": 0.4018287170276137,
+          "ks": 0.281
+        },
+        "Separator Coolant Temp": {
+          "psi": 1.7184821797627863,
+          "ks": 0.3543333333333334
+        },
+        "Component A to Reactor": {
+          "psi": 1.4006808517965985,
+          "ks": 0.19166666666666665
+        },
+        "Component B to Reactor": {
+          "psi": 1.2455460752229137,
+          "ks": 0.22033333333333338
+        },
+        "Component C to Reactor": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Component D to Reactor": {
+          "psi": 0.2954423657280208,
+          "ks": 0.16266666666666663
+        },
+        "Component E to Reactor": {
+          "psi": 0.29675324254341623,
+          "ks": 0.15
+        },
+        "Component F to Reactor": {
+          "psi": 1.5001013581243094,
+          "ks": 0.2673333333333333
+        },
+        "Component A to Purge": {
+          "psi": 1.260759562659935,
+          "ks": 0.20700000000000002
+        },
+        "Component B to Purge": {
+          "psi": 1.7035146173926285,
+          "ks": 0.36700000000000005
+        },
+        "Component C to Purge": {
+          "psi": 0.3336781495273202,
+          "ks": 0.21466666666666667
+        },
+        "Component D to Purge": {
+          "psi": 0.26597096172064344,
+          "ks": 0.15
+        },
+        "Component E to Purge": {
+          "psi": 0.25283696347592866,
+          "ks": 0.15
+        },
+        "Component F to Purge": {
+          "psi": 1.443433553006634,
+          "ks": 0.25666666666666665
+        },
+        "Component G to Purge": {
+          "psi": 1.4138918136114795,
+          "ks": 0.19766666666666666
+        },
+        "Component H to Purge": {
+          "psi": 1.2121552058693064,
+          "ks": 0.15
+        },
+        "Component D to Product": {
+          "psi": 2.6896340809219614,
+          "ks": 0.23266666666666666
+        },
+        "Component E to Product": {
+          "psi": 2.6673680391762695,
+          "ks": 0.3323333333333333
+        },
+        "Component F to Product": {
+          "psi": 2.441982280216134,
+          "ks": 0.15833333333333333
+        },
+        "Component G to Product": {
+          "psi": 2.4509370039336438,
+          "ks": 0.21233333333333337
+        },
+        "Component H to Product": {
+          "psi": 2.547942879762647,
+          "ks": 0.21733333333333332
+        }
+      },
+      "diagnostics": {
+        "D feed": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "E Feed": {
+          "median_psi": 0.3913532791984323,
+          "median_ks": 0.16466666666666668
+        },
+        "A Feed": {
+          "median_psi": 0.12171965580148755,
+          "median_ks": 0.10366666666666667
+        },
+        "A and C Feed": {
+          "median_psi": 0.09721385704800607,
+          "median_ks": 0.08933333333333338
+        },
+        "Recycle": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Purge": {
+          "median_psi": 0.1290988457147844,
+          "median_ks": 0.09200000000000003
+        },
+        "Separator": {
+          "median_psi": 1.494621222722124,
+          "median_ks": 0.28300000000000003
+        },
+        "Stripper": {
+          "median_psi": 1.364735564256813,
+          "median_ks": 0.22416666666666663
+        },
+        "Steam": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Reactor Coolant": {
+          "median_psi": 0.10732521029685646,
+          "median_ks": 0.11166666666666664
+        },
+        "Condenser Coolant": {
+          "median_psi": 0.05338209564741542,
+          "median_ks": 0.07299999999999995
+        },
+        "msv A Feed": {
+          "median_psi": 0.12525723763311752,
+          "median_ks": 0.1093333333333334
+        },
+        "msv D Feed": {
+          "median_psi": 0.0508501277143007,
+          "median_ks": 0.05600000000000005
+        },
+        "msv E Feed": {
+          "median_psi": 0.08404146624633044,
+          "median_ks": 0.07466666666666666
+        },
+        "msv A and C Feed": {
+          "median_psi": 0.055810591350597176,
+          "median_ks": 0.07166666666666677
+        },
+        "Recycle Flow": {
+          "median_psi": 0.04728887304716239,
+          "median_ks": 0.06133333333333332
+        },
+        "Reactor Feed Rate": {
+          "median_psi": 0.06120065956269429,
+          "median_ks": 0.09700000000000003
+        },
+        "Reactor Pressure": {
+          "median_psi": 0.05363255164947711,
+          "median_ks": 0.05500000000000005
+        },
+        "Reactor Level": {
+          "median_psi": 0.18658862812811727,
+          "median_ks": 0.15100000000000002
+        },
+        "Reactor Temperature": {
+          "median_psi": 0.08647199945377458,
+          "median_ks": 0.07466666666666666
+        },
+        "Purge Rate": {
+          "median_psi": 0.13317848236418173,
+          "median_ks": 0.10299999999999998
+        },
+        "Product Sep Temp": {
+          "median_psi": 0.5165304041918201,
+          "median_ks": 0.20666666666666667
+        },
+        "Product Sep Level": {
+          "median_psi": 0.052540742702328704,
+          "median_ks": 0.09983333333333333
+        },
+        "Product Sep Pressure": {
+          "median_psi": 0.07108792304822201,
+          "median_ks": 0.0663333333333333
+        },
+        "Product Sep Underflow": {
+          "median_psi": 0.08360442669602865,
+          "median_ks": 0.08816666666666667
+        },
+        "Stripper Level": {
+          "median_psi": 0.08097302357141656,
+          "median_ks": 0.1296666666666667
+        },
+        "Stripper Pressure": {
+          "median_psi": 0.060865838153635714,
+          "median_ks": 0.06366666666666665
+        },
+        "Stripper Underflow": {
+          "median_psi": 0.06960727028821251,
+          "median_ks": 0.0693333333333333
+        },
+        "Stripper Temp": {
+          "median_psi": 2.6831770548206686,
+          "median_ks": 0.2833333333333333
+        },
+        "Stripper Steam Flow": {
+          "median_psi": 0.06201118733737709,
+          "median_ks": 0.059666666666666646
+        },
+        "Compressor Work": {
+          "median_psi": 0.2669189346734082,
+          "median_ks": 0.24900000000000005
+        },
+        "Reactor Coolant Temp": {
+          "median_psi": 0.15703562676089436,
+          "median_ks": 0.14300000000000002
+        },
+        "Separator Coolant Temp": {
+          "median_psi": 1.1996251769214517,
+          "median_ks": 0.247
+        },
+        "Component A to Reactor": {
+          "median_psi": 0.14377753484460254,
+          "median_ks": 0.09133333333333338
+        },
+        "Component B to Reactor": {
+          "median_psi": 0.2138836996840116,
+          "median_ks": 0.16933333333333334
+        },
+        "Component C to Reactor": {
+          "median_psi": 0.09732437221283348,
+          "median_ks": 0.08933333333333326
+        },
+        "Component D to Reactor": {
+          "median_psi": 0.15529906946114472,
+          "median_ks": 0.11166666666666669
+        },
+        "Component E to Reactor": {
+          "median_psi": 0.11778860963541979,
+          "median_ks": 0.10999999999999999
+        },
+        "Component F to Reactor": {
+          "median_psi": 0.19131465562968106,
+          "median_ks": 0.17633333333333331
+        },
+        "Component A to Purge": {
+          "median_psi": 0.07548873185844732,
+          "median_ks": 0.10000000000000003
+        },
+        "Component B to Purge": {
+          "median_psi": 0.26534042559852206,
+          "median_ks": 0.21333333333333337
+        },
+        "Component C to Purge": {
+          "median_psi": 0.21469088602355296,
+          "median_ks": 0.14866666666666672
+        },
+        "Component D to Purge": {
+          "median_psi": 0.15205069321979509,
+          "median_ks": 0.122
+        },
+        "Component E to Purge": {
+          "median_psi": 0.12013099785720793,
+          "median_ks": 0.12
+        },
+        "Component F to Purge": {
+          "median_psi": 0.24390866040014128,
+          "median_ks": 0.2053333333333333
+        },
+        "Component G to Purge": {
+          "median_psi": 0.21526704505310146,
+          "median_ks": 0.16900000000000004
+        },
+        "Component H to Purge": {
+          "median_psi": 0.1261341439111834,
+          "median_ks": 0.09283333333333338
+        },
+        "Component D to Product": {
+          "median_psi": 0.3465735902799727,
+          "median_ks": 0.17983333333333332
+        },
+        "Component E to Product": {
+          "median_psi": 2.441982280216134,
+          "median_ks": 0.3006666666666667
+        },
+        "Component F to Product": {
+          "median_psi": 0.3129852099590167,
+          "median_ks": 0.11933333333333335
+        },
+        "Component G to Product": {
+          "median_psi": 0.2700668204126836,
+          "median_ks": 0.11633333333333334
+        },
+        "Component H to Product": {
+          "median_psi": 1.3209456272110438,
+          "median_ks": 0.1956666666666667
+        }
+      }
+    },
+    "case3": {
+      "trajectory_ids": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21,
+        23,
+        25,
+        26,
+        27,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        56,
+        57,
+        58,
+        60,
+        62,
+        64,
+        65,
+        66,
+        68,
+        69,
+        70,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        87,
+        88,
+        89,
+        91,
+        92,
+        93,
+        96,
+        97,
+        99,
+        100
+      ],
+      "windows": 350,
+      "legacy_alert_windows": 335,
+      "legacy_alert_window_rate": 0.9571428571428572,
+      "limits": {
+        "D feed": {
+          "psi": 9.27448419549726,
+          "ks": 0.7416666666666667
+        },
+        "E Feed": {
+          "psi": 8.159687067810692,
+          "ks": 0.7013333333333334
+        },
+        "A Feed": {
+          "psi": 2.4695183484796273,
+          "ks": 0.38933333333333336
+        },
+        "A and C Feed": {
+          "psi": 0.3507447983894857,
+          "ks": 0.21466666666666664
+        },
+        "Recycle": {
+          "psi": 0.25,
+          "ks": 0.1706666666666667
+        },
+        "Purge": {
+          "psi": 1.5724115092856605,
+          "ks": 0.33233333333333337
+        },
+        "Separator": {
+          "psi": 3.774492279607137,
+          "ks": 0.32566666666666666
+        },
+        "Stripper": {
+          "psi": 1.4488762297560007,
+          "ks": 0.23433333333333334
+        },
+        "Steam": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Coolant": {
+          "psi": 0.3564377641271136,
+          "ks": 0.21699999999999997
+        },
+        "Condenser Coolant": {
+          "psi": 1.2357722968068778,
+          "ks": 0.21666666666666667
+        },
+        "msv A Feed": {
+          "psi": 2.6611571742019042,
+          "ks": 0.38799999999999996
+        },
+        "msv D Feed": {
+          "psi": 0.4964621968844902,
+          "ks": 0.29499999999999993
+        },
+        "msv E Feed": {
+          "psi": 0.610415087227529,
+          "ks": 0.32566666666666666
+        },
+        "msv A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15066666666666667
+        },
+        "Recycle Flow": {
+          "psi": 0.25,
+          "ks": 0.15433333333333332
+        },
+        "Reactor Feed Rate": {
+          "psi": 0.37590518154103303,
+          "ks": 0.17633333333333334
+        },
+        "Reactor Pressure": {
+          "psi": 1.2437885422277783,
+          "ks": 0.24800000000000005
+        },
+        "Reactor Level": {
+          "psi": 0.4042630322305177,
+          "ks": 0.1833333333333333
+        },
+        "Reactor Temperature": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge Rate": {
+          "psi": 1.5560403722016394,
+          "ks": 0.33399999999999996
+        },
+        "Product Sep Temp": {
+          "psi": 2.5076311861694354,
+          "ks": 0.204
+        },
+        "Product Sep Level": {
+          "psi": 0.5791884618636093,
+          "ks": 0.19899999999999995
+        },
+        "Product Sep Pressure": {
+          "psi": 1.3519935690899587,
+          "ks": 0.22499999999999998
+        },
+        "Product Sep Underflow": {
+          "psi": 0.5169610835850541,
+          "ks": 0.22833333333333328
+        },
+        "Stripper Level": {
+          "psi": 2.758397315656577,
+          "ks": 0.22233333333333336
+        },
+        "Stripper Pressure": {
+          "psi": 1.4245776460910606,
+          "ks": 0.22666666666666663
+        },
+        "Stripper Underflow": {
+          "psi": 0.25,
+          "ks": 0.16300000000000003
+        },
+        "Stripper Temp": {
+          "psi": 1.6632951241804168,
+          "ks": 0.22333333333333333
+        },
+        "Stripper Steam Flow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Compressor Work": {
+          "psi": 1.3350257199134594,
+          "ks": 0.2006666666666667
+        },
+        "Reactor Coolant Temp": {
+          "psi": 1.3172188241740257,
+          "ks": 0.22566666666666663
+        },
+        "Separator Coolant Temp": {
+          "psi": 1.2987218814387245,
+          "ks": 0.20100000000000007
+        },
+        "Component A to Reactor": {
+          "psi": 1.2632924833273131,
+          "ks": 0.33566666666666667
+        },
+        "Component B to Reactor": {
+          "psi": 1.4770609485397628,
+          "ks": 0.28633333333333333
+        },
+        "Component C to Reactor": {
+          "psi": 0.3864287145692181,
+          "ks": 0.22866666666666668
+        },
+        "Component D to Reactor": {
+          "psi": 0.4894367166078434,
+          "ks": 0.20099999999999998
+        },
+        "Component E to Reactor": {
+          "psi": 1.6698833675809532,
+          "ks": 0.29966666666666664
+        },
+        "Component F to Reactor": {
+          "psi": 1.4302261614794123,
+          "ks": 0.24999999999999994
+        },
+        "Component A to Purge": {
+          "psi": 3.245876465439767,
+          "ks": 0.506
+        },
+        "Component B to Purge": {
+          "psi": 3.826214344767156,
+          "ks": 0.4993333333333334
+        },
+        "Component C to Purge": {
+          "psi": 1.7180046694651956,
+          "ks": 0.35866666666666663
+        },
+        "Component D to Purge": {
+          "psi": 1.4087110554626228,
+          "ks": 0.2346666666666667
+        },
+        "Component E to Purge": {
+          "psi": 1.7200630631551004,
+          "ks": 0.3463333333333334
+        },
+        "Component F to Purge": {
+          "psi": 0.6147183363424479,
+          "ks": 0.274
+        },
+        "Component G to Purge": {
+          "psi": 1.537889931053362,
+          "ks": 0.20533333333333337
+        },
+        "Component H to Purge": {
+          "psi": 0.44674452192205144,
+          "ks": 0.21133333333333332
+        },
+        "Component D to Product": {
+          "psi": 2.711058018455683,
+          "ks": 0.3426666666666667
+        },
+        "Component E to Product": {
+          "psi": 3.930328060962733,
+          "ks": 0.41866666666666663
+        },
+        "Component F to Product": {
+          "psi": 2.667368039176269,
+          "ks": 0.268
+        },
+        "Component G to Product": {
+          "psi": 3.932686921979679,
+          "ks": 0.253
+        },
+        "Component H to Product": {
+          "psi": 2.7109801219217764,
+          "ks": 0.3223333333333333
+        }
+      },
+      "diagnostics": {
+        "D feed": {
+          "median_psi": 0.3098335124279602,
+          "median_ks": 0.185
+        },
+        "E Feed": {
+          "median_psi": 0.5486174359412839,
+          "median_ks": 0.252
+        },
+        "A Feed": {
+          "median_psi": 0.48671068817611596,
+          "median_ks": 0.20266666666666666
+        },
+        "A and C Feed": {
+          "median_psi": 0.12665143134814033,
+          "median_ks": 0.09766666666666662
+        },
+        "Recycle": {
+          "median_psi": 0.10191536404690102,
+          "median_ks": 0.08533333333333334
+        },
+        "Purge": {
+          "median_psi": 0.2218472754198966,
+          "median_ks": 0.1316666666666666
+        },
+        "Separator": {
+          "median_psi": 0.2707566657757934,
+          "median_ks": 0.15100000000000002
+        },
+        "Stripper": {
+          "median_psi": 0.16620468938785538,
+          "median_ks": 0.119
+        },
+        "Steam": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Reactor Coolant": {
+          "median_psi": 0.10879150882650906,
+          "median_ks": 0.09299999999999997
+        },
+        "Condenser Coolant": {
+          "median_psi": 0.16441122884947046,
+          "median_ks": 0.11599999999999999
+        },
+        "msv A Feed": {
+          "median_psi": 0.491057992771673,
+          "median_ks": 0.19133333333333324
+        },
+        "msv D Feed": {
+          "median_psi": 0.12117252355478308,
+          "median_ks": 0.08799999999999997
+        },
+        "msv E Feed": {
+          "median_psi": 0.07479636497622001,
+          "median_ks": 0.10099999999999998
+        },
+        "msv A and C Feed": {
+          "median_psi": 0.08113730737762945,
+          "median_ks": 0.07600000000000001
+        },
+        "Recycle Flow": {
+          "median_psi": 0.08095618081206335,
+          "median_ks": 0.08966666666666667
+        },
+        "Reactor Feed Rate": {
+          "median_psi": 0.08275142156921161,
+          "median_ks": 0.09800000000000003
+        },
+        "Reactor Pressure": {
+          "median_psi": 0.17321030406156096,
+          "median_ks": 0.11466666666666664
+        },
+        "Reactor Level": {
+          "median_psi": 0.1114982796810971,
+          "median_ks": 0.09166666666666667
+        },
+        "Reactor Temperature": {
+          "median_psi": 0.10054224617475832,
+          "median_ks": 0.07400000000000007
+        },
+        "Purge Rate": {
+          "median_psi": 0.21330395791277623,
+          "median_ks": 0.126
+        },
+        "Product Sep Temp": {
+          "median_psi": 0.15940683922654644,
+          "median_ks": 0.10066666666666668
+        },
+        "Product Sep Level": {
+          "median_psi": 0.12665123707457554,
+          "median_ks": 0.11
+        },
+        "Product Sep Pressure": {
+          "median_psi": 0.23821622179110508,
+          "median_ks": 0.11966666666666669
+        },
+        "Product Sep Underflow": {
+          "median_psi": 0.12347380885473513,
+          "median_ks": 0.09933333333333338
+        },
+        "Stripper Level": {
+          "median_psi": 0.22673062804530295,
+          "median_ks": 0.131
+        },
+        "Stripper Pressure": {
+          "median_psi": 0.1837988809364537,
+          "median_ks": 0.1456666666666666
+        },
+        "Stripper Underflow": {
+          "median_psi": 0.0818660805494004,
+          "median_ks": 0.08866666666666667
+        },
+        "Stripper Temp": {
+          "median_psi": 0.11741408128866151,
+          "median_ks": 0.10666666666666669
+        },
+        "Stripper Steam Flow": {
+          "median_psi": 0.06313770985506148,
+          "median_ks": 0.07433333333333333
+        },
+        "Compressor Work": {
+          "median_psi": 0.22398829525750835,
+          "median_ks": 0.12016666666666667
+        },
+        "Reactor Coolant Temp": {
+          "median_psi": 0.1266371166014805,
+          "median_ks": 0.11100000000000004
+        },
+        "Separator Coolant Temp": {
+          "median_psi": 0.14179296100047073,
+          "median_ks": 0.132
+        },
+        "Component A to Reactor": {
+          "median_psi": 0.2740643074210511,
+          "median_ks": 0.122
+        },
+        "Component B to Reactor": {
+          "median_psi": 0.25166652667922196,
+          "median_ks": 0.1356666666666667
+        },
+        "Component C to Reactor": {
+          "median_psi": 0.21624103594702793,
+          "median_ks": 0.10366666666666668
+        },
+        "Component D to Reactor": {
+          "median_psi": 0.12907216583879919,
+          "median_ks": 0.10066666666666668
+        },
+        "Component E to Reactor": {
+          "median_psi": 0.15103692720462195,
+          "median_ks": 0.10533333333333333
+        },
+        "Component F to Reactor": {
+          "median_psi": 0.19870979263595867,
+          "median_ks": 0.15233333333333332
+        },
+        "Component A to Purge": {
+          "median_psi": 0.3851650655625526,
+          "median_ks": 0.22566666666666674
+        },
+        "Component B to Purge": {
+          "median_psi": 1.4189744087293064,
+          "median_ks": 0.28
+        },
+        "Component C to Purge": {
+          "median_psi": 0.20090752369975534,
+          "median_ks": 0.1831666666666667
+        },
+        "Component D to Purge": {
+          "median_psi": 0.13551163121804197,
+          "median_ks": 0.09566666666666668
+        },
+        "Component E to Purge": {
+          "median_psi": 0.13113146181879526,
+          "median_ks": 0.11199999999999999
+        },
+        "Component F to Purge": {
+          "median_psi": 0.2505150260383449,
+          "median_ks": 0.15600000000000003
+        },
+        "Component G to Purge": {
+          "median_psi": 0.15353852065927703,
+          "median_ks": 0.12533333333333335
+        },
+        "Component H to Purge": {
+          "median_psi": 0.09923974949070873,
+          "median_ks": 0.09999999999999998
+        },
+        "Component D to Product": {
+          "median_psi": 1.36353993178669,
+          "median_ks": 0.16999999999999998
+        },
+        "Component E to Product": {
+          "median_psi": 0.31230257879698853,
+          "median_ks": 0.17366666666666666
+        },
+        "Component F to Product": {
+          "median_psi": 0.28704865332709517,
+          "median_ks": 0.15483333333333332
+        },
+        "Component G to Product": {
+          "median_psi": 0.3410132737177759,
+          "median_ks": 0.15200000000000002
+        },
+        "Component H to Product": {
+          "median_psi": 1.3132938035220092,
+          "median_ks": 0.15900000000000003
+        }
+      }
+    },
+    "case4": {
+      "trajectory_ids": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        16,
+        19,
+        21,
+        22,
+        23,
+        24,
+        26,
+        27,
+        29,
+        32,
+        33,
+        34,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        56,
+        58,
+        59,
+        62,
+        63,
+        64,
+        65,
+        67,
+        68,
+        72,
+        73,
+        75,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        90,
+        92,
+        93,
+        99,
+        100
+      ],
+      "windows": 350,
+      "legacy_alert_windows": 350,
+      "legacy_alert_window_rate": 1.0,
+      "limits": {
+        "D feed": {
+          "psi": 6.5624291215194415,
+          "ks": 0.5976666666666667
+        },
+        "E Feed": {
+          "psi": 4.238673575083476,
+          "ks": 0.5056666666666667
+        },
+        "A Feed": {
+          "psi": 0.4612349848992519,
+          "ks": 0.20999999999999996
+        },
+        "A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Recycle": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge": {
+          "psi": 1.534259573094474,
+          "ks": 0.239
+        },
+        "Separator": {
+          "psi": 2.519070070980951,
+          "ks": 0.372
+        },
+        "Stripper": {
+          "psi": 0.3533783333030357,
+          "ks": 0.22599999999999998
+        },
+        "Steam": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Coolant": {
+          "psi": 0.25,
+          "ks": 0.20233333333333325
+        },
+        "Condenser Coolant": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "msv A Feed": {
+          "psi": 0.3957194543810739,
+          "ks": 0.20999999999999996
+        },
+        "msv D Feed": {
+          "psi": 0.2797702492156457,
+          "ks": 0.22033333333333327
+        },
+        "msv E Feed": {
+          "psi": 0.4731902080100993,
+          "ks": 0.27566666666666667
+        },
+        "msv A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Recycle Flow": {
+          "psi": 0.25,
+          "ks": 0.17100000000000004
+        },
+        "Reactor Feed Rate": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Level": {
+          "psi": 0.5080911291961561,
+          "ks": 0.30466666666666664
+        },
+        "Reactor Temperature": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge Rate": {
+          "psi": 1.29883905864043,
+          "ks": 0.20766666666666667
+        },
+        "Product Sep Temp": {
+          "psi": 3.4576629132491647,
+          "ks": 0.5426666666666666
+        },
+        "Product Sep Level": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Product Sep Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Product Sep Underflow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Level": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Underflow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Temp": {
+          "psi": 6.89758801799901,
+          "ks": 0.6636666666666666
+        },
+        "Stripper Steam Flow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Compressor Work": {
+          "psi": 5.716630052021046,
+          "ks": 0.6373333333333333
+        },
+        "Reactor Coolant Temp": {
+          "psi": 1.619007180906963,
+          "ks": 0.3413333333333333
+        },
+        "Separator Coolant Temp": {
+          "psi": 1.6688850218522233,
+          "ks": 0.3176666666666667
+        },
+        "Component A to Reactor": {
+          "psi": 0.4667467963159739,
+          "ks": 0.22333333333333327
+        },
+        "Component B to Reactor": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Component C to Reactor": {
+          "psi": 0.25,
+          "ks": 0.15200000000000002
+        },
+        "Component D to Reactor": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Component E to Reactor": {
+          "psi": 0.2942327526037116,
+          "ks": 0.21833333333333338
+        },
+        "Component F to Reactor": {
+          "psi": 0.6719553764518873,
+          "ks": 0.32600000000000007
+        },
+        "Component A to Purge": {
+          "psi": 0.3784660684819401,
+          "ks": 0.2486666666666666
+        },
+        "Component B to Purge": {
+          "psi": 0.3057977986657867,
+          "ks": 0.21266666666666667
+        },
+        "Component C to Purge": {
+          "psi": 0.4801272676962414,
+          "ks": 0.28200000000000003
+        },
+        "Component D to Purge": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Component E to Purge": {
+          "psi": 0.31095856215501877,
+          "ks": 0.18966666666666668
+        },
+        "Component F to Purge": {
+          "psi": 1.4926890381159756,
+          "ks": 0.28533333333333327
+        },
+        "Component G to Purge": {
+          "psi": 0.25,
+          "ks": 0.16433333333333336
+        },
+        "Component H to Purge": {
+          "psi": 0.3031323752829428,
+          "ks": 0.22199999999999998
+        },
+        "Component D to Product": {
+          "psi": 1.521697729567733,
+          "ks": 0.19633333333333336
+        },
+        "Component E to Product": {
+          "psi": 2.7571861270717397,
+          "ks": 0.29600000000000004
+        },
+        "Component F to Product": {
+          "psi": 1.4157371300212198,
+          "ks": 0.27366666666666667
+        },
+        "Component G to Product": {
+          "psi": 1.4192544030685224,
+          "ks": 0.2833333333333334
+        },
+        "Component H to Product": {
+          "psi": 2.6119776528651237,
+          "ks": 0.25
+        }
+      },
+      "diagnostics": {
+        "D feed": {
+          "median_psi": 1.3143642935028825,
+          "median_ks": 0.203
+        },
+        "E Feed": {
+          "median_psi": 1.3048121338221839,
+          "median_ks": 0.2316666666666667
+        },
+        "A Feed": {
+          "median_psi": 0.31327343832715016,
+          "median_ks": 0.1419999999999999
+        },
+        "A and C Feed": {
+          "median_psi": 0.05964801107002672,
+          "median_ks": 0.08533333333333337
+        },
+        "Recycle": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Purge": {
+          "median_psi": 0.2948865238911961,
+          "median_ks": 0.1788333333333333
+        },
+        "Separator": {
+          "median_psi": 0.9054394335938438,
+          "median_ks": 0.31766666666666665
+        },
+        "Stripper": {
+          "median_psi": 0.19263494567088693,
+          "median_ks": 0.11199999999999999
+        },
+        "Steam": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Reactor Coolant": {
+          "median_psi": 0.09922892198419972,
+          "median_ks": 0.14099999999999996
+        },
+        "Condenser Coolant": {
+          "median_psi": 0.049364881001906766,
+          "median_ks": 0.06833333333333325
+        },
+        "msv A Feed": {
+          "median_psi": 0.2676658938968562,
+          "median_ks": 0.15366666666666673
+        },
+        "msv D Feed": {
+          "median_psi": 0.0676938233694334,
+          "median_ks": 0.08483333333333326
+        },
+        "msv E Feed": {
+          "median_psi": 0.15194970800949242,
+          "median_ks": 0.12
+        },
+        "msv A and C Feed": {
+          "median_psi": 0.06311068977226748,
+          "median_ks": 0.07600000000000007
+        },
+        "Recycle Flow": {
+          "median_psi": 0.06608185921999446,
+          "median_ks": 0.11733333333333335
+        },
+        "Reactor Feed Rate": {
+          "median_psi": 0.07514993474213395,
+          "median_ks": 0.07899999999999996
+        },
+        "Reactor Pressure": {
+          "median_psi": 0.0939270399388134,
+          "median_ks": 0.083
+        },
+        "Reactor Level": {
+          "median_psi": 0.1001608737936418,
+          "median_ks": 0.10933333333333328
+        },
+        "Reactor Temperature": {
+          "median_psi": 0.050292109565644165,
+          "median_ks": 0.07466666666666666
+        },
+        "Purge Rate": {
+          "median_psi": 0.2582787103599656,
+          "median_ks": 0.15933333333333333
+        },
+        "Product Sep Temp": {
+          "median_psi": 0.25989520499143237,
+          "median_ks": 0.15866666666666668
+        },
+        "Product Sep Level": {
+          "median_psi": 0.04555620112519313,
+          "median_ks": 0.07233333333333336
+        },
+        "Product Sep Pressure": {
+          "median_psi": 0.07104732233754568,
+          "median_ks": 0.07499999999999996
+        },
+        "Product Sep Underflow": {
+          "median_psi": 0.07419802973270229,
+          "median_ks": 0.07799999999999996
+        },
+        "Stripper Level": {
+          "median_psi": 0.07711801117907457,
+          "median_ks": 0.10899999999999999
+        },
+        "Stripper Pressure": {
+          "median_psi": 0.07221942871016798,
+          "median_ks": 0.07199999999999995
+        },
+        "Stripper Underflow": {
+          "median_psi": 0.052533859903716375,
+          "median_ks": 0.06166666666666665
+        },
+        "Stripper Temp": {
+          "median_psi": 2.1944882714194502,
+          "median_ks": 0.242
+        },
+        "Stripper Steam Flow": {
+          "median_psi": 0.05468589157206141,
+          "median_ks": 0.07916666666666661
+        },
+        "Compressor Work": {
+          "median_psi": 0.595449965015454,
+          "median_ks": 0.22799999999999998
+        },
+        "Reactor Coolant Temp": {
+          "median_psi": 0.20338040030925972,
+          "median_ks": 0.16633333333333333
+        },
+        "Separator Coolant Temp": {
+          "median_psi": 0.10613862831476989,
+          "median_ks": 0.12133333333333335
+        },
+        "Component A to Reactor": {
+          "median_psi": 0.12452068088274412,
+          "median_ks": 0.10433333333333333
+        },
+        "Component B to Reactor": {
+          "median_psi": 0.10866478794727409,
+          "median_ks": 0.10683333333333332
+        },
+        "Component C to Reactor": {
+          "median_psi": 0.11489225390181491,
+          "median_ks": 0.1050000000000001
+        },
+        "Component D to Reactor": {
+          "median_psi": 0.12809949785483699,
+          "median_ks": 0.09833333333333338
+        },
+        "Component E to Reactor": {
+          "median_psi": 0.10647785693223008,
+          "median_ks": 0.09200000000000003
+        },
+        "Component F to Reactor": {
+          "median_psi": 0.3603204089848226,
+          "median_ks": 0.20099999999999996
+        },
+        "Component A to Purge": {
+          "median_psi": 0.1255667084580273,
+          "median_ks": 0.15866666666666662
+        },
+        "Component B to Purge": {
+          "median_psi": 0.1492047312193991,
+          "median_ks": 0.08066666666666666
+        },
+        "Component C to Purge": {
+          "median_psi": 0.14567377456498737,
+          "median_ks": 0.1341666666666667
+        },
+        "Component D to Purge": {
+          "median_psi": 0.17238687853990303,
+          "median_ks": 0.10899999999999999
+        },
+        "Component E to Purge": {
+          "median_psi": 0.2386335340888966,
+          "median_ks": 0.16633333333333333
+        },
+        "Component F to Purge": {
+          "median_psi": 0.23200616436923857,
+          "median_ks": 0.138
+        },
+        "Component G to Purge": {
+          "median_psi": 0.11216543441265832,
+          "median_ks": 0.09699999999999998
+        },
+        "Component H to Purge": {
+          "median_psi": 0.1966025531178771,
+          "median_ks": 0.128
+        },
+        "Component D to Product": {
+          "median_psi": 0.2611120966951737,
+          "median_ks": 0.17833333333333334
+        },
+        "Component E to Product": {
+          "median_psi": 1.4663073432565872,
+          "median_ks": 0.2425
+        },
+        "Component F to Product": {
+          "median_psi": 0.33761886656246276,
+          "median_ks": 0.15966666666666662
+        },
+        "Component G to Product": {
+          "median_psi": 0.3930092528736084,
+          "median_ks": 0.17133333333333337
+        },
+        "Component H to Product": {
+          "median_psi": 0.33761886656246276,
+          "median_ks": 0.1773333333333333
+        }
+      }
+    },
+    "case5": {
+      "trajectory_ids": [
+        1,
+        4,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        46,
+        47,
+        49,
+        50,
+        52,
+        53,
+        54,
+        56,
+        57,
+        58,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        71,
+        72,
+        74,
+        76,
+        77,
+        79,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        91,
+        93,
+        94,
+        95,
+        96,
+        97,
+        99,
+        100
+      ],
+      "windows": 350,
+      "legacy_alert_windows": 350,
+      "legacy_alert_window_rate": 1.0,
+      "limits": {
+        "D feed": {
+          "psi": 7.5977112552196955,
+          "ks": 0.6843333333333333
+        },
+        "E Feed": {
+          "psi": 6.872784664260706,
+          "ks": 0.6676666666666666
+        },
+        "A Feed": {
+          "psi": 7.68643159542385,
+          "ks": 0.5966666666666667
+        },
+        "A and C Feed": {
+          "psi": 5.376028915870507,
+          "ks": 0.5076666666666667
+        },
+        "Recycle": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge": {
+          "psi": 8.992132050079935,
+          "ks": 0.4796666666666667
+        },
+        "Separator": {
+          "psi": 5.101788930148151,
+          "ks": 0.5916666666666667
+        },
+        "Stripper": {
+          "psi": 5.449764521801034,
+          "ks": 0.5346666666666666
+        },
+        "Steam": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Coolant": {
+          "psi": 4.366636692654085,
+          "ks": 0.39466666666666667
+        },
+        "Condenser Coolant": {
+          "psi": 0.27894556729660874,
+          "ks": 0.16366666666666663
+        },
+        "msv A Feed": {
+          "psi": 7.711271115915064,
+          "ks": 0.5976666666666667
+        },
+        "msv D Feed": {
+          "psi": 1.4784482574217974,
+          "ks": 0.39266666666666666
+        },
+        "msv E Feed": {
+          "psi": 3.038478945608228,
+          "ks": 0.44499999999999995
+        },
+        "msv A and C Feed": {
+          "psi": 4.140124112327065,
+          "ks": 0.45566666666666666
+        },
+        "Recycle Flow": {
+          "psi": 4.022491331781523,
+          "ks": 0.44566666666666666
+        },
+        "Reactor Feed Rate": {
+          "psi": 3.92988656172735,
+          "ks": 0.42200000000000004
+        },
+        "Reactor Pressure": {
+          "psi": 6.295244882756061,
+          "ks": 0.44166666666666665
+        },
+        "Reactor Level": {
+          "psi": 1.5683382657024918,
+          "ks": 0.4226666666666667
+        },
+        "Reactor Temperature": {
+          "psi": 0.32932851835295085,
+          "ks": 0.18800000000000006
+        },
+        "Purge Rate": {
+          "psi": 8.98472387252497,
+          "ks": 0.476
+        },
+        "Product Sep Temp": {
+          "psi": 6.788906801030131,
+          "ks": 0.5646666666666667
+        },
+        "Product Sep Level": {
+          "psi": 3.8560040336084453,
+          "ks": 0.4726666666666667
+        },
+        "Product Sep Pressure": {
+          "psi": 5.457915957978199,
+          "ks": 0.43833333333333335
+        },
+        "Product Sep Underflow": {
+          "psi": 2.876525221512575,
+          "ks": 0.5840000000000001
+        },
+        "Stripper Level": {
+          "psi": 4.283441071640398,
+          "ks": 0.5616666666666665
+        },
+        "Stripper Pressure": {
+          "psi": 5.310723261440749,
+          "ks": 0.43833333333333335
+        },
+        "Stripper Underflow": {
+          "psi": 0.5602331362069162,
+          "ks": 0.33099999999999996
+        },
+        "Stripper Temp": {
+          "psi": 7.727960752580298,
+          "ks": 0.616
+        },
+        "Stripper Steam Flow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Compressor Work": {
+          "psi": 4.95212185793494,
+          "ks": 0.45466666666666666
+        },
+        "Reactor Coolant Temp": {
+          "psi": 6.415396048581366,
+          "ks": 0.428
+        },
+        "Separator Coolant Temp": {
+          "psi": 6.428065221829088,
+          "ks": 0.5556666666666666
+        },
+        "Component A to Reactor": {
+          "psi": 5.107864853561775,
+          "ks": 0.46433333333333326
+        },
+        "Component B to Reactor": {
+          "psi": 11.022672162589302,
+          "ks": 0.8663333333333333
+        },
+        "Component C to Reactor": {
+          "psi": 6.227354183330495,
+          "ks": 0.4363333333333333
+        },
+        "Component D to Reactor": {
+          "psi": 2.8103825973958956,
+          "ks": 0.4133333333333333
+        },
+        "Component E to Reactor": {
+          "psi": 7.696609854357024,
+          "ks": 0.7786666666666666
+        },
+        "Component F to Reactor": {
+          "psi": 8.952564148281162,
+          "ks": 0.755
+        },
+        "Component A to Purge": {
+          "psi": 6.135274496431939,
+          "ks": 0.4763333333333333
+        },
+        "Component B to Purge": {
+          "psi": 12.43385588583866,
+          "ks": 0.913
+        },
+        "Component C to Purge": {
+          "psi": 6.179894603561279,
+          "ks": 0.443
+        },
+        "Component D to Purge": {
+          "psi": 1.779445103818447,
+          "ks": 0.33000000000000007
+        },
+        "Component E to Purge": {
+          "psi": 8.79118792629941,
+          "ks": 0.8176666666666667
+        },
+        "Component F to Purge": {
+          "psi": 9.47255964994861,
+          "ks": 0.7786666666666666
+        },
+        "Component G to Purge": {
+          "psi": 6.405082941415879,
+          "ks": 0.533
+        },
+        "Component H to Purge": {
+          "psi": 3.820497109062922,
+          "ks": 0.47300000000000003
+        },
+        "Component D to Product": {
+          "psi": 2.816247028269115,
+          "ks": 0.265
+        },
+        "Component E to Product": {
+          "psi": 7.617827620013848,
+          "ks": 0.65
+        },
+        "Component F to Product": {
+          "psi": 7.647326337871752,
+          "ks": 0.6246666666666667
+        },
+        "Component G to Product": {
+          "psi": 3.770119959238472,
+          "ks": 0.3496666666666667
+        },
+        "Component H to Product": {
+          "psi": 2.7066159138363726,
+          "ks": 0.354
+        }
+      },
+      "diagnostics": {
+        "D feed": {
+          "median_psi": 2.9012097411458733,
+          "median_ks": 0.32666666666666666
+        },
+        "E Feed": {
+          "median_psi": 1.981516982961157,
+          "median_ks": 0.33333333333333337
+        },
+        "A Feed": {
+          "median_psi": 2.8286867421858477,
+          "median_ks": 0.3443333333333333
+        },
+        "A and C Feed": {
+          "median_psi": 2.5254411949017177,
+          "median_ks": 0.3725
+        },
+        "Recycle": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Purge": {
+          "median_psi": 1.6337849288356892,
+          "median_ks": 0.28933333333333333
+        },
+        "Separator": {
+          "median_psi": 2.5527815333527704,
+          "median_ks": 0.31299999999999994
+        },
+        "Stripper": {
+          "median_psi": 1.3397718446490414,
+          "median_ks": 0.21500000000000002
+        },
+        "Steam": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Reactor Coolant": {
+          "median_psi": 1.2882109363782615,
+          "median_ks": 0.30266666666666664
+        },
+        "Condenser Coolant": {
+          "median_psi": 0.08023121515991571,
+          "median_ks": 0.10866666666666669
+        },
+        "msv A Feed": {
+          "median_psi": 2.8275493505618283,
+          "median_ks": 0.3436666666666666
+        },
+        "msv D Feed": {
+          "median_psi": 0.2416635822489931,
+          "median_ks": 0.18766666666666676
+        },
+        "msv E Feed": {
+          "median_psi": 0.5836314971681218,
+          "median_ks": 0.21999999999999997
+        },
+        "msv A and C Feed": {
+          "median_psi": 1.415670386366972,
+          "median_ks": 0.33899999999999997
+        },
+        "Recycle Flow": {
+          "median_psi": 0.6141954881287017,
+          "median_ks": 0.2603333333333333
+        },
+        "Reactor Feed Rate": {
+          "median_psi": 0.6605259092007553,
+          "median_ks": 0.24633333333333335
+        },
+        "Reactor Pressure": {
+          "median_psi": 1.5507268930439337,
+          "median_ks": 0.23166666666666663
+        },
+        "Reactor Level": {
+          "median_psi": 0.25947750518958185,
+          "median_ks": 0.16666666666666669
+        },
+        "Reactor Temperature": {
+          "median_psi": 0.10594004554813838,
+          "median_ks": 0.10433333333333339
+        },
+        "Purge Rate": {
+          "median_psi": 1.4215811297412253,
+          "median_ks": 0.2943333333333333
+        },
+        "Product Sep Temp": {
+          "median_psi": 2.6307807819326703,
+          "median_ks": 0.29266666666666663
+        },
+        "Product Sep Level": {
+          "median_psi": 1.0169104959902189,
+          "median_ks": 0.2463333333333333
+        },
+        "Product Sep Pressure": {
+          "median_psi": 1.543055516173708,
+          "median_ks": 0.22199999999999998
+        },
+        "Product Sep Underflow": {
+          "median_psi": 1.6424812349217783,
+          "median_ks": 0.2436666666666667
+        },
+        "Stripper Level": {
+          "median_psi": 1.6492296864026488,
+          "median_ks": 0.191
+        },
+        "Stripper Pressure": {
+          "median_psi": 1.522675435311822,
+          "median_ks": 0.22866666666666666
+        },
+        "Stripper Underflow": {
+          "median_psi": 0.0759194305949192,
+          "median_ks": 0.09300000000000003
+        },
+        "Stripper Temp": {
+          "median_psi": 2.6144487778525667,
+          "median_ks": 0.2853333333333334
+        },
+        "Stripper Steam Flow": {
+          "median_psi": 0.06689791187559176,
+          "median_ks": 0.07400000000000007
+        },
+        "Compressor Work": {
+          "median_psi": 1.5377315206045654,
+          "median_ks": 0.281
+        },
+        "Reactor Coolant Temp": {
+          "median_psi": 1.992109231649072,
+          "median_ks": 0.307
+        },
+        "Separator Coolant Temp": {
+          "median_psi": 2.6699573196480766,
+          "median_ks": 0.30066666666666664
+        },
+        "Component A to Reactor": {
+          "median_psi": 1.8364857028540944,
+          "median_ks": 0.30166666666666675
+        },
+        "Component B to Reactor": {
+          "median_psi": 3.049115186030969,
+          "median_ks": 0.4103333333333333
+        },
+        "Component C to Reactor": {
+          "median_psi": 2.6711124744046506,
+          "median_ks": 0.2886666666666667
+        },
+        "Component D to Reactor": {
+          "median_psi": 0.45437054767662205,
+          "median_ks": 0.2313333333333333
+        },
+        "Component E to Reactor": {
+          "median_psi": 1.7384140301744175,
+          "median_ks": 0.32066666666666666
+        },
+        "Component F to Reactor": {
+          "median_psi": 3.9546259707575513,
+          "median_ks": 0.36616666666666664
+        },
+        "Component A to Purge": {
+          "median_psi": 1.7846194552912347,
+          "median_ks": 0.3073333333333334
+        },
+        "Component B to Purge": {
+          "median_psi": 3.0874069415796113,
+          "median_ks": 0.41866666666666663
+        },
+        "Component C to Purge": {
+          "median_psi": 2.521184754694032,
+          "median_ks": 0.303
+        },
+        "Component D to Purge": {
+          "median_psi": 0.16670176662771036,
+          "median_ks": 0.11133333333333334
+        },
+        "Component E to Purge": {
+          "median_psi": 1.8224606381778872,
+          "median_ks": 0.29300000000000004
+        },
+        "Component F to Purge": {
+          "median_psi": 4.824975403558025,
+          "median_ks": 0.37266666666666665
+        },
+        "Component G to Purge": {
+          "median_psi": 1.7154526098947023,
+          "median_ks": 0.30433333333333334
+        },
+        "Component H to Purge": {
+          "median_psi": 1.4896399587008302,
+          "median_ks": 0.261
+        },
+        "Component D to Product": {
+          "median_psi": 1.3468821838429652,
+          "median_ks": 0.15300000000000002
+        },
+        "Component E to Product": {
+          "median_psi": 3.839668598615901,
+          "median_ks": 0.3583333333333334
+        },
+        "Component F to Product": {
+          "median_psi": 2.4250004473017226,
+          "median_ks": 0.22666666666666668
+        },
+        "Component G to Product": {
+          "median_psi": 1.2963119706075974,
+          "median_ks": 0.13
+        },
+        "Component H to Product": {
+          "median_psi": 1.2963119706075976,
+          "median_ks": 0.14366666666666664
+        }
+      }
+    },
+    "case6": {
+      "trajectory_ids": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        12,
+        13,
+        14,
+        15,
+        19,
+        20,
+        21,
+        24,
+        25,
+        26,
+        27,
+        30,
+        31,
+        32,
+        34,
+        35,
+        37,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        49,
+        50,
+        51,
+        52,
+        53,
+        55,
+        56,
+        58,
+        60,
+        62,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        81,
+        82,
+        83,
+        85,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "windows": 350,
+      "legacy_alert_windows": 350,
+      "legacy_alert_window_rate": 1.0,
+      "limits": {
+        "D feed": {
+          "psi": 1.9887186898257418,
+          "ks": 0.43833333333333335
+        },
+        "E Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "A Feed": {
+          "psi": 0.369644316228545,
+          "ks": 0.2063333333333333
+        },
+        "A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Recycle": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge": {
+          "psi": 1.9455178009227847,
+          "ks": 0.42700000000000005
+        },
+        "Separator": {
+          "psi": 5.1999218793577615,
+          "ks": 0.5263333333333333
+        },
+        "Stripper": {
+          "psi": 1.9159790372135668,
+          "ks": 0.4136666666666667
+        },
+        "Steam": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Coolant": {
+          "psi": 0.25,
+          "ks": 0.17599999999999993
+        },
+        "Condenser Coolant": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "msv A Feed": {
+          "psi": 0.32206194566986157,
+          "ks": 0.22699999999999998
+        },
+        "msv D Feed": {
+          "psi": 0.25,
+          "ks": 0.15800000000000003
+        },
+        "msv E Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "msv A and C Feed": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Recycle Flow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Feed Rate": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Level": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Reactor Temperature": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Purge Rate": {
+          "psi": 1.8672430233641066,
+          "ks": 0.423
+        },
+        "Product Sep Temp": {
+          "psi": 2.6970947943169454,
+          "ks": 0.3706666666666667
+        },
+        "Product Sep Level": {
+          "psi": 0.2515170412059443,
+          "ks": 0.243
+        },
+        "Product Sep Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Product Sep Underflow": {
+          "psi": 0.25,
+          "ks": 0.15333333333333332
+        },
+        "Stripper Level": {
+          "psi": 0.4567151058358531,
+          "ks": 0.2966666666666667
+        },
+        "Stripper Pressure": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Underflow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Stripper Temp": {
+          "psi": 6.3611712460894925,
+          "ks": 0.58
+        },
+        "Stripper Steam Flow": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Compressor Work": {
+          "psi": 2.8281483474437352,
+          "ks": 0.41400000000000003
+        },
+        "Reactor Coolant Temp": {
+          "psi": 0.35447619789144996,
+          "ks": 0.24566666666666667
+        },
+        "Separator Coolant Temp": {
+          "psi": 0.6348181295460331,
+          "ks": 0.339
+        },
+        "Component A to Reactor": {
+          "psi": 0.2566314918513564,
+          "ks": 0.17200000000000004
+        },
+        "Component B to Reactor": {
+          "psi": 1.375344124302009,
+          "ks": 0.19600000000000004
+        },
+        "Component C to Reactor": {
+          "psi": 0.25,
+          "ks": 0.15
+        },
+        "Component D to Reactor": {
+          "psi": 0.32298148942534166,
+          "ks": 0.15633333333333335
+        },
+        "Component E to Reactor": {
+          "psi": 1.2766246265954972,
+          "ks": 0.189
+        },
+        "Component F to Reactor": {
+          "psi": 1.5368200328878594,
+          "ks": 0.2503333333333333
+        },
+        "Component A to Purge": {
+          "psi": 1.4270204297149434,
+          "ks": 0.257
+        },
+        "Component B to Purge": {
+          "psi": 0.42308589656149703,
+          "ks": 0.2726666666666666
+        },
+        "Component C to Purge": {
+          "psi": 1.329987898248757,
+          "ks": 0.24333333333333335
+        },
+        "Component D to Purge": {
+          "psi": 0.3451124223484215,
+          "ks": 0.20166666666666666
+        },
+        "Component E to Purge": {
+          "psi": 0.30553934773342833,
+          "ks": 0.2396666666666667
+        },
+        "Component F to Purge": {
+          "psi": 1.9403974725074167,
+          "ks": 0.42266666666666663
+        },
+        "Component G to Purge": {
+          "psi": 0.30290784669614734,
+          "ks": 0.15
+        },
+        "Component H to Purge": {
+          "psi": 1.2243777407308225,
+          "ks": 0.29166666666666663
+        },
+        "Component D to Product": {
+          "psi": 2.6414314825443475,
+          "ks": 0.248
+        },
+        "Component E to Product": {
+          "psi": 4.034753592858711,
+          "ks": 0.478
+        },
+        "Component F to Product": {
+          "psi": 1.5428141131238764,
+          "ks": 0.22566666666666668
+        },
+        "Component G to Product": {
+          "psi": 2.783122683703662,
+          "ks": 0.3093333333333333
+        },
+        "Component H to Product": {
+          "psi": 3.7195497460031053,
+          "ks": 0.23866666666666664
+        }
+      },
+      "diagnostics": {
+        "D feed": {
+          "median_psi": 0.28821075790983375,
+          "median_ks": 0.20566666666666664
+        },
+        "E Feed": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "A Feed": {
+          "median_psi": 0.1289350848178799,
+          "median_ks": 0.10200000000000009
+        },
+        "A and C Feed": {
+          "median_psi": 0.10404682691795335,
+          "median_ks": 0.10633333333333339
+        },
+        "Recycle": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Purge": {
+          "median_psi": 0.4787778838556068,
+          "median_ks": 0.1786666666666667
+        },
+        "Separator": {
+          "median_psi": 1.3364978739063471,
+          "median_ks": 0.3006666666666667
+        },
+        "Stripper": {
+          "median_psi": 1.3001341520969099,
+          "median_ks": 0.26566666666666666
+        },
+        "Steam": {
+          "median_psi": 0.0,
+          "median_ks": 0.0
+        },
+        "Reactor Coolant": {
+          "median_psi": 0.07211015957923524,
+          "median_ks": 0.11433333333333329
+        },
+        "Condenser Coolant": {
+          "median_psi": 0.07321265974033118,
+          "median_ks": 0.061000000000000054
+        },
+        "msv A Feed": {
+          "median_psi": 0.1498398610535023,
+          "median_ks": 0.11133333333333334
+        },
+        "msv D Feed": {
+          "median_psi": 0.07419735978401101,
+          "median_ks": 0.07933333333333331
+        },
+        "msv E Feed": {
+          "median_psi": 0.07324720217644816,
+          "median_ks": 0.06333333333333335
+        },
+        "msv A and C Feed": {
+          "median_psi": 0.06305323653350442,
+          "median_ks": 0.06466666666666665
+        },
+        "Recycle Flow": {
+          "median_psi": 0.07844962849007561,
+          "median_ks": 0.08833333333333337
+        },
+        "Reactor Feed Rate": {
+          "median_psi": 0.10327738642653204,
+          "median_ks": 0.1256666666666667
+        },
+        "Reactor Pressure": {
+          "median_psi": 0.07854631697561222,
+          "median_ks": 0.06833333333333336
+        },
+        "Reactor Level": {
+          "median_psi": 0.07470124301010185,
+          "median_ks": 0.07366666666666666
+        },
+        "Reactor Temperature": {
+          "median_psi": 0.030976856171113953,
+          "median_ks": 0.05600000000000002
+        },
+        "Purge Rate": {
+          "median_psi": 0.41647808026261185,
+          "median_ks": 0.16466666666666663
+        },
+        "Product Sep Temp": {
+          "median_psi": 0.18704837493482562,
+          "median_ks": 0.17566666666666664
+        },
+        "Product Sep Level": {
+          "median_psi": 0.09808149742211078,
+          "median_ks": 0.062333333333333324
+        },
+        "Product Sep Pressure": {
+          "median_psi": 0.08308737799654178,
+          "median_ks": 0.08399999999999996
+        },
+        "Product Sep Underflow": {
+          "median_psi": 0.08554764888961829,
+          "median_ks": 0.09766666666666668
+        },
+        "Stripper Level": {
+          "median_psi": 0.137355271235947,
+          "median_ks": 0.12766666666666665
+        },
+        "Stripper Pressure": {
+          "median_psi": 0.08014991179181724,
+          "median_ks": 0.07366666666666677
+        },
+        "Stripper Underflow": {
+          "median_psi": 0.07373906901308555,
+          "median_ks": 0.07566666666666666
+        },
+        "Stripper Temp": {
+          "median_psi": 0.7533063785502758,
+          "median_ks": 0.2656666666666667
+        },
+        "Stripper Steam Flow": {
+          "median_psi": 0.06489463208641728,
+          "median_ks": 0.08333333333333326
+        },
+        "Compressor Work": {
+          "median_psi": 1.3167545523130963,
+          "median_ks": 0.22033333333333338
+        },
+        "Reactor Coolant Temp": {
+          "median_psi": 0.1695310756935488,
+          "median_ks": 0.16899999999999993
+        },
+        "Separator Coolant Temp": {
+          "median_psi": 0.15983933322567986,
+          "median_ks": 0.16166666666666668
+        },
+        "Component A to Reactor": {
+          "median_psi": 0.11135476484497242,
+          "median_ks": 0.07266666666666666
+        },
+        "Component B to Reactor": {
+          "median_psi": 0.17081453474048403,
+          "median_ks": 0.1256666666666667
+        },
+        "Component C to Reactor": {
+          "median_psi": 0.11226552246866274,
+          "median_ks": 0.07766666666666666
+        },
+        "Component D to Reactor": {
+          "median_psi": 0.18490559078902397,
+          "median_ks": 0.09866666666666668
+        },
+        "Component E to Reactor": {
+          "median_psi": 0.2129477435810763,
+          "median_ks": 0.16066666666666668
+        },
+        "Component F to Reactor": {
+          "median_psi": 0.24926319036632621,
+          "median_ks": 0.19299999999999995
+        },
+        "Component A to Purge": {
+          "median_psi": 0.23683437340649666,
+          "median_ks": 0.15133333333333338
+        },
+        "Component B to Purge": {
+          "median_psi": 0.2610537953387908,
+          "median_ks": 0.1925
+        },
+        "Component C to Purge": {
+          "median_psi": 0.23870232673684433,
+          "median_ks": 0.1416666666666666
+        },
+        "Component D to Purge": {
+          "median_psi": 0.12765185383395375,
+          "median_ks": 0.10499999999999998
+        },
+        "Component E to Purge": {
+          "median_psi": 0.1539905990492751,
+          "median_ks": 0.1196666666666667
+        },
+        "Component F to Purge": {
+          "median_psi": 0.2448314096456322,
+          "median_ks": 0.16633333333333333
+        },
+        "Component G to Purge": {
+          "median_psi": 0.10663788365710038,
+          "median_ks": 0.1226666666666667
+        },
+        "Component H to Purge": {
+          "median_psi": 0.2148110831533943,
+          "median_ks": 0.1363333333333333
+        },
+        "Component D to Product": {
+          "median_psi": 0.27006682041268365,
+          "median_ks": 0.1196666666666667
+        },
+        "Component E to Product": {
+          "median_psi": 1.727653361273195,
+          "median_ks": 0.296
+        },
+        "Component F to Product": {
+          "median_psi": 1.3946207464650764,
+          "median_ks": 0.17366666666666664
+        },
+        "Component G to Product": {
+          "median_psi": 0.19356005054539457,
+          "median_ks": 0.1398333333333333
+        },
+        "Component H to Product": {
+          "median_psi": 1.4327189629356314,
+          "median_ks": 0.13866666666666672
+        }
+      }
+    }
+  }
+}

@@ -129,8 +129,12 @@ def benjamini_hochberg(p_values: Sequence[float]) -> list[float]:
 
 
 class DriftDetector:
-    def __init__(self, thresholds: DriftThresholds | None = None) -> None:
+    def __init__(
+        self, thresholds: DriftThresholds | None = None,
+        feature_limits: Mapping[str, Mapping[str, float]] | None = None,
+    ) -> None:
         self.thresholds = thresholds or DriftThresholds()
+        self.feature_limits = feature_limits
         self._consecutive_drift_count = 0
 
     def reset(self) -> None:
@@ -147,6 +151,8 @@ class DriftDetector:
             raise ValueError("감시할 기준 Feature가 없습니다.")
         if set(feature_names) != set(current):
             raise ValueError("기준 데이터와 현재 창의 Feature가 일치하지 않습니다.")
+        if self.feature_limits is not None and set(self.feature_limits) != set(reference):
+            raise ValueError("Calibration features do not match the reference")
 
         sample_counts = [_finite_values(current[name]).size for name in feature_names]
         if min(sample_counts) < self.thresholds.min_samples:
@@ -174,6 +180,11 @@ class DriftDetector:
                 and statistic >= self.thresholds.ks_statistic
                 and q_value < self.thresholds.ks_q_value
             )
+            if self.feature_limits is not None:
+                limits = self.feature_limits[name]
+                # 경험적 정상 창의 상한을 두 통계량 모두 넘어야 변화로 판정한다.
+                # 시계열 표본의 독립성을 가정하는 p-value는 이 규칙의 근거로 쓰지 않는다.
+                drifted = psi > limits["psi"] and statistic > limits["ks"]
             features.append(FeatureDrift(name, psi, statistic, q_value, drifted))
 
         drifted_count = sum(item.drifted for item in features)

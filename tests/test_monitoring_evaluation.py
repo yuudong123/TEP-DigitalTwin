@@ -43,6 +43,8 @@ def test_late_degradation_does_not_count_as_stable_alert(tmp_path, monkeypatch):
     assert late["alerts"] == late["windows"]
     assert sum(p["windows"] for p in result["phases"].values()) == result["evaluated_windows"]
     assert sum(p["alerts"] for p in result["phases"].values()) == result["alert_windows"]
+    assert result["trajectories_with_alert"] == 1
+    assert result["trajectory_results"][0]["first_alert_hours"] >= 70
 
 
 def test_rejects_partial_windows_before_loading_files(tmp_path):

@@ -41,6 +41,7 @@ class MonitorSettings:
     minimum_timestamp_hours: float
     retraining_enabled: bool
     retraining_state_path: Path
+    calibration_path: Path | None = None
 
 
 def settings_from_environment() -> MonitorSettings:
@@ -75,6 +76,10 @@ def settings_from_environment() -> MonitorSettings:
         retraining_state_path=path(
             "DRIFT_RETRAINING_STATE_PATH",
             PROJECT_ROOT / "logs" / "retraining-state.json",
+        ),
+        calibration_path=(
+            path("DRIFT_CALIBRATION_PATH", PROJECT_ROOT / "models/monitoring/calibration.json")
+            if os.getenv("DRIFT_CALIBRATION_PATH", "").strip() else None
         ),
     )
 
@@ -136,12 +141,18 @@ class DriftMonitor:
         window_size: int = 120,
         min_samples: int = 20,
         thresholds: DriftThresholds | None = None,
+        feature_limits_by_case: Mapping[str, Mapping[str, Mapping[str, float]]] | None = None,
         clock: Any = time.monotonic,
     ) -> None:
         if check_interval_seconds < 0:
             raise ValueError("check_interval_seconds는 0 이상이어야 합니다.")
         if minimum_timestamp_hours < 0:
             raise ValueError("minimum_timestamp_hours는 0 이상이어야 합니다.")
+        if feature_limits_by_case is not None:
+            if min_samples != 120 or window_size != 120:
+                raise ValueError("Calibrated monitoring requires complete 120-sample windows")
+            if retraining_enabled:
+                raise ValueError("Experimental calibration cannot request retraining")
         self.features = features
         self.references = references
         self.reference_version = reference_version
@@ -154,6 +165,7 @@ class DriftMonitor:
         # 여러 trajectory를 번갈아 처리해도 서로의 확인 횟수가 섞이지 않아야 한다.
         self.detectors: dict[str, DriftDetector] = {}
         self.thresholds = thresholds
+        self.feature_limits_by_case = feature_limits_by_case
         self.trigger = RetrainingTrigger(
             retraining_state_path,
             enabled=retraining_enabled,
@@ -168,11 +180,15 @@ class DriftMonitor:
             raise ValueError(f"기준 분포가 없는 case입니다: {case_name}")
 
         update = self.window.add(message)
-        detector = self.detectors.setdefault(
-            trajectory_key, DriftDetector(self.thresholds)
-        )
+        if trajectory_key not in self.detectors:
+            limits = None
+            if self.feature_limits_by_case is not None:
+                limits = self.feature_limits_by_case[case_name]
+            self.detectors[trajectory_key] = DriftDetector(self.thresholds, limits)
+        detector = self.detectors[trajectory_key]
         if update.reset_reason:
             detector.reset()
+            self.last_checked_at.pop(trajectory_key, None)
 
         if update.timestamp_hours < self.minimum_timestamp_hours:
             event = self._event(
@@ -265,10 +281,37 @@ def _stop(_signum: int, _frame: Any) -> None:
     RUNNING = False
 
 
+def publish_event(producer: Any, topic: str, key: str, event: Mapping[str, Any]) -> None:
+    """flush 완료뿐 아니라 broker delivery 성공도 확인한 뒤 반환한다."""
+    outcome = {"called": False, "error": None}
+
+    def delivered(error: Any, _message: Any) -> None:
+        outcome["called"] = True
+        outcome["error"] = error
+
+    payload = json.dumps(event, ensure_ascii=False, allow_nan=False).encode("utf-8")
+    producer.produce(topic, key=key.encode("utf-8"), value=payload, on_delivery=delivered)
+    remaining = producer.flush(10)
+    if remaining != 0 or not outcome["called"]:
+        raise RuntimeError("Monitor event delivery was not acknowledged within 10 seconds")
+    if outcome["error"] is not None:
+        raise RuntimeError(f"Monitor event delivery failed: {outcome['error']}")
+
+
 def main() -> None:
     settings = settings_from_environment()
     reference_version, references = load_reference(settings.reference_path)
     features = list(next(iter(references.values())).keys())
+    feature_limits = None
+    calibration_path = getattr(settings, "calibration_path", None)
+    if calibration_path:
+        from .calibration import load_limits
+        feature_limits = load_limits(
+            calibration_path, settings.reference_path,
+            PROJECT_ROOT / "data/metadata/split_manifest.csv", 120,
+        )
+        if settings.retraining_enabled:
+            raise ValueError("Calibrated operating-state monitoring cannot request retraining")
     ensure_topic(settings.bootstrap_servers, settings.drift_topic)
 
     monitor = DriftMonitor(
@@ -280,6 +323,8 @@ def main() -> None:
         minimum_timestamp_hours=settings.minimum_timestamp_hours,
         retraining_enabled=settings.retraining_enabled,
         retraining_state_path=settings.retraining_state_path,
+        feature_limits_by_case=feature_limits,
+        min_samples=120 if feature_limits is not None else 20,
     )
     consumer = Consumer({
         "bootstrap.servers": settings.bootstrap_servers,
@@ -301,6 +346,8 @@ def main() -> None:
     print(f"입력 토픽: {settings.sensor_topic}")
     print(f"출력 토픽: {settings.drift_topic}")
     print(f"기준 분포: {settings.reference_path}")
+    if calibration_path:
+        print(f"운전상태 기준 후보: {calibration_path} (120개 창·재학습 비활성)")
     print("[수신 대기] Sensor 메시지를 기다립니다.")
 
     try:
@@ -315,24 +362,19 @@ def main() -> None:
             try:
                 message = decode_sensor_message(kafka_message)
                 event = monitor.process(message)
-                if event is not None:
-                    producer.produce(
-                        settings.drift_topic,
-                        key=message["trajectory_key"].encode("utf-8"),
-                        value=json.dumps(
-                            event, ensure_ascii=False, allow_nan=False
-                        ).encode("utf-8"),
-                    )
-                    if producer.flush(10) != 0:
-                        raise RuntimeError("Drift Event 발행 제한 시간을 초과했습니다.")
-                    print(
-                        f"[Drift Event] {message['trajectory_key']} "
-                        f"sequence={message['sequence']} status={event['status']}"
-                    )
-                consumer.commit(message=kafka_message, asynchronous=False)
             except (UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError) as error:
                 print(f"[입력 오류] offset={kafka_message.offset()}: {error}")
                 consumer.commit(message=kafka_message, asynchronous=False)
+                continue
+            # 발행 실패는 입력 오류로 건너뛰지 않는다. 현재 offset은 commit하지 않고
+            # 종료하므로 재시작 시 다시 읽힌다(중복 허용 at-least-once).
+            if event is not None:
+                publish_event(producer, settings.drift_topic, message["trajectory_key"], event)
+                print(
+                    f"[Drift Event] {message['trajectory_key']} "
+                    f"sequence={message['sequence']} status={event['status']}"
+                )
+            consumer.commit(message=kafka_message, asynchronous=False)
     finally:
         consumer.close()
         producer.flush(10)
