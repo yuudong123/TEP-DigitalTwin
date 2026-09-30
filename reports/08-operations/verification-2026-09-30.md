@@ -27,7 +27,9 @@ topic·메시지 유지 및 sequence 1,2부터 재개 확인.
 격리 dev export + 새 배포 코드에서 ValidateOnly 실제 실행:
 Python 39 passed, compileall/pip check 및 npm ci/lint/build 통과.
 공통 33개 + 새 운영 테스트 6개이며 17번 브랜치 테스트와 합산하지 않는다.
-Validation 보고서 commit은 격리 export의 임시 Git revision이며 운영 배포 revision이 아니다.
+처음 export 검증 후 실제 commit `5a2e8a7`을 bundle로 가져온 별도 checkout에서
+동일 검증을 다시 통과했다. 원본 `preflight-2026-09-30.json`의 revision은 이 commit이며
+validationOnly=true/fullDeployment=false다. 운영 배포 성공으로 해석하지 않는다.
 
 집컴 깨끗한 dev `0380467`에서 기존 Inference/Monitor 이미지를 빌드·복구.
 Kafka healthy, 구현된 서비스 Running/restart 0, Monitor 재학습 false 확인.
@@ -43,6 +45,7 @@ dev/H/2/Groovy Sandbox/DisableRemotePoll 및 기존 접근권한은 유지했다
 `aaea1ca3aa525cef4e177c9f1346cc83343b373598af065373acbda48daf50e0`.
 최근 build #23 UNSTABLE. 저장 후 새 dev 변경으로 실제 자동 배포된 증적은 아직 없다.
 비밀번호·secret은 산출물에 포함하지 않았다.
+설정 화면 증적: `jenkins-settings-2026-09-30.png`.
 
 ## 완료 경계
 
