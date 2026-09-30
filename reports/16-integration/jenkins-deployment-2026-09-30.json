@@ -1,0 +1,19 @@
+﻿{
+    "time":  "2026-09-30T17:29:46.4307679+09:00",
+    "revision":  "bea3e4f181965d232dbd2289744f31875dd103e1",
+    "source":  "D:\\TEP_DigitalTwin\\.jenkins-agent\\workspace\\TEP-dev",
+    "runtime":  "D:\\TEP_DigitalTwin",
+    "running":  [
+                    "kafka",
+                    "api",
+                    "inference",
+                    "monitor"
+                ],
+    "pending":  [
+
+                ],
+    "fullDeployment":  true,
+    "validationOnly":  false,
+    "exitCode":  0,
+    "stage":  "service-verified"
+}
