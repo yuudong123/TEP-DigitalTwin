@@ -1,5 +1,58 @@
 # TEP Digital Twin
 
+> 화학공정의 시계열 데이터를 재생하고 RUL·고장 위험·판단 근거를 실시간으로 제공하는 예지보전 프로젝트입니다.
+
+## 📌 프로젝트 개요
+
+| 항목 | 내용 |
+|---|---|
+| 개발 형태 | 3인 팀으로 시작한 프로젝트 |
+| 데이터 | TEP Run-to-Failure, 공식 6개 시나리오·600개 trajectory |
+| 예측 대상 | 잔여수명(RUL), 4·2·1시간 이내 고장 위험 |
+| 모델·설명 | XGBoost · 시계열 특징 728개 · TreeSHAP |
+| 서비스·운영 | Kafka · FastAPI · Web · Docker · Jenkins |
+| 개인 담당 | 조현재 — Backend 중심으로 시작, 이후 잔여 개발·통합 범위 인수 |
+
+## 🙋 개인 기여
+
+- **초기 Backend 범위:** Kafka 실시간 재생, 시계열 추론, FastAPI와 서비스 간 데이터 계약을 담당했습니다.
+- **역할 확대:** 팀원 이탈 이후 남은 개발·통합 작업을 인수해 진행하고 있습니다. 초기 배정과 이후 인수 범위를 구분해 설명합니다.
+- **연결 범위:** 센서 재생 → 시계열 특징 생성 → 모델 추론 → API·Web의 전체 흐름과 모델 평가·승격·적용·rollback 연결을 정리했습니다.
+- **남은 범위:** Unity 실제 연결·빌드와 장시간 부하·PC 재부팅 복구 검증은 완료 성과로 포함하지 않습니다.
+
+초기 팀 배정과 잔여 작업 인수 기록은 [역할 문서](docs/00-team-roles.md), 구현·실증·미완료 구분은 [진행표](docs/00-progress-status.md)를 참고하세요. 아래 모델 성능은 프로젝트 산출물이며 전체 모델 개발을 개인 단독 성과로 표현하지 않습니다.
+
+## 💡 문제 해결과 설계 판단
+
+| 문제 | 설계·해결 방법 | 검증 근거 |
+|---|---|---|
+| 같은 공정 실행의 인접 행이 학습·평가에 섞일 위험 | `case::Id`로 trajectory를 식별하고 실행 단위 분할, validation에서 threshold 선택 | [데이터셋 설계](docs/03-dataset-design.md), [최종 모델](docs/06-final-model.md) |
+| 정적인 센서값만으로 열화 추세 표현이 부족 | 52개 기본 변수에서 변화량·통계·기울기를 포함한 728개 Temporal Feature 구성 | [실시간 특징 코드](src/inference/temporal_features.py) |
+| 빠른 재생이 공정 시간축을 바꾸는 문제 | 전송 속도 대신 메시지의 3분 간격 시간축으로 최근 21개 시점·60분 특징 생성 | [실시간 특징 코드](src/inference/temporal_features.py), [추론 시험](tests/test_inference_runtime.py) |
+| 부적합 모델 교체 또는 적용 실패 위험 | validation 비회귀 검사, 해시 검증, 명시적 승인, 원자적 활성 포인터와 rollback | [생명주기 시험](tests/test_model_lifecycle.py), [실증 기록](reports/19-20-lifecycle/verification-2026-09-30.md) |
+| 열화 변화와 재학습 가능한 운영 Drift 혼동 | 변화 이벤트 기록과 모델 생명주기를 분리하고 자동 재학습은 비활성 유지 | [진행표와 남은 조건](docs/00-progress-status.md) |
+
+## 📊 모델 성능과 검증 근거
+
+저장소의 [최종 모델 평가 기록](docs/06-final-model.md)에 따른 값입니다. 이번 문서 편집에서 학습·실측을 재실행하지 않았습니다.
+
+| Test 지표 | Baseline 52 features | Temporal 728 features |
+|---|---:|---:|
+| RUL MAE | 3.0446 h | **2.1877 h** |
+| RUL R² | 0.9857 | **0.9930** |
+| 4시간 위험 AP / F1 | 0.9907 / 0.9538 | **0.9948 / 0.9619** |
+| 2시간 위험 AP / F1 | 0.9775 / 0.9161 | **0.9833 / 0.9276** |
+| 1시간 위험 AP / F1 | 0.9418 / 0.8714 | **0.9648 / 0.8993** |
+
+RUL MAE는 약 **28.1% 감소**했습니다. 분류 출력은 보정된 실제 고장 확률이 아닌 `risk score`이며, SHAP은 모델 판단 기여도입니다.
+
+- **실제 서비스 체인:** CSV 센서 2,929건 → 예측 2,909건, 동기 예측 일치·재생 제어·API 재시작 보존 기록. 차이 20건은 초기 21개 시점의 특징 버퍼 준비와 함께 해석해야 합니다. [통합 실증](reports/16-integration/verification-2026-09-30.md)
+- **모델 생명주기:** validation 238,872행·90 trajectory에서 동등 모델 control 통과와 악화 후보 거부, hot application·rollback을 확인했습니다. 새 개선 모델의 운영 적용 성과는 아닙니다. [실증 기록](reports/19-20-lifecycle/verification-2026-09-30.md)
+- **완료 경계:** 비 Unity 체인과 Jenkins 배포 검증까지이며, Unity·장시간 부하·재부팅 복구·운영 Drift label 확보는 별도입니다. [최신 진행표](docs/00-progress-status.md)
+
+---
+
+
 TEP Run-to-Failure 화학공정 데이터를 실시간으로 스트리밍하고,
 AI를 이용해 공정의 고장 위험과 잔여수명(RUL)을 예측하며,
 공정 열화·운전상태 변화 모니터링과 디지털트윈 모니터링까지 구현하는
