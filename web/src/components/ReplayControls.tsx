@@ -56,7 +56,7 @@ export function ReplayControls() {
   const processing = ['completed', 'stopped'].includes(replay.status) && replay.inference_caught_up === false
   return <section className="stream-controls replay-controls" aria-label="실제 TEP 재생">
     <div className="stream-state">
-      <strong>실제 CSV → Kafka 재생</strong>
+      <strong title="실제 CSV → Kafka → 추론 → 화면">재생 제어</strong>
       <label>재생 데이터 <select value={key} disabled={active || busy} onChange={(e) => setKey(e.target.value)}>
         {catalog.map((item) => <option key={item.trajectory_key} value={item.trajectory_key} disabled={!item.raw_available}>
           {trajectoryLabel(item.trajectory_key)}{item.raw_available ? '' : ' · 원본 없음'}
@@ -64,10 +64,9 @@ export function ReplayControls() {
       </select></label>
       <label>전송 간격(초) <input type="number" min=".01" max="10" step=".01" value={interval}
         disabled={active || busy} onChange={(e) => setIntervalValue(Number(e.target.value))} /></label>
-      <span aria-live="polite">{replayLabels[replay.status] ?? replay.status} · {replay.sent}/{replay.total ?? '—'}
+      <span className="replay-progress" aria-live="polite">{replayLabels[replay.status] ?? replay.status} · {replay.sent}/{replay.total ?? '—'}
         {replay.trajectory_key ? ` · ${trajectoryLabel(replay.trajectory_key)}` : ''}</span>
       {processing && <span>센서 전송 종료 · 추론 처리 중 ({replay.prediction_timestamp_hours?.toFixed(2) ?? '준비'} 시간)</span>}
-      <small>센서 시간은 3분 간격 그대로예요. 첫 20행은 예측 준비 구간입니다.</small>
       {(error || replay.error) && <span role="alert">{error ?? replay.error}</span>}
     </div>
     <div className="stream-actions">

@@ -28,9 +28,9 @@ export function StreamControls({
   const stateLabel = {
     mock: '모의 데이터 재생',
     connecting: '서버 연결 중',
-    connected: '서버 연결됨',
-    stale: '갱신 지연 · 새 예측 없음',
-    error: '서버 연결 오류',
+    connected: '실시간 연결',
+    stale: '예측 갱신 지연',
+    error: '연결 오류',
     paused: '화면 갱신 일시정지',
   }[connectionState]
 
@@ -41,7 +41,7 @@ export function StreamControls({
         <strong>{stateLabel}</strong>
         <span>
           {mode === 'mock' && totalSnapshots ? `${currentIndex + 1}/${totalSnapshots} · ` : ''}
-          마지막 갱신{' '}
+          최근{' '}
           {lastReceivedAt ? (
             <time dateTime={lastReceivedAt.toISOString()}>{lastReceivedAt.toLocaleTimeString('ko-KR')}</time>
           ) : (

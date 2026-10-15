@@ -13,7 +13,7 @@ export function Header({ prediction, sourceMode }: HeaderProps) {
       <div>
         <h1>TEP 공정 디지털트윈</h1>
         <p className="dashboard-subtitle">
-          예지보전 모니터링 ({sourceMode === 'mock' ? '모의 데이터' : 'API 데이터'})
+          공정 예지보전 관제 · {sourceMode === 'mock' ? '모의 데이터' : 'API 예측 데이터'}
         </p>
       </div>
       <dl className="dashboard-meta">

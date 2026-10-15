@@ -16,12 +16,10 @@ function App() {
 
   return (
     <div className="dashboard">
+      <div className="command-bar">
       {prediction ? (
         <>
           <Header prediction={prediction} sourceMode={stream.mode} />
-          <div className="dashboard-status-row">
-            <StatusBadge status={prediction.status} />
-          </div>
         </>
       ) : (
         <header className="dashboard-header">
@@ -43,21 +41,28 @@ function App() {
         onToggle={stream.toggle}
         onRestart={stream.restart}
       />
-
-      {stream.mode === 'api' && <ReplayControls />}
-      {stream.mode === 'api' && prediction && <OperatingStatePanel key={prediction.trajectory_key} trajectoryKey={prediction.trajectory_key} />}
+      </div>
 
       {prediction ? (
         <>
-          <UnityDigitalTwin prediction={prediction} receivedAt={stream.lastReceivedAt!} sourceMode={stream.mode} connectionState={stream.connectionState} />
-
-          <main className="dashboard-grid">
+          <section className="summary-grid" aria-label="핵심 공정 상태">
+            <section className={`card status-summary status-summary--${prediction.status.toLowerCase()}`}>
+              <h2>{stream.connectionState === 'connected' ? '공정 전체 상태' : '마지막 공정 판정'}</h2>
+              <StatusBadge status={prediction.status} />
+              <p>공정 전체 예측 · 설비별 고장 위치 아님</p>
+            </section>
             <RulCard hours={prediction.rul.hours} />
             <RiskPanel risk={prediction.risk} />
+          </section>
+          <main className="console-grid">
+            <UnityDigitalTwin prediction={prediction} receivedAt={stream.lastReceivedAt!} sourceMode={stream.mode} connectionState={stream.connectionState} />
+            <aside className="insight-column" aria-label="예측 해석과 운전상태">
             <RiskFactorList
               factors={prediction.top_risk_factors}
               explanationModel={prediction.explanation_model}
             />
+            {stream.mode === 'api' && <OperatingStatePanel key={prediction.trajectory_key} trajectoryKey={prediction.trajectory_key} />}
+            </aside>
           </main>
         </>
       ) : (
@@ -66,6 +71,9 @@ function App() {
           <span>API가 연결되면 대시보드와 Unity 화면이 자동으로 표시됩니다.</span>
         </section>
       )}
+      {stream.mode === 'api' && <ReplayControls />}
+      <footer className="console-footer"><span>TEP 공정 관제 · 예측 모델 v1.0.0</span><span>공정 흐름을 표현한 모형 · 물리 시뮬레이터 아님</span></footer>
+      <div className="viewport-notice" role="status">관제 화면을 표시할 공간이 부족해.<br />가로 1,000 × 세로 720 이상으로 창을 넓혀줘.</div>
     </div>
   )
 }

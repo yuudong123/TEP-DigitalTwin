@@ -10,6 +10,7 @@ export function RulCard({ hours }: RulCardProps) {
         {hours.toFixed(2)}
         <span className="rul-unit">시간</span>
       </p>
+      <p className="metric-caption">최근 예측 기준 · 공정 전체 잔여시간</p>
     </section>
   )
 }
