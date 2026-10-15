@@ -38,6 +38,13 @@ namespace TEP.DigitalTwin
 
         private void Update()
         {
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                // The web host owns the monitoring panels; give the process diagram its whole tile.
+                overviewCamera.rect = new Rect(0, 0, 1, 1);
+                overviewCamera.orthographicSize = Mathf.Max(6.2f, 11.4f / Mathf.Max(.1f, overviewCamera.aspect));
+                return;
+            }
             // Preserve the layout and type proportions inside a resized WebGL canvas.
             var scale = Mathf.Min(Screen.width / 1920f, Screen.height / 1080f);
             var offsetX = (Screen.width - 1920f * scale) * .5f;
@@ -194,7 +201,7 @@ namespace TEP.DigitalTwin
             var text = label.AddComponent<TextMesh>();
             text.font = font;
             text.fontSize = 54;
-            text.characterSize = .075f;
+            text.characterSize = .09f;
             text.anchor = TextAnchor.MiddleCenter;
             text.alignment = TextAlignment.Center;
             text.text = title + "\n" + subtitle;
@@ -319,6 +326,7 @@ namespace TEP.DigitalTwin
 
         private void OnGUI()
         {
+            if (Application.platform == RuntimePlatform.WebGLPlayer) return;
             var prior = GUI.matrix;
             var scale = Mathf.Min(Screen.width / 1920f, Screen.height / 1080f);
             var offsetX = (Screen.width - 1920f * scale) * .5f;

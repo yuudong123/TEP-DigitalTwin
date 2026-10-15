@@ -93,7 +93,7 @@ export function UnityDigitalTwin({ prediction, receivedAt, sourceMode, connectio
       setViewport({ width, height })
 
       // Unity's loader synchronizes the WebGL render buffer to this CSS size.
-      // The resize event makes that synchronization immediate after a drag.
+      // Keep the render buffer synchronized when the control-room viewport changes.
       window.dispatchEvent(new Event('resize'))
     })
     observer.observe(container)
@@ -165,11 +165,11 @@ export function UnityDigitalTwin({ prediction, receivedAt, sourceMode, connectio
       data-unity-received-at={applied?.receivedAt} data-unity-connection={applied?.connection} data-unity-ack-count={applied?.count ?? 0}>
       <div className="unity-card__header">
         <div>
-          <h2 id="unity-title">3D 공정 디지털트윈</h2>
-          <p>{applied ? '실제 3D 화면의 예측 동기화가 확인됐어.' : '오른쪽 아래 모서리를 드래그하면 화면 크기를 조절할 수 있어.'}</p>
+          <h2 id="unity-title">공정 흐름 · 디지털트윈</h2>
+          <p>설비 상태 띠는 공정 전체 판정</p>
         </div>
-        <span className="unity-card__size" aria-live="polite">
-          {viewport.width} × {viewport.height}
+        <span className="unity-card__sync" data-linked={Boolean(applied)} aria-live="polite" title={`${viewport.width} × ${viewport.height}`}>
+          {applied ? '예측 동기화됨' : '연결 준비 중'}
         </span>
       </div>
 
@@ -209,7 +209,7 @@ export function UnityDigitalTwin({ prediction, receivedAt, sourceMode, connectio
         )}
       </div>
 
-      <p className="unity-controls">공정 흐름과 전체 예측 상태를 함께 보여주는 3D 개요 화면</p>
+      <div className="process-flow"><span>원료 투입</span><b>→</b><span>반응</span><b>→</b><span>응축·냉각</span><b>→</b><span>분리</span><b>→</b><span>정제</span><b>→</b><span>제품 생산</span><small><i />주 공정 <i className="recycle-key" />재순환</small></div>
     </section>
   )
 }

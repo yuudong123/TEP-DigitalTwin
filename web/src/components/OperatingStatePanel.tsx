@@ -31,11 +31,12 @@ export function OperatingStatePanel({ trajectoryKey }: { trajectoryKey: string }
     const timer = window.setInterval(() => void refresh(), 5000)
     return () => { active = false; window.clearInterval(timer) }
   }, [trajectoryKey])
-  return <section className="stream-controls operating-state" aria-label="운전상태·열화 모니터링">
+  return <section className="card operating-state" aria-label="운전상태·열화 모니터링" data-monitor-status={event?.status ?? 'INSUFFICIENT_DATA'}>
     <div className="stream-state">
-      <strong>운전상태·열화 변화 · {event ? statusLabels[event.status] ?? '알 수 없는 상태' : '판정 준비 중'}</strong>
-      {event && <span>변화 변수 비율 {(event.drifted_feature_ratio * 100).toFixed(2)}% · 수신 {receivedAt}</span>}
-      <small>실제 데이터 분포 변화나 오탐률이 아닌 공정 변화 신호예요. 자동 재학습은 보류 상태입니다.</small>
+      <h2>운전상태·열화 변화</h2>
+      <div className="monitor-reading"><strong>{event ? statusLabels[event.status] ?? '알 수 없는 상태' : '판정 준비 중'}</strong><span>{event ? `${(event.drifted_feature_ratio * 100).toFixed(2)}%` : '—'}</span></div>
+      <small>변화 변수 비율 · 자동 재학습 꺼짐</small>
+      {receivedAt && <time dateTime={receivedAt}>수신 {new Date(receivedAt).toLocaleTimeString('ko-KR', { hour12: false })}</time>}
       {event?.retraining_requested && <span role="alert">설정 확인 필요: 재학습 요청 감지</span>}
       {error && <span role="alert">{error}</span>}
     </div>

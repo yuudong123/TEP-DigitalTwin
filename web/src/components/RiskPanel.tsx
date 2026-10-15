@@ -6,11 +6,11 @@ const HORIZON_LABEL: Record<RiskHorizon, string> = {
   failure_within_1h: '1시간 이내',
 }
 
-// prediction_schema.json 상 risk의 키 순서를 그대로 사용
+// 화면은 긴급도가 높은 1시간 위험부터 표시한다. JSON 계약 순서는 변경하지 않는다.
 const HORIZON_ORDER: RiskHorizon[] = [
-  'failure_within_4h',
-  'failure_within_2h',
   'failure_within_1h',
+  'failure_within_2h',
+  'failure_within_4h',
 ]
 
 interface RiskPanelProps {
@@ -44,9 +44,8 @@ export function RiskPanel({ risk }: RiskPanelProps) {
               </div>
 
               <span className="risk-threshold">
-                판정 기준 {(entry.threshold * 100).toFixed(1)}%
+                {entry.alert ? '기준 초과 / ' : '판정 기준 '}{(entry.threshold * 100).toFixed(1)}%
               </span>
-              {entry.alert && <span className="risk-alert-flag">위험 판정</span>}
             </div>
           )
         })}

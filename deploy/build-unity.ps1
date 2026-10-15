@@ -52,6 +52,7 @@ if ($compatible) {
         foreach ($extension in @('.cs','.cs.meta')) { Copy-Item -LiteralPath (Join-Path $original "Assets\TEP\Scripts\Runtime\$name$extension") -Destination (Join-Path $runtimeDir "$name$extension") }
     }
     Copy-Item -LiteralPath (Join-Path $original 'Assets\TEP\Scripts\Editor\ProcessOverviewSetup.cs') -Destination $editorDir
+    Copy-Item -LiteralPath (Join-Path $original 'Assets\TEP\link.xml') -Destination (Join-Path $project 'Assets\TEP\link.xml')
     foreach ($name in @('NanumGothic-Regular.ttf','NanumGothic-Regular.ttf.meta','NanumGothic-OFL.txt','NanumGothic-OFL.txt.meta')) { Copy-Item -LiteralPath (Join-Path $original "Assets\TEP\Resources\$name") -Destination $resourceDir }
     Copy-Item -LiteralPath (Join-Path $original 'Assets\TEP\Plugins\WebGL\PredictionBridge.jslib') -Destination $pluginDir
     $packages = @{dependencies=@{'com.unity.ugui'='2.0.0';'com.unity.modules.audio'='1.0.0';'com.unity.modules.imageconversion'='1.0.0';'com.unity.modules.imgui'='1.0.0';'com.unity.modules.jsonserialize'='1.0.0';'com.unity.modules.physics'='1.0.0';'com.unity.modules.screencapture'='1.0.0';'com.unity.modules.ui'='1.0.0';'com.unity.modules.uielements'='1.0.0'}}

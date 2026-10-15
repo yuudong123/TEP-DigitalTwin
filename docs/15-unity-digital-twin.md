@@ -10,7 +10,7 @@ Unity 메뉴 `TEP Digital Twin > Generate Process Overview`로 생성할 수 있
 - 분리기 기체는 압축기(C-101)를 거쳐 반응기로 재순환한다. 배관은 청록/황색으로 구분한다.
 - 형상과 배관은 기획 흐름을 설명하는 모형이며 물리 공정 시뮬레이터가 아니다.
 - 모든 설비의 상태 밴드는 **공정 전체 상태**를 표시한다. 개별 설비 고장 확률을 의미하지 않는다.
-- 오른쪽 패널은 전체 상태·RUL·1/2/4시간 위험/threshold·상위 SHAP 변수·모델/trajectory/공정 시간을 표시한다.
+- 독립 실행 화면의 오른쪽 패널은 전체 상태·RUL·위험도·SHAP 변수를 표시한다. WebGL에서는 중복 HUD를 숨기고 호스트 웹의 고정 관제 레이아웃을 사용한다. 최신 배치는 `27-control-room-layout.md`를 참고한다.
 - 화면·설비 이름·상태·주요 위험 변수·시간 단위는 한글로 표시한다. 예측 JSON의 식별자와 필드명은 원래 계약을 유지한다.
 - 나눔고딕을 프로젝트에 포함하여 웹에서도 한글을 표시한다. 폰트의 OFL 라이선스는 `Assets/TEP/Resources/NanumGothic-OFL.txt`에 포함한다.
 - 기본은 데이터 대기다. Web의 `ApplyPredictionEnvelope` 수신 후 표시한다. 서버의 원래 수신 시각을 기준으로 15초가 지나면 한글로 데이터 지연을 표시한다. 같은 예측을 다시 조회해도 수신 시각을 갱신하지 않는다.
@@ -117,8 +117,8 @@ Unity 메뉴에서 `TEP Digital Twin > Generate Demo (Prefabs + Scene)`를 한 �
 Web 대시보드에 포함하려면 Unity 메뉴에서
 `TEP Digital Twin > Build WebGL for Web Dashboard`를 실행한다. 빌드 결과는 자동으로
 `web/public/unity/`에 생성되며 React 대시보드가 `/unity/Build/unity.loader.js`를 로드한다.
-웹의 Unity 영역은 데스크톱에서 우측 아래 모서리로 가로·세로 크기를 조절할 수 있고 모바일에서는
-세로 크기를 조절할 수 있다. `ResizeObserver`와 Unity의 `matchWebGLToCanvasSize` 설정이 CSS 크기,
+웹의 Unity 영역은 관제 그리드의 남는 공간을 채우며 수동 크기 조절로 페이지가 늘어나지 않는다.
+`ResizeObserver`와 Unity의 `matchWebGLToCanvasSize` 설정이 CSS 크기,
 WebGL 렌더 버퍼, 화면 DPR을 동기화한다.
 
 ## 6. 실제 API 연결 지점
