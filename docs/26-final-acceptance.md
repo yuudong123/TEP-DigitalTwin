@@ -23,15 +23,17 @@
 | 실제 WebGL 거부/resize | 숫자 상태·범위 밖 위험도·receipt 누락 거부, 1280/1920 canvas 크기 일치, `reports/26-final/webgl-contracts-2026-10-15.json` |
 | 새 체크아웃 검증 | 로컬 commit7df947e를 새로 clone하여 Unity/Web 빌드와 Python105개 통과; 당시 gate 보고서는 `reports/26-final/clean-checkout-validation.json`. 이후 추가된7개는 컨테이너 교체/재시작 검증 도구 테스트 |
 | 오전 중단된 부하 | 665.2초·예측6,322·오류0, **1시간 통과 아님** |
-| 저녁 1시간 backend | 진행 중, `reports/26-final/soak-resumed-2026-10-15.progress.json` |
-| 저녁 1시간 WebGL | 진행 중, 완료 시 `reports/26-final/webgl-soak-resumed-2026-10-15.json` |
-| cold stop/start | 장시간 검증 뒤 실행 예정 |
+| 저녁 backend 중간 결과 | 사용자 요청으로 중단. 마지막 저장2054.4초·예측19,288건·보정27건·오류0. **1시간 통과 아님**, `reports/26-final/soak-resumed-2026-10-15.json` |
+| 저녁 WebGL 중간 결과 | 사용자 요청으로 최종 집계 전에 중단. 별도 완료된 짧은 연동/거부 검증과 구분, `reports/26-final/webgl-soak-resumed-2026-10-15.json` |
+| cold stop/start | 이번 재개 작업에서는 사용자 요청으로 미실행. 오전 Stop의 Docker/WSL/agent0 및 보호 서비스 유지 확인과 구분 |
 | Windows 기존 자동 시작 | 18:05 재부팅 후 로그인, Jenkins/Tailscale/sshd Auto+Running, Docker 및 기존 agent/Jenkins dev 배포 관찰. 기준 snapshot: `reports/26-final/resume-baseline-2026-10-15.json` |
 
 ## 재실행
 
 장시간 검증 중에는 다른 replay나 배포를 시작하지 않는다. 자동 배포 충돌을 피하기 위해
-현재 Jenkins 서비스와 TEP agent만 잠시 중지했으며 자동시작 설정은 유지했다.
+검증 동안 Jenkins 서비스와 TEP agent만 잠시 중지했으며 자동시작 설정은 유지했다.
+사용자가 검증을 중단하고 PR 업로드/병합을 요청하여 replay와 소유한 검증 프로세스만 종료했다.
+추가 수동 검증은 실행하지 않는다. 병합 후 자동 배포는 기존 Jenkins gate를 그대로 따른다.
 
 ```powershell
 Set-Location D:\TEP_DigitalTwin
@@ -58,7 +60,7 @@ Cold stop/start에서는 먼저 replay를 완료/중지하고 backlog를 비운�
 ```
 
 예측 전체 snapshot와 원래 receipt가 같고 Kafka high-water가 감소하지 않는지 확인한다.
-이는 제어된 Desktop/WSL/컨테이너 재기동 증거이며 새로운 Windows 재부팅 시험이라고 하지 않는다.
+위 명령은 향후 재실행 절차다. 이번 저녁에는 실행하지 않았으므로 제어된 cold restart 통과로 보고하지 않는다.
 
 ## 남는 경계
 

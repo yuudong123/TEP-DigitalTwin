@@ -1,0 +1,12 @@
+{
+  "source": "three_real_case1_csv_windows",
+  "timestamps": [
+    1.0,
+    35.0,
+    130.0
+  ],
+  "old_unrestricted_seconds": 0.08551870000019335,
+  "one_thread_seconds": 0.12040560000014011,
+  "prediction_json_identical": true,
+  "model_files_modified": false
+}
