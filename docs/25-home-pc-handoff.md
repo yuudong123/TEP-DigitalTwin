@@ -29,7 +29,7 @@
 
 ## 남은 별도 선택/검증
 
-- 재부팅/로그인 후 기존 서비스 복구는 10/15 관찰했다. 최신 코드의 1시간 연속 및 cold stop/start 최종 결과는26번 문서를 참조한다.
+- 재부팅/로그인 후 기존 서비스 복구는10/15 관찰했다. 최신 코드는 사용자 합의30분 연속 기준을 충족했다. Cold stop/start는 미실행이며26번 문서를 참조한다.
 - 17 train 보정 기준은 10/15 운영 `.env`에서 명시적으로 선택했다.
   `DRIFT_CALIBRATION_PATH=models/monitoring/state-calibration-v1.0.0.json`,
   `DRIFT_MIN_TIMESTAMP_HOURS=30`, 120개 window, `RETRAIN_ENABLED=false`다.

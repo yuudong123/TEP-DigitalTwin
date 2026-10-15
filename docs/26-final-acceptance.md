@@ -23,8 +23,9 @@
 | 실제 WebGL 거부/resize | 숫자 상태·범위 밖 위험도·receipt 누락 거부, 1280/1920 canvas 크기 일치, `reports/26-final/webgl-contracts-2026-10-15.json` |
 | 새 체크아웃 검증 | 로컬 commit7df947e를 새로 clone하여 Unity/Web 빌드와 Python105개 통과; 당시 gate 보고서는 `reports/26-final/clean-checkout-validation.json`. 이후 추가된7개는 컨테이너 교체/재시작 검증 도구 테스트 |
 | 오전 중단된 부하 | 665.2초·예측6,322·오류0, **1시간 통과 아님** |
-| 저녁 backend 중간 결과 | 사용자 요청으로 중단. 마지막 저장2054.4초·예측19,288건·보정27건·오류0. **1시간 통과 아님**, `reports/26-final/soak-resumed-2026-10-15.json` |
-| 저녁 WebGL 중간 결과 | 사용자 요청으로 최종 집계 전에 중단. 별도 완료된 짧은 연동/거부 검증과 구분, `reports/26-final/webgl-soak-resumed-2026-10-15.json` |
+| 합의된30분 완료 기준 | 사용자 요청으로 기준을30분으로 변경. 실제2054.4초·예측19,288건·보정27건·오류0, `reports/26-final/acceptance-30min-2026-10-15.json`에서 기준 충족 |
+| 저녁 backend 원본 | 최초1시간 실행은 중단된 원본 그대로 보존, `reports/26-final/soak-resumed-2026-10-15.json`. **1시간 통과를 주장하지 않음** |
+| 저녁 WebGL 관찰 | 2062초까지 실제 일치/연결 관찰. 마지막6개 stdout checkpoint를 `reports/26-final/browser-final-observations-2026-10-15.json`에 보존. 최종 전체 sample/메모리 집계는 없음 |
 | cold stop/start | 이번 재개 작업에서는 사용자 요청으로 미실행. 오전 Stop의 Docker/WSL/agent0 및 보호 서비스 유지 확인과 구분 |
 | Windows 기존 자동 시작 | 18:05 재부팅 후 로그인, Jenkins/Tailscale/sshd Auto+Running, Docker 및 기존 agent/Jenkins dev 배포 관찰. 기준 snapshot: `reports/26-final/resume-baseline-2026-10-15.json` |
 
@@ -34,14 +35,16 @@
 검증 동안 Jenkins 서비스와 TEP agent만 잠시 중지했으며 자동시작 설정은 유지했다.
 사용자가 검증을 중단하고 PR 업로드/병합을 요청하여 replay와 소유한 검증 프로세스만 종료했다.
 추가 수동 검증은 실행하지 않는다. 병합 후 자동 배포는 기존 Jenkins gate를 그대로 따른다.
+이후 사용자가1시간 대신30분을 완료 기준으로 지정했다. 측정된34분 이상 기록이 이를 충족하므로
+별도30분 acceptance를 완료로 기록한다. 원래1시간 실행 기록을 완료한 것으로 소급 변경하지 않는다.
 
 ```powershell
 Set-Location D:\TEP_DigitalTwin
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File deploy\09-manual-deploy.ps1
-.\.venv\Scripts\python.exe -m deploy.verify_soak --seconds 3600 --interval .1 --output reports/26-final/soak-resumed-2026-10-15.json
+.\.venv\Scripts\python.exe -m deploy.verify_soak --seconds 1800 --interval .1 --output reports/26-final/soak-new.json
 # 위 replay가 실행 중인 동안 별도 터미널에서:
 Set-Location web
-node verify-webgl.mjs http://127.0.0.1:8000 3600 ../reports/26-final/webgl-soak-resumed-2026-10-15.json ../reports/26-final/unity-live.png
+node verify-webgl.mjs http://127.0.0.1:8000 1800 ../reports/26-final/webgl-soak-new.json ../reports/26-final/unity-live.png
 ```
 
 실제 test split의 case1–6 CSV를 반복 재생한다. 센서/예측 순서·중복·누락과 API readiness,

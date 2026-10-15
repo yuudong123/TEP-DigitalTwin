@@ -132,5 +132,5 @@ React가 `WebPredictionBridge.ApplyPredictionEnvelope`로 `prediction`, `receive
 ## 7. 검증 경계
 
 - Windows 기록 화면 캡처 및 실제 WebGL/API 짧은 연동 테스트 완료.
-- 1시간 연속 결과와 cold stop/start 결과는 `26-final-acceptance.md` 및 원본 보고서에서 별도 확인한다.
+- 합의된30분 연속 관찰 완료와 미실행 cold stop/start 경계는 `26-final-acceptance.md` 및 원본 보고서에서 확인한다.
 - 원본 Unity 6.3/URP 동일 버전 빌드와 물리 공정 시뮬레이션은 이번 증거 범위가 아니다.

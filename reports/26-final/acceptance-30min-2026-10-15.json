@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "criterion": "30 minute continuous observed operation",
+  "minimum_seconds": 1800,
+  "criterion_revised_by_direct_user_request": true,
+  "original_planned_seconds": 3600,
+  "backend": {
+    "observed_seconds": 2054.4,
+    "predictions": 19288,
+    "calibrated_events": 27,
+    "runtime_samples": 74,
+    "recorded_errors": 0,
+    "sampled_service_issues": 0,
+    "source": "soak-resumed-2026-10-15.json"
+  },
+  "browser": {
+    "last_observed_seconds": 2062,
+    "actual_compiled_webgl_and_api": true,
+    "last_observations_connected_and_matching": true,
+    "final_aggregation_available": false,
+    "source": "browser-final-observations-2026-10-15.json",
+    "completed_short_contract_report": "webgl-contracts-2026-10-15.json"
+  },
+  "boundaries": [
+    "The original interrupted 3600-second run record is preserved, including its passed=false. This revised acceptance does not claim one-hour completion.",
+    "Browser final sample count and full memory aggregation were not produced before the user stopped the process.",
+    "No evening cold stop/start test or original Unity 6000.3.24f1/URP verification is claimed."
+  ]
+}

@@ -386,7 +386,7 @@ Kafka 데이터는 외부 볼륨 `tep-kafka-data`에 보존한다. 기존 브로
 Unity는 6.1 격리 호환 빌드만 검증했으며 원본6.3/URP 검증과 구분한다.
 운전상태 보정 기준을 명시적으로 선택했고 추론 스레드를 제한했다. 자동 재학습은 계속 비활성이다.
 바탕화면 TEP-Start/TEP-Stop은 기존 자동시작 설정·데이터·원격 관리 서비스를 유지한다.
-1시간 연속 및 복구 검증의 최종 결과와 미검증 경계는 `docs/26-final-acceptance.md`에서 확인한다.
+사용자 합의30분 연속 기준 완료 및 미실행 복구/원본 버전 경계는 `docs/26-final-acceptance.md`에서 확인한다.
 상세 진행표는 [docs/00-progress-status.md](docs/00-progress-status.md),
 집 PC 재개/Unity 인계는 [docs/25-home-pc-handoff.md](docs/25-home-pc-handoff.md)를 따른다.
  

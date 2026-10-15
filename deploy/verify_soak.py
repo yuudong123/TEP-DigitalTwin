@@ -188,7 +188,7 @@ if __name__ == '__main__':
     parser.add_argument('--prediction-topic', default='tep-predictions')
     parser.add_argument('--monitor-topic', default='tep-drift-events')
     parser.add_argument('--split-manifest', default='data/metadata/split_manifest.csv')
-    parser.add_argument('--seconds', type=float, default=3600)
+    parser.add_argument('--seconds', type=float, default=1800)
     parser.add_argument('--interval', type=float, default=.1)
     parser.add_argument('--calibration-sha256', default='5e99120bdaf854e703c98ff8fca54f59e38544c3d57f818ef912d47713e600b1')
     parser.add_argument('--output', required=True)

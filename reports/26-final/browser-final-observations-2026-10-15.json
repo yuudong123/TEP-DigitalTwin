@@ -1,0 +1,51 @@
+{
+  "source": "stdout of actual running WebGL/API validator",
+  "status": "stopped_by_user",
+  "final_aggregation_available": false,
+  "last_observed_seconds": 2062,
+  "notes": "Only the last six stdout observations are retained here, not a fabricated full sample count. Each non-null observation follows the validator's actual API/Unity comparison. The process was running until explicitly stopped.",
+  "samples": [
+    {
+      "elapsed_seconds": 1987,
+      "trajectory": "case1::9",
+      "timestamp": 135.39999389648438,
+      "state": "connected",
+      "js_heap_bytes": 20439914
+    },
+    {
+      "elapsed_seconds": 2002,
+      "trajectory": "case1::9",
+      "timestamp": 143.35000610351562,
+      "state": "connected",
+      "js_heap_bytes": 20277008
+    },
+    {
+      "elapsed_seconds": 2017,
+      "trajectory": "case1::9",
+      "timestamp": 144.35000610351562,
+      "state": "connected",
+      "js_heap_bytes": 20763483
+    },
+    {
+      "elapsed_seconds": 2032,
+      "trajectory": "case2::2",
+      "timestamp": 8.25,
+      "state": "connected",
+      "js_heap_bytes": 19795316
+    },
+    {
+      "elapsed_seconds": 2047,
+      "trajectory": "case2::2",
+      "timestamp": 15.050000190734863,
+      "state": "connected",
+      "js_heap_bytes": 20295134
+    },
+    {
+      "elapsed_seconds": 2062,
+      "trajectory": "case2::2",
+      "timestamp": 23.049999237060547,
+      "state": "connected",
+      "js_heap_bytes": 20122772
+    }
+  ]
+}
