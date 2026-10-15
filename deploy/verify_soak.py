@@ -17,9 +17,18 @@ from src.monitoring.event_schema import validate_drift_event
 def inspect_services():
     result = subprocess.run(['docker', 'inspect', 'tep-kafka', 'tep-api', 'tep-inference', 'tep-monitor'],
                             check=True, capture_output=True, text=True)
-    return {item['Name'].removeprefix('/'): {'running': item['State']['Running'],
+    return {item['Name'].removeprefix('/'): {'id': item['Id'], 'image': item['Image'],
+            'created': item['Created'], 'started_at': item['State']['StartedAt'], 'running': item['State']['Running'],
             'health': item['State'].get('Health', {}).get('Status'), 'restarts': item['RestartCount']}
             for item in json.loads(result.stdout)}
+
+
+def services_unchanged(before, after):
+    return bool(before) and before.keys() == after.keys() and all(
+        value['running'] and value['health'] in (None, 'healthy')
+        and all(value[key] == before[name][key] for key in ('id', 'image', 'started_at', 'restarts'))
+        for name, value in after.items()
+    )
 
 
 def assign_latest(consumer, topics):
@@ -102,8 +111,7 @@ def verify(args):
                         ready = client.get('/health/ready')
                         ready.raise_for_status()
                         services = inspect_services()
-                        if any(not value['running'] or value['restarts'] != initial_services[name]['restarts']
-                               or value['health'] not in (None, 'healthy') for name, value in services.items()):
+                        if not services_unchanged(initial_services, services):
                             raise RuntimeError('Container stopped, became unhealthy or restarted during soak')
                         if ready.json()['reader_failed'] or ready.json()['invalid_messages']:
                             raise RuntimeError('API reader failed or received invalid messages')
@@ -155,6 +163,8 @@ def verify(args):
             report['elapsed_seconds'] = round(time.monotonic()-started, 1)
             report['calibration_sha256'] = expected_hash
             report['final_services'] = inspect_services()
+            if not services_unchanged(initial_services, report['final_services']):
+                raise RuntimeError('Container changed or became unhealthy at final acceptance')
             report['passed'] = report['elapsed_seconds'] >= args.seconds and report['predictions'] > 0 and report['calibrated_events'] > 0
             if not report['passed']:
                 raise AssertionError('Soak acceptance conditions were not all demonstrated')

@@ -10,6 +10,18 @@ await mkdir(path.dirname(output), { recursive: true })
 await mkdir(path.dirname(screenshot), { recursive: true })
 const browser = await chromium.launch({ channel: process.env.TEP_BROWSER_CHANNEL ?? 'msedge', headless: true })
 const page = await browser.newPage({ viewport: { width: 1920, height: 1200 }, deviceScaleFactor: 1 })
+// Test-only loader wrapper captures the public instance; WASM/data and API stay real.
+await page.route('**/unity/Build/unity.loader.js', async route => {
+  const response = await route.fetch()
+  const body = await response.text()
+  await route.fulfill({ response, body: body + `
+const __tepOriginalUnityFactory = window.createUnityInstance;
+window.createUnityInstance = async (...args) => {
+  const instance = await __tepOriginalUnityFactory(...args);
+  window.__tepTestUnityInstance = instance;
+  return instance;
+};` })
+})
 const errors = []
 const responses = new Map()
 let matching = 0
@@ -29,7 +41,11 @@ page.on('response', async response => {
 })
 await page.addInitScript(() => {
   window.__tepUnityAck = null
-  window.addEventListener('tep-unity-prediction', event => { window.__tepUnityAck = event.detail })
+  window.__tepUnityAckCount = 0
+  window.addEventListener('tep-unity-prediction', event => {
+    window.__tepUnityAck = event.detail
+    window.__tepUnityAckCount++
+  })
 })
 function near(a, b) { return Number.isFinite(a) && Number.isFinite(b) && Math.abs(a - b) <= 1e-4 }
 async function readAndMatch() {
@@ -61,6 +77,23 @@ try {
   await page.locator('.stream-controls').first().getByRole('button', { name: '일시정지', exact: true }).click()
   await page.waitForFunction(() => window.__tepUnityAck?.connection_state === 'paused', null, { timeout: 15000 })
   report.pause_propagates_to_unity = true
+  const rejection = await page.evaluate(async () => {
+    const accepted = structuredClone(window.__tepUnityAck)
+    for (const kind of ['numeric_status', 'invalid_risk', 'missing_receipt']) {
+      const invalid = structuredClone(accepted)
+      if (kind === 'numeric_status') invalid.prediction.status = '1'
+      if (kind === 'invalid_risk') invalid.prediction.risk.failure_within_1h.score = 1.5
+      if (kind === 'missing_receipt') delete invalid.received_at_unix_ms
+      const prior = window.__tepUnityAckCount
+      window.__tepTestUnityInstance.SendMessage('DigitalTwinRuntime', 'ApplyPredictionEnvelope', JSON.stringify(invalid))
+      await new Promise(resolve => setTimeout(resolve, 600))
+      if (window.__tepUnityAckCount !== prior) return false
+    }
+    window.__tepTestUnityInstance.SendMessage('DigitalTwinRuntime', 'ApplyPredictionEnvelope', JSON.stringify(accepted))
+    return true
+  })
+  if (!rejection) throw new Error('Compiled Unity accepted an invalid prediction envelope')
+  report.invalid_predictions_rejected_by_compiled_unity = true
   await page.locator('.stream-controls').first().getByRole('button', { name: '재생', exact: true }).click()
   await page.route('**/api/predictions/latest', route => route.abort())
   await page.waitForFunction(() => window.__tepUnityAck?.connection_state === 'error', null, { timeout: 15000 })
@@ -68,6 +101,16 @@ try {
   await page.unroute('**/api/predictions/latest')
   await page.waitForFunction(() => ['connected', 'stale'].includes(window.__tepUnityAck?.connection_state), null, { timeout: 15000 })
   report.connection_restored = true
+  for (const viewport of [{ width: 1280, height: 900 }, { width: 1920, height: 1200 }]) {
+    await page.setViewportSize(viewport)
+    await page.waitForFunction(() => {
+      const canvas = document.querySelector('#unity-canvas')
+      const rect = canvas?.getBoundingClientRect()
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      return rect && Math.abs(canvas.width - rect.width * dpr) <= 2 && Math.abs(canvas.height - rect.height * dpr) <= 2
+    }, null, { timeout: 15000 })
+  }
+  report.resized_canvas_matches_viewport = true
   const deadline = Date.now() + seconds * 1000
   let captured = false
   while (Date.now() < deadline) {

@@ -21,7 +21,7 @@
 | 19 | ✅ 계약/실증 | 실제 validation 전체238,872행·90 trajectories 평가, 동등 통과·악화 거부·승인 SHA 승격 | 실제 새 개선 후보 학습/운영 승격은18과 별도 |
 | 20 | ✅ 계약/실증 | hash/원자 pointer·live hot application·실패시 직전 유지·restart fallback·rollback | 실제 운영 모델은 v1.0.0 유지 |
 | 21 | 범위 미정 | 기존 문서에 번호/담당만 존재, 요구사항 미정임을 명시 | 임의 기능을 만들지 않음. 요구사항 확인 필요 |
-| 22 | 🟡 | 최신 Python105개, Web6개·lint/build, WebGL 95초 연동·전달 실패/모델 복구 | 1시간 부하·cold start/stop 검증 중 |
+| 22 | 🟡 | 최신 Python112개, Web6개·lint/build, 실제 WebGL 정상/거부·resize·전달 실패/모델 복구 | 1시간 부하·cold start/stop 검증 중 |
 | 23 | 🟡 | Unity 포함 짧은 실제 연결 검증 완료 | 장시간·복구·PR 병합 후 Jenkins 최종 배포 검증 |
 | 24 | ✅ 현재분 | API/lifecycle/운영 문서·본 표·원본 JSON/화면 증거 동기화 | 남은 실제 결과 발생 시 갱신 |
 

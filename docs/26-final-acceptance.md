@@ -15,11 +15,13 @@
 
 | 검증 | 결과/원본 |
 |---|---|
-| Python | 105개 통과, `tests/`; 알려진 Starlette/httpx deprecation warning1개 |
+| Python | 112개 통과, `tests/`; 알려진 Starlette/httpx deprecation warning1개 |
 | Web | 6개·lint·TypeScript/production build 통과 |
 | Unity build | 6000.1.10f1, 격리 built-in renderer, JSON bridge 정상/거부 계약 검사 통과 |
 | 기존 실제 전체 체인 | 센서2,929 → 예측2,909, 순서/직접예측 일치·재생 pause/resume/conflict, `reports/26-final/full-chain-2026-10-15.json` |
 | 기존 실제 WebGL | 95초, API/Unity 일치8회, pause/error/복구 통과, `reports/26-final/webgl-smoke-2026-10-15.json` |
+| 실제 WebGL 거부/resize | 숫자 상태·범위 밖 위험도·receipt 누락 거부, 1280/1920 canvas 크기 일치, `reports/26-final/webgl-contracts-2026-10-15.json` |
+| 새 체크아웃 검증 | 로컬 commit7df947e를 새로 clone하여 Unity/Web 빌드와 Python105개 통과; 당시 gate 보고서는 `reports/26-final/clean-checkout-validation.json`. 이후 추가된7개는 컨테이너 교체/재시작 검증 도구 테스트 |
 | 오전 중단된 부하 | 665.2초·예측6,322·오류0, **1시간 통과 아님** |
 | 저녁 1시간 backend | 진행 중, `reports/26-final/soak-resumed-2026-10-15.progress.json` |
 | 저녁 1시간 WebGL | 진행 중, 완료 시 `reports/26-final/webgl-soak-resumed-2026-10-15.json` |
@@ -43,6 +45,8 @@ node verify-webgl.mjs http://127.0.0.1:8000 3600 ../reports/26-final/webgl-soak-
 실제 test split의 case1–6 CSV를 반복 재생한다. 센서/예측 순서·중복·누락과 API readiness,
 컨테이너 상태/재시작, 모니터 보정 SHA/자동 재학습=false를 검사한다.
 브라우저는 실제 컴파일된 WebGL ACK와 API 예측/receipt를 비교한다.
+추가 거부/resize 검증은 테스트 브라우저에서 loader factory를 감싸 공개 Unity instance만 캡처한다.
+WASM/data와 API 응답은 실제 산출물/서비스이며 mock으로 대체하지 않는다.
 브라우저 `js_heap_bytes`는 JS heap 측정이며 Unity WASM/GPU/전체 프로세스 메모리의 증거가 아니다.
 
 Cold stop/start에서는 먼저 replay를 완료/중지하고 backlog를 비운다.
