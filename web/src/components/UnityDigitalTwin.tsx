@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Prediction } from '../types/prediction'
+import type { PredictionConnectionState } from '../hooks/usePredictionStream'
+import type { PredictionSourceMode } from '../config/predictionSource'
+import { unityEnvelope } from '../services/unityEnvelope'
 
 type UnityInstance = {
   Quit: () => Promise<void>
@@ -53,15 +56,31 @@ function loadUnityLoader() {
 
 interface UnityDigitalTwinProps {
   prediction: Prediction
+  receivedAt: Date
+  sourceMode: PredictionSourceMode
+  connectionState: PredictionConnectionState
 }
 
-export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
+export function UnityDigitalTwin({ prediction, receivedAt, sourceMode, connectionState }: UnityDigitalTwinProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const unityRef = useRef<UnityInstance>(null)
   const [progress, setProgress] = useState(0)
   const [state, setState] = useState<'loading' | 'ready' | 'missing' | 'error'>('loading')
   const [viewport, setViewport] = useState({ width: 0, height: 0 })
+  const [applied, setApplied] = useState<{ trajectory: string; timestamp: number; receivedAt: number; connection: string; count: number } | null>(null)
+
+  useEffect(() => {
+    const acknowledge = (event: Event) => {
+      const envelope = (event as CustomEvent).detail
+      if (typeof envelope?.prediction?.trajectory_key !== 'string' || !Number.isFinite(envelope?.prediction?.timestamp_hours)
+        || !Number.isFinite(envelope?.received_at_unix_ms) || typeof envelope?.connection_state !== 'string') return
+      setApplied((prior) => ({ trajectory: envelope.prediction.trajectory_key, timestamp: envelope.prediction.timestamp_hours,
+        receivedAt: envelope.received_at_unix_ms, connection: envelope.connection_state, count: (prior?.count ?? 0) + 1 }))
+    }
+    window.addEventListener('tep-unity-prediction', acknowledge)
+    return () => window.removeEventListener('tep-unity-prediction', acknowledge)
+  }, [])
 
   useEffect(() => {
     const container = containerRef.current
@@ -95,9 +114,9 @@ export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
           canvas,
           {
             arguments: [],
-            dataUrl: '/unity/Build/unity.data.br',
-            frameworkUrl: '/unity/Build/unity.framework.js.br',
-            codeUrl: '/unity/Build/unity.wasm.br',
+            dataUrl: '/unity/Build/unity.data',
+            frameworkUrl: '/unity/Build/unity.framework.js',
+            codeUrl: '/unity/Build/unity.wasm',
             streamingAssetsUrl: '/unity/StreamingAssets',
             companyName: 'TEP Digital Twin',
             productName: 'TEP Digital Twin',
@@ -135,17 +154,19 @@ export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
     if (state !== 'ready' || !unityRef.current) return
     unityRef.current.SendMessage(
       'DigitalTwinRuntime',
-      'ApplyPredictionJson',
-      JSON.stringify(prediction),
+      'ApplyPredictionEnvelope',
+      unityEnvelope(prediction, receivedAt, sourceMode, connectionState),
     )
-  }, [prediction, state])
+  }, [prediction, receivedAt, sourceMode, connectionState, state])
 
   return (
-    <section className="unity-card" aria-labelledby="unity-title">
+    <section className="unity-card" aria-labelledby="unity-title" data-unity-state={state}
+      data-unity-trajectory={applied?.trajectory} data-unity-timestamp={applied?.timestamp}
+      data-unity-received-at={applied?.receivedAt} data-unity-connection={applied?.connection} data-unity-ack-count={applied?.count ?? 0}>
       <div className="unity-card__header">
         <div>
-          <h2 id="unity-title">3D Process Twin</h2>
-          <p>Drag the lower-right corner to resize the live Unity viewport.</p>
+          <h2 id="unity-title">3D 공정 디지털트윈</h2>
+          <p>{applied ? '실제 3D 화면의 예측 동기화가 확인됐어.' : '오른쪽 아래 모서리를 드래그하면 화면 크기를 조절할 수 있어.'}</p>
         </div>
         <span className="unity-card__size" aria-live="polite">
           {viewport.width} × {viewport.height}
@@ -158,7 +179,7 @@ export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
           ref={canvasRef}
           className="unity-viewport__canvas"
           tabIndex={0}
-          aria-label="Interactive Unity digital twin"
+          aria-label="상호작용 가능한 3D 공정 디지털트윈"
           onPointerDown={(event) => event.currentTarget.focus()}
         />
 
@@ -166,7 +187,7 @@ export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
           <div className="unity-viewport__overlay">
             {state === 'loading' && (
               <>
-                <strong>Loading Unity… {Math.round(progress * 100)}%</strong>
+                <strong>3D 화면 불러오는 중… {Math.round(progress * 100)}%</strong>
                 <div className="unity-progress" aria-hidden="true">
                   <span style={{ width: `${progress * 100}%` }} />
                 </div>
@@ -174,21 +195,21 @@ export function UnityDigitalTwin({ prediction }: UnityDigitalTwinProps) {
             )}
             {state === 'missing' && (
               <>
-                <strong>Unity WebGL build required</strong>
-                <span>Generate the WebGL build to enable the interactive view.</span>
+                <strong>3D 화면 빌드가 필요해</strong>
+                <span>Unity에서 웹용 빌드를 생성하면 공정 화면이 표시돼.</span>
               </>
             )}
             {state === 'error' && (
               <>
-                <strong>Unity could not start</strong>
-                <span>Check the browser console and WebGL build files.</span>
+                <strong>3D 화면을 실행할 수 없어</strong>
+                <span>브라우저 오류와 웹용 빌드 파일을 확인해줘.</span>
               </>
             )}
           </div>
         )}
       </div>
 
-      <p className="unity-controls">WASD move · Q/E height · Shift boost · Right-drag look</p>
+      <p className="unity-controls">공정 흐름과 전체 예측 상태를 함께 보여주는 3D 개요 화면</p>
     </section>
   )
 }

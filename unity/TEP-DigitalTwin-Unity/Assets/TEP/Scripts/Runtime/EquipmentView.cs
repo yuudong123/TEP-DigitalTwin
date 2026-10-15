@@ -24,7 +24,9 @@ namespace TEP.DigitalTwin
 
             if (label != null)
             {
-                label.text = $"{displayName}\n{status}";
+                label.font = Resources.Load<Font>("NanumGothic-Regular");
+                label.GetComponent<MeshRenderer>().sharedMaterial = label.font.material;
+                label.text = $"{KoreanUi.Equipment(displayName)}\n{KoreanUi.Status(status)}";
                 label.color = Color.white;
             }
         }

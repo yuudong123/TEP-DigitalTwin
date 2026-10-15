@@ -5,10 +5,10 @@ interface RulCardProps {
 export function RulCard({ hours }: RulCardProps) {
   return (
     <section className="card rul-card">
-      <h2>잔여수명 (RUL)</h2>
+      <h2>예측 잔여수명</h2>
       <p className="rul-value">
         {hours.toFixed(2)}
-        <span className="rul-unit">h</span>
+        <span className="rul-unit">시간</span>
       </p>
     </section>
   )

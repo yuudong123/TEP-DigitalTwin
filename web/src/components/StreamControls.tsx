@@ -26,12 +26,12 @@ export function StreamControls({
 }: StreamControlsProps) {
   const isHealthy = connectionState === 'mock' || connectionState === 'connected'
   const stateLabel = {
-    mock: 'LIVE MOCK',
-    connecting: 'API CONNECTING',
-    connected: 'API CONNECTED',
-    stale: 'DATA STALE · 새 예측 없음',
-    error: 'API ERROR',
-    paused: 'PAUSED',
+    mock: '모의 데이터 재생',
+    connecting: '서버 연결 중',
+    connected: '서버 연결됨',
+    stale: '갱신 지연 · 새 예측 없음',
+    error: '서버 연결 오류',
+    paused: '화면 갱신 일시정지',
   }[connectionState]
 
   return (

@@ -26,7 +26,7 @@ function App() {
       ) : (
         <header className="dashboard-header">
           <div>
-            <h1>TEP Digital Twin</h1>
+            <h1>TEP 공정 디지털트윈</h1>
             <p className="dashboard-subtitle">예지보전 모니터링</p>
           </div>
         </header>
@@ -49,7 +49,7 @@ function App() {
 
       {prediction ? (
         <>
-          <UnityDigitalTwin prediction={prediction} />
+          <UnityDigitalTwin prediction={prediction} receivedAt={stream.lastReceivedAt!} sourceMode={stream.mode} connectionState={stream.connectionState} />
 
           <main className="dashboard-grid">
             <RulCard hours={prediction.rul.hours} />

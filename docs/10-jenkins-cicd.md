@@ -63,7 +63,7 @@ Jenkinsfile을 수정하면 작업 Configure의 Script에도 동일하게 반영
 
 초기 등록 시도는 거부됐으나 2026-09-30 실제 예약 작업을 확인했다.
 TEP-Jenkins-Agent는 Running, MSFT_TaskLogonTrigger, Interactive/Limited다.
-현재는 등록 대기가 아니다. 재부팅 후 실제 재연결은 아직 검증하지 않았다.
+현재는 등록 대기가 아니다. 2026-10-15 사용자 재부팅/로그인 뒤 실제 agent 기동과 dev 배포를 관찰했다.
 
 등록할 내용은 `deploy/10-register-agent.ps1`에 준비했다.
 현재 사용자 로그인 시, 관리자 권한·비밀번호 저장 없이 `TEP-Jenkins-Agent` 작업을
@@ -106,7 +106,7 @@ TEP-dev의 지금 빌드를 실행해 재검증한다. PC는 로그인 상태로
 - [x] 공개 webhook/추가 inbound 포트 없이 구성
 - [x] 실행기 로그인 자동 시작 등록 (2026-09-30 실제 등록 및 Running 확인)
 - [x] 실제 새 dev 커밋으로 자동 빌드 발생 확인 (2026-09-30 #25/#26 SUCCESS)
-- [ ] 재부팅 후 로그인·Docker·실행기·배포 복구 검증
+- [x] 사용자 재부팅 후 로그인·Docker·실행기·기존 dev 배포 복구 관찰 (2026-10-15)
 - [x] API/inference/monitor 전체 서비스 기동 검증 (2026-09-30 #25/#26)
 
 공식 참고: [Pipeline 문법](https://www.jenkins.io/doc/book/pipeline/syntax/),
@@ -129,5 +129,14 @@ TEP-dev의 지금 빌드를 실행해 재검증한다. PC는 로그인 상태로
 - 초기 build #23 UNSTABLE, #22/#21 FAILURE 기록 이후 PR #29·#30 병합을 Poll SCM이 감지했다.
   **#25/#26 SUCCESS**, workspace revision과 단계 보고서에서 전체4서비스 배포 exit0 확인.
   실제 CSV 전체 체인과 모델 적용 증거는 `reports/16-integration`, `reports/19-20-lifecycle`.
-  집컴 재부팅 후 사용자 로그인/Docker/실행기 복구는 별도 미검증이다.
+  집컴 재부팅 후 사용자 로그인/Docker/실행기 복구는 이후 2026-10-15 관찰했다.
 - 비밀번호/secret/API key는 코드나 문서에 저장하지 않았다.
+
+## 2026-10-15 Unity 포함 배포
+
+workspace의 최신 `deploy/09-manual-deploy.ps1`은 Python gate 뒤 Unity WebGL,
+Web lint/test/build를 거쳐 Docker를 배포한다. 기존 Pipeline/SCM poll 설정은 유지한다.
+Unity 에디터는 runtime `.env`에 지정하며 로그인된 사용자 실행기의 라이선스를 사용한다.
+다른 Unity 버전의 격리 빌드는 명시적 옵션이 필요하고 원본 프로젝트를 변환하지 않는다.
+장시간 검증 중에는 Jenkins/agent를 일시 중지하되 Auto/Enabled는 변경하지 않는다.
+사용자가 승인한 PR 병합 이후의 실제 Jenkins 빌드 번호·revision·결과는26번 문서/보고서에 별도 기록한다.

@@ -24,7 +24,10 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File deploy\09-manual-deploy.
 
 `09-manual-deploy.ps1`은 Compose 구성을 검증하고, 테스트 파일이 있으면
 집 PC의 `.venv\Scripts\python.exe`로 실행한다. 테스트가 없으면 건너뛰었다고
-명시한다. 이어서 이미지 세 개를 빌드하고 구현된 서비스만 기동한다.
+명시한다. Unity WebGL 생성/캐시 SHA 확인, Web npm ci/lint/test/build를 통과한 뒤
+이미지 세 개를 빌드하고 구현된 서비스만 기동한다. Unity 에디터는 원본 지정 버전이 기본이며
+다른 버전은 runtime `.env`의 `UNITY_EDITOR_PATH`, `UNITY_ALLOW_COMPATIBLE=true`를 명시해야 한다.
+후자는 별도 검증 프로젝트를 사용하며 원본 버전과 패키지를 변경하지 않는다.
 
 - `src/api/main.py`, `src/inference/main.py`, `src/monitoring/main.py`가 없는
   서비스는 기존 컨테이너를 중지하고 미구현으로 보고한다. 삭제하지 않는다.
@@ -58,7 +61,8 @@ AC 전원에서 절전·최대절전 대기시간을 0으로 설정했고 하이
 DC 설정과 화면 꺼짐 시간은 변경하지 않았다. 최대절전 기능 자체를 삭제하지 않았다.
 Docker Desktop 로그인 자동 시작 설정 및 사용자 시작 항목을 설정했다.
 Jenkins 실행기의 로그인 자동 시작 등록과 Running은 2026-09-30 확인했다.
-PC 재부팅 검증은 하지 않았으며, 로그아웃하면 사용자 실행기는 중단된다.
+2026-10-15 사용자 재부팅/로그인 후 자동 서비스·Docker·실행기와 Jenkins dev 배포를 관찰했다.
+이는 최신 feature 코드의 새 Windows reboot 시험과 구분한다. 로그아웃하면 사용자 실행기는 중단된다.
 
 ## 2026-09-11 검증
 
@@ -69,7 +73,7 @@ PC 재부팅 검증은 하지 않았으며, 로그아웃하면 사용자 실행�
 - [x] 미구현 서비스 반복 재시작 중지, 컨테이너·데이터 보존
 - [x] AC 절전·최대절전 설정 및 Docker 로그인 시작 설정
 - [x] API·inference·monitor 전체 정상 기동 (2026-09-30 Jenkins #25/#26 및 실제 replay 확인)
-- [ ] 로그인 후 자동 복구와 재부팅 실증 (실행기 자동 시작 등록 후 검증)
+- [x] 사용자 재부팅/로그인 후 기존 자동 복구 관찰 (2026-10-15). 최신 코드 cold start/stop은26번 결과 참조.
 
 ## Tailscale 원격 접속
 
@@ -97,7 +101,7 @@ Tailscale 장치 키 만료 예정일은 2027-03-10이며, 그 전에 갱신하�
 .\.venv\Scripts\python.exe deploy/runtime_status.py --root . --output logs/runtime-audit.json
 ```
 
-ValidateOnly는 Compose 구성, Python compileall/pip check/pytest, Web npm ci/lint/build를 검증한다.
+ValidateOnly는 Compose 구성, Python compileall/pip check/pytest, Unity WebGL build/cache SHA, Web npm ci/lint/test/build를 검증한다.
 패키지 설치·임시 override·lock·보고서 생성은 수행하지만 컨테이너를 변경하지 않는다.
 종료 0은 이 모드에서는 사전검증 통과이지 배포 성공이 아니다.
 성공/실패 단계·commit은 소스의 `reports/deployment/last-attempt.json`에 기록하고
@@ -111,3 +115,11 @@ Monitor 재학습 비활성화를 확인한다. 종료 0은 컨테이너 준비,
 17번 기준 후보는 dev에 병합했지만 운영 선택은 기본 비활성이다. API도 구현·배포했다.
 모델 승격은 `docs/19-20-model-lifecycle.md`의 승인 SHA CLI 절차만 사용한다.
 Web gate는 npm test도 실행하고 동일 origin의 api 모드를 빌드한다.
+
+## 2026-10-15 운영 마무리
+
+- 집 PC runtime `.env`에 train 운전상태 보정 기준과 `INFERENCE_THREADS=1`을 명시했다. 모델 파일과 자동 재학습=false는 유지했다.
+- 바탕화면 Start는 기존 이미지로 서비스만 켜고 Stop은 TEP만 내린다. 다른 Docker/WSL 작업이 있으면 Desktop/WSL은 유지한다.
+- Start/Stop은 기존 Jenkins StartupType과 agent 작업 Enabled를 바꾸지 않는다. Tailscale/sshd도 유지한다.
+- 코드·장시간·cold recovery·Jenkins 최종 증거는 `docs/26-final-acceptance.md`를 참조한다.
+- Unity 버전/빌드 계정 라이선스와 6.1 격리 검증 경계는 `docs/15-unity-digital-twin.md`를 따른다.

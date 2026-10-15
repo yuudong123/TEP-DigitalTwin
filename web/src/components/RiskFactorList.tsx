@@ -1,4 +1,5 @@
 import type { RiskFactor, RiskHorizon } from '../types/prediction'
+import { featureLabel, transformLabel } from '../config/koreanUi'
 
 interface RiskFactorListProps {
   factors: RiskFactor[]
@@ -10,17 +11,17 @@ export function RiskFactorList({ factors, explanationModel }: RiskFactorListProp
 
   return (
     <section className="card risk-factor-list">
-      <h2>주요 위험 요인 (SHAP)</h2>
-      <p className="risk-factor-source">설명 대상 모델: {explanationModel}</p>
+      <h2>주요 위험 요인</h2>
+      <p className="risk-factor-source">설명 대상: {{ failure_within_4h: '4시간 이내 고장 위험', failure_within_2h: '2시간 이내 고장 위험', failure_within_1h: '1시간 이내 고장 위험' }[explanationModel]}</p>
       <ol>
         {factors.map((factor) => (
           <li key={factor.rank}>
             <div className="risk-factor-name">
               <span className="risk-factor-rank">#{factor.rank}</span>
-              <span>{factor.source_feature}</span>
+              <span>{featureLabel(factor.source_feature)}</span>
               <span className="risk-factor-transform">
-                {factor.transform}
-                {factor.window_minutes != null ? ` (${factor.window_minutes}m)` : ''}
+                {transformLabel(factor.transform)}
+                {factor.window_minutes != null ? ` (최근 ${factor.window_minutes}분)` : ''}
               </span>
             </div>
             <div className="risk-factor-bar">

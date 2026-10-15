@@ -20,7 +20,7 @@ interface RiskPanelProps {
 export function RiskPanel({ risk }: RiskPanelProps) {
   return (
     <section className="card risk-panel">
-      <h2>고장 위험 (Risk Score)</h2>
+      <h2>고장 위험 확률</h2>
       <div className="risk-grid">
         {HORIZON_ORDER.map((horizon) => {
           const entry = risk[horizon]
@@ -44,9 +44,9 @@ export function RiskPanel({ risk }: RiskPanelProps) {
               </div>
 
               <span className="risk-threshold">
-                threshold {(entry.threshold * 100).toFixed(1)}%
+                판정 기준 {(entry.threshold * 100).toFixed(1)}%
               </span>
-              {entry.alert && <span className="risk-alert-flag">ALERT</span>}
+              {entry.alert && <span className="risk-alert-flag">위험 판정</span>}
             </div>
           )
         })}
