@@ -1,0 +1,66 @@
+{
+  "time": "2026-10-15T18:43:27.8640594+09:00",
+  "boot": "2026-10-15T18:05:37.5000000+09:00",
+  "services": [
+    {
+      "Name": "Jenkins",
+      "State": "Running",
+      "StartMode": "Auto"
+    },
+    {
+      "Name": "sshd",
+      "State": "Running",
+      "StartMode": "Auto"
+    },
+    {
+      "Name": "Tailscale",
+      "State": "Running",
+      "StartMode": "Auto"
+    }
+  ],
+  "agent_task": {
+    "TaskName": "TEP-Jenkins-Agent",
+    "State": 3,
+    "Enabled": true
+  },
+  "agent_task_xml_sha256": "74DA9C4AA6C984A65B8E1494068761252CE7B40C715B69833DCD5F19F9E8D1A6",
+  "model_files": [
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\failure_within_1h.json",
+      "Hash": "1BCEC6CFDAE1579131E3B29FB365889AE9D573126A55F22FF0D652871007B0C2"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\failure_within_2h.json",
+      "Hash": "4F6F233C766F7E67284623586F0B3E16FD68D914B6A2910722FEF1CE039B1AB8"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\failure_within_4h.json",
+      "Hash": "A11303A3641228375C66E94B3237CA0D984E699862BA0E65D83984C01EE34ED8"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\feature_list.json",
+      "Hash": "D1056F2DD09E5BF10C5B240473B19C7ECB92D959D71D791A5E87D19729951A78"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\feature_schema.csv",
+      "Hash": "CF6770D180F37FABAD411EAB03268F51FC561289FDE7EF3BAD18E756E4E3C8C1"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\metadata.json",
+      "Hash": "7C4C88E3F71AA88EF510B5E8F95C8D1441D7EE104D109FB30694646CAE86C3F4"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\prediction_schema.json",
+      "Hash": "91A5F745EE404C1AF7E5D0B48DD9B76587CE59F2C19AC1AF6AFA4628C86709EB"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\rul_hours.json",
+      "Hash": "E11DCD6A7941CEF8D57C255E4E56A5F683F6CB8B002FA22CE0126E6BABD4CBD5"
+    },
+    {
+      "Path": "D:\\TEP_DigitalTwin\\models\\production\\v1.0.0\\thresholds.json",
+      "Hash": "89325F9767C070402280C1962A4D6F31F249C55AE6236769BEAA4235546A1C3F"
+    }
+  ],
+  "docker_login": "\"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\""
+}

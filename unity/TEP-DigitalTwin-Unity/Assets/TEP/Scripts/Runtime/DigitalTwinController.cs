@@ -6,8 +6,10 @@ namespace TEP.DigitalTwin
     {
         [SerializeField] private PredictionSource source;
         [SerializeField] private DashboardPanel dashboard;
-        [SerializeField] private EquipmentView[] equipment;
+        [SerializeField] private EquipmentView[] equipment = System.Array.Empty<EquipmentView>();
         private bool usesExternalSource;
+        public event System.Action<PredictionSnapshot> PredictionApplied;
+        public bool UsesExternalSource => usesExternalSource;
 
         private void OnEnable()
         {
@@ -38,6 +40,7 @@ namespace TEP.DigitalTwin
             dashboard?.Apply(prediction);
             foreach (var view in equipment)
                 view?.Apply(prediction);
+            PredictionApplied?.Invoke(prediction);
         }
     }
 }

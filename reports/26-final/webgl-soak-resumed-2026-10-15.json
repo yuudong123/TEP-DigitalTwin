@@ -1,0 +1,8 @@
+{
+  "source": "actual_compiled_unity_webgl_and_live_api",
+  "requested_seconds": 3600,
+  "status": "interrupted_by_user",
+  "completed": false,
+  "passed": false,
+  "note": "The user requested stopping validation and uploading/merging the implementation before final aggregation. No full-duration pass or final sample count is claimed. Completed short browser results are in webgl-smoke-2026-10-15.json and webgl-contracts-2026-10-15.json."
+}

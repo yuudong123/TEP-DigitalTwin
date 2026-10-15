@@ -1,0 +1,1814 @@
+{
+  "started_at": "2026-10-14T23:41:11.184196+00:00",
+  "source": "real_test_split_csv",
+  "requested_seconds": 3600.0,
+  "interval_seconds": 0.1,
+  "passed": false,
+  "runs": [
+    {
+      "trajectory": "case1::9",
+      "predictions": 2868,
+      "last_timestamp": 144.35,
+      "total_sensors": 2888,
+      "complete": true,
+      "sent": 2888
+    },
+    {
+      "trajectory": "case2::2",
+      "predictions": 2881,
+      "last_timestamp": 145.0,
+      "total_sensors": 2901,
+      "complete": true,
+      "sent": 2901
+    },
+    {
+      "trajectory": "case3::2",
+      "predictions": 573,
+      "last_timestamp": 29.6,
+      "total_sensors": 2817,
+      "complete": false
+    }
+  ],
+  "samples": [
+    {
+      "elapsed_seconds": 0.9,
+      "trajectory": "case1::9",
+      "sent": 0,
+      "predictions": 0,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 24.6MB",
+          "CPUPerc": "3.82%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.72%",
+          "MemUsage": "1.044GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "19MB / 30.7MB",
+          "PIDs": "129"
+        },
+        {
+          "BlockIO": "0B / 1.07MB",
+          "CPUPerc": "6.52%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.8MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "180kB / 35.3MB",
+          "PIDs": "96"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "0.50%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.76%",
+          "MemUsage": "439.5MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "75kB / 44.8kB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.61%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.36MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "79kB / 52.7kB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 30.9,
+      "trajectory": "case1::9",
+      "sent": 294,
+      "predictions": 273,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 25MB",
+          "CPUPerc": "136.98%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.78%",
+          "MemUsage": "1.053GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "21.3MB / 34.4MB",
+          "PIDs": "129"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.60%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.4MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "1.24MB / 36.5MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.21%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.9MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "975kB / 680kB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.57%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.48MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "961kB / 492kB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 60.9,
+      "trajectory": "case1::9",
+      "sent": 591,
+      "predictions": 571,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 27.3MB",
+          "CPUPerc": "4.64%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.78%",
+          "MemUsage": "1.054GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "23.7MB / 38.1MB",
+          "PIDs": "129"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.62%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.3MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "2.31MB / 37.6MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.56%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.7MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "1.88MB / 1.33MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.60%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.51MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "1.84MB / 932kB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 91.0,
+      "trajectory": "case1::9",
+      "sent": 889,
+      "predictions": 869,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 29.3MB",
+          "CPUPerc": "3.50%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.79%",
+          "MemUsage": "1.054GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "25.7MB / 41.4MB",
+          "PIDs": "129"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.61%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.1MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "3.16MB / 38.7MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.25%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.8MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "2.78MB / 1.98MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.43%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.4MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "2.71MB / 1.2MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 121.1,
+      "trajectory": "case1::9",
+      "sent": 1187,
+      "predictions": 1167,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 31.2MB",
+          "CPUPerc": "3.47%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.90%",
+          "MemUsage": "1.072GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "27.5MB / 44.4MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.67%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.2MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "3.85MB / 39.7MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.32%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.5MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "3.69MB / 2.63MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.40%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.47MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "3.55MB / 1.35MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 151.2,
+      "trajectory": "case1::9",
+      "sent": 1485,
+      "predictions": 1465,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 32.9MB",
+          "CPUPerc": "3.25%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.90%",
+          "MemUsage": "1.072GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "29.3MB / 47.4MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.69%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.5MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "4.55MB / 40.7MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.00%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.76%",
+          "MemUsage": "439.9MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "4.6MB / 3.28MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.38%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.44MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "4.41MB / 1.5MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 181.2,
+      "trajectory": "case1::9",
+      "sent": 1783,
+      "predictions": 1763,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 34.6MB",
+          "CPUPerc": "3.37%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.90%",
+          "MemUsage": "1.072GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "31.1MB / 50.4MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.65%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.2MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "5.26MB / 41.8MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "33.48%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.6MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "5.54MB / 3.95MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.40%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.29MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "5.26MB / 1.65MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 211.3,
+      "trajectory": "case1::9",
+      "sent": 2081,
+      "predictions": 2060,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 36.4MB",
+          "CPUPerc": "4.17%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.91%",
+          "MemUsage": "1.074GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "33MB / 53.5MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.72%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.7MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "5.97MB / 42.8MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.31%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.3MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "6.45MB / 4.6MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.41%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.27MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "6.13MB / 1.81MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 241.3,
+      "trajectory": "case1::9",
+      "sent": 2379,
+      "predictions": 2358,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 38.2MB",
+          "CPUPerc": "162.98%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "7.46%",
+          "MemUsage": "1.159GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "34.9MB / 56.5MB",
+          "PIDs": "166"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.75%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.2MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "6.66MB / 43.8MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "33.79%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.5MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "7.36MB / 5.25MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.42%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.07MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "6.98MB / 1.96MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 271.4,
+      "trajectory": "case1::9",
+      "sent": 2677,
+      "predictions": 2657,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 39.9MB",
+          "CPUPerc": "3.74%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.92%",
+          "MemUsage": "1.075GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "36.7MB / 59.4MB",
+          "PIDs": "136"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.73%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.6MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "7.36MB / 44.8MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.29%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.9MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "8.26MB / 5.9MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.41%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.28MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "7.83MB / 2.11MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 297.8,
+      "trajectory": "case2::2",
+      "sent": 0,
+      "predictions": 0,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 41.6MB",
+          "CPUPerc": "5.32%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.92%",
+          "MemUsage": "1.075GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "38MB / 61.6MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "3.80%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.95%",
+          "MemUsage": "468.9MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "7.88MB / 45.6MB",
+          "PIDs": "96"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "0.47%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.4MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "8.88MB / 6.32MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.56%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.24MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "8.44MB / 2.24MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 327.8,
+      "trajectory": "case2::2",
+      "sent": 298,
+      "predictions": 277,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 43.1MB",
+          "CPUPerc": "4.24%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.92%",
+          "MemUsage": "1.075GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "40.3MB / 65.3MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.61%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.5MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "8.92MB / 46.7MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "33.12%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.6MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "9.8MB / 6.98MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.58%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.12MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "9.29MB / 2.66MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 357.8,
+      "trajectory": "case2::2",
+      "sent": 594,
+      "predictions": 573,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 45.2MB",
+          "CPUPerc": "5.12%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.94%",
+          "MemUsage": "1.078GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "42.6MB / 68.9MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.76%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.5MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "10MB / 47.8MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.54%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.6MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "10.7MB / 7.63MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.58%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.52MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "10.2MB / 3.12MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 387.9,
+      "trajectory": "case2::2",
+      "sent": 891,
+      "predictions": 871,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 47.2MB",
+          "CPUPerc": "3.59%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.94%",
+          "MemUsage": "1.078GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "44.6MB / 72.3MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.69%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.7MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "10.9MB / 48.9MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "31.40%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.7MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "11.6MB / 8.28MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.39%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.45MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "11MB / 3.37MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 417.9,
+      "trajectory": "case2::2",
+      "sent": 1188,
+      "predictions": 1168,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 49MB",
+          "CPUPerc": "3.58%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.94%",
+          "MemUsage": "1.078GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "46.5MB / 75.2MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.73%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "462MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "11.5MB / 49.9MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.09%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.4MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "12.5MB / 8.94MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.38%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.26MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "11.9MB / 3.52MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 447.9,
+      "trajectory": "case2::2",
+      "sent": 1485,
+      "predictions": 1465,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 50.7MB",
+          "CPUPerc": "3.69%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.94%",
+          "MemUsage": "1.078GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "48.3MB / 78.2MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.79%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.5MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "12.2MB / 50.9MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "32.15%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.5MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "13.4MB / 9.59MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.41%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.18MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "12.7MB / 3.67MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 478.0,
+      "trajectory": "case2::2",
+      "sent": 1782,
+      "predictions": 1762,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 52.5MB",
+          "CPUPerc": "4.05%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.95%",
+          "MemUsage": "1.081GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "50.1MB / 81.2MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.12%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "462MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "12.9MB / 51.9MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "33.22%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.6MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "14.3MB / 10.2MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.42%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.11MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "13.5MB / 3.82MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 508.0,
+      "trajectory": "case2::2",
+      "sent": 2079,
+      "predictions": 2058,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 54.2MB",
+          "CPUPerc": "6.69%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.97%",
+          "MemUsage": "1.083GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "51.9MB / 84.2MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.50%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.6MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "13.6MB / 52.9MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "92.65%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.6MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "15.2MB / 10.9MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.75%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.39MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "14.4MB / 3.98MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 538.1,
+      "trajectory": "case2::2",
+      "sent": 2332,
+      "predictions": 2297,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 55.8MB",
+          "CPUPerc": "4.70%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.98%",
+          "MemUsage": "1.084GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "53.4MB / 86.7MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.61%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "462.1MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "14.3MB / 53.8MB",
+          "PIDs": "95"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "63.14%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.5MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "16MB / 11.5MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.54%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.61MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "15.1MB / 4.1MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 568.1,
+      "trajectory": "case2::2",
+      "sent": 2621,
+      "predictions": 2601,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 57.3MB",
+          "CPUPerc": "4.10%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.98%",
+          "MemUsage": "1.084GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "55.2MB / 89.6MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.33%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.90%",
+          "MemUsage": "461.9MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "14.9MB / 54.8MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "36.90%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.1MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "16.9MB / 12.1MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.46%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.98MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "15.9MB / 4.25MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 598.2,
+      "trajectory": "case2::2",
+      "sent": 2901,
+      "predictions": 2881,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 59.1MB",
+          "CPUPerc": "1.01%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.99%",
+          "MemUsage": "1.086GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "56.8MB / 92.2MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "38.67%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.91%",
+          "MemUsage": "462.6MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "15.6MB / 55.7MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "0.05%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.5MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "17.6MB / 12.6MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.05%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.27MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "16.7MB / 4.38MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 605.2,
+      "trajectory": "case3::2",
+      "sent": 0,
+      "predictions": 0,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 59.8MB",
+          "CPUPerc": "3.25%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.98%",
+          "MemUsage": "1.085GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "56.9MB / 92.4MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "1.75%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.91%",
+          "MemUsage": "462.2MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "15.6MB / 55.8MB",
+          "PIDs": "94"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "3.88%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.4MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "17.7MB / 12.7MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.57%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.27MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "16.7MB / 4.4MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 635.2,
+      "trajectory": "case3::2",
+      "sent": 297,
+      "predictions": 277,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 61.7MB",
+          "CPUPerc": "4.57%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.99%",
+          "MemUsage": "1.086GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "59.3MB / 96.2MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.73%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.91%",
+          "MemUsage": "463.1MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "16.7MB / 56.9MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "33.65%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.4MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "18.6MB / 13.3MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.65%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.43MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "17.6MB / 4.84MB",
+          "PIDs": "35"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 665.2,
+      "trajectory": "case3::2",
+      "sent": 594,
+      "predictions": 573,
+      "services": {
+        "tep-kafka": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-api": {
+          "running": true,
+          "health": "healthy",
+          "restarts": 0
+        },
+        "tep-inference": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        },
+        "tep-monitor": {
+          "running": true,
+          "health": null,
+          "restarts": 0
+        }
+      },
+      "resources": [
+        {
+          "BlockIO": "232MB / 63.7MB",
+          "CPUPerc": "4.30%",
+          "Container": "tep-kafka",
+          "ID": "ccaa70d16c53",
+          "MemPerc": "6.99%",
+          "MemUsage": "1.086GiB / 15.54GiB",
+          "Name": "tep-kafka",
+          "NetIO": "61.6MB / 99.9MB",
+          "PIDs": "133"
+        },
+        {
+          "BlockIO": "0B / 1.1MB",
+          "CPUPerc": "2.59%",
+          "Container": "tep-api",
+          "ID": "194ee65e679b",
+          "MemPerc": "2.91%",
+          "MemUsage": "462.4MiB / 15.54GiB",
+          "Name": "tep-api",
+          "NetIO": "17.7MB / 58MB",
+          "PIDs": "93"
+        },
+        {
+          "BlockIO": "0B / 1.02MB",
+          "CPUPerc": "35.39%",
+          "Container": "tep-inference",
+          "ID": "72f47b8935b9",
+          "MemPerc": "2.77%",
+          "MemUsage": "440.7MiB / 15.54GiB",
+          "Name": "tep-inference",
+          "NetIO": "19.5MB / 14MB",
+          "PIDs": "90"
+        },
+        {
+          "BlockIO": "0B / 156kB",
+          "CPUPerc": "0.58%",
+          "Container": "tep-monitor",
+          "ID": "0f4d41d60478",
+          "MemPerc": "0.33%",
+          "MemUsage": "52.56MiB / 15.54GiB",
+          "Name": "tep-monitor",
+          "NetIO": "18.5MB / 5.3MB",
+          "PIDs": "35"
+        }
+      ]
+    }
+  ],
+  "predictions": 6322,
+  "monitor_events": 2040,
+  "calibrated_events": 8,
+  "errors": []
+}

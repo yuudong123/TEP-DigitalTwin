@@ -24,6 +24,16 @@ namespace TEP.DigitalTwin
     public sealed class RulEntry { public float hours; }
 
     [Serializable]
+    public sealed class RiskFactor
+    {
+        public int rank;
+        public string feature;
+        public string source_feature;
+        public string transform;
+        public float shap_value;
+    }
+
+    [Serializable]
     public sealed class PredictionSnapshot
     {
         public string schema_version;
@@ -33,6 +43,8 @@ namespace TEP.DigitalTwin
         public RulEntry rul;
         public RiskSet risk;
         public string status;
+        public string explanation_model;
+        public RiskFactor[] top_risk_factors;
 
         public ProcessStatus Status
         {
@@ -47,4 +59,13 @@ namespace TEP.DigitalTwin
 
     [Serializable]
     public sealed class PredictionSequence { public PredictionSnapshot[] snapshots; }
+
+    [Serializable]
+    public sealed class PredictionEnvelope
+    {
+        public PredictionSnapshot prediction;
+        public double received_at_unix_ms;
+        public string source_mode;
+        public string connection_state;
+    }
 }

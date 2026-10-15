@@ -382,8 +382,11 @@ PR #27–30은 dev 병합 완료. 실제 CSV 센서2,929건 → 예측2,909건,
 동등 모델 복사 control 및 악화 후보로 검증한 것이며 새 개선 모델을 운영 적용한 것은 아니다.
 Kafka 데이터는 외부 볼륨 `tep-kafka-data`에 보존한다. 기존 브로커의 최초 이전은
 `docs/08-kafka-persistence.md`를 따른다.
-Unity는 사용자 집 PC 마무리 대상이다. PC 재부팅 복구·장시간 부하 검증,
-17번 보정 기준 선택은 남아 있고 자동 재학습은 비활성 유지한다.
+2026-10-15 한글 Unity 공정 개요와 실제 WebGL/API 연동을 추가했다.
+Unity는 6.1 격리 호환 빌드만 검증했으며 원본6.3/URP 검증과 구분한다.
+운전상태 보정 기준을 명시적으로 선택했고 추론 스레드를 제한했다. 자동 재학습은 계속 비활성이다.
+바탕화면 TEP-Start/TEP-Stop은 기존 자동시작 설정·데이터·원격 관리 서비스를 유지한다.
+사용자 합의30분 연속 기준 완료 및 미실행 복구/원본 버전 경계는 `docs/26-final-acceptance.md`에서 확인한다.
 상세 진행표는 [docs/00-progress-status.md](docs/00-progress-status.md),
 집 PC 재개/Unity 인계는 [docs/25-home-pc-handoff.md](docs/25-home-pc-handoff.md)를 따른다.
  

@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 
@@ -60,9 +61,12 @@ def _parse_window(value: object) -> int | None:
 
 
 class ProductionPredictor:
-    def __init__(self, production_dir: Path) -> None:
+    def __init__(self, production_dir: Path, *, threads: int | None = None) -> None:
         """서비스 시작 시 Feature 정보·임계값·모델 4개를 한 번만 불러온다."""
         self.production_dir = production_dir
+        self.threads = int(os.getenv("INFERENCE_THREADS", "1")) if threads is None else threads
+        if isinstance(self.threads, bool) or not isinstance(self.threads, int) or self.threads < 1:
+            raise ValueError("INFERENCE_THREADS must be a positive integer")
         feature_payload = _load_json(production_dir / "feature_list.json")
         self.features = list(feature_payload["features"])
         if len(self.features) != 728:
@@ -81,6 +85,7 @@ class ProductionPredictor:
                 raise FileNotFoundError(f"모델 파일을 찾을 수 없습니다: {path}")
             model = xgb.Booster()
             model.load_model(path)
+            model.set_param({"nthread": self.threads})
             self.models[target] = model
 
         schema = pd.read_csv(production_dir / "feature_schema.csv")
@@ -122,7 +127,7 @@ class ProductionPredictor:
         # 값이 같아도 열 순서가 다르면 모델 입력이 달라지므로 반드시 검사한다.
         if list(features.columns) != self.features:
             raise ValueError("실시간 Feature 순서가 feature_list.json과 다릅니다.")
-        matrix = xgb.DMatrix(features, feature_names=self.features)
+        matrix = xgb.DMatrix(features, feature_names=self.features, nthread=self.threads)
         # RUL은 물리적으로 음수가 될 수 없어서 화면에 표시할 값은 0 이상으로 제한한다.
         rul = max(0.0, float(self.models["rul_hours"].predict(matrix)[0]))
         scores = {

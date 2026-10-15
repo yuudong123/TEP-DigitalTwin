@@ -12,7 +12,7 @@ import time
 from uuid import uuid4
 
 import httpx
-from confluent_kafka import Consumer
+from confluent_kafka import Consumer, TopicPartition
 from kafka.message_schema import build_sensor_message
 from src.inference.prediction_schema import validate_prediction
 
@@ -31,7 +31,20 @@ def verify(args):
             raise RuntimeError('Web was not served by the API')
         consumer = Consumer({'bootstrap.servers': args.bootstrap, 'group.id': 'live-proof-'+uuid4().hex,
                              'auto.offset.reset': 'earliest', 'enable.auto.commit': False})
-        consumer.subscribe([args.prediction_topic])
+        # Begin at explicit current high-water marks. Existing production history
+        # must not be mistaken for the replay started by this acceptance run.
+        metadata = consumer.list_topics(args.prediction_topic, timeout=10)
+        topic = metadata.topics[args.prediction_topic]
+        if topic.error:
+            raise RuntimeError(topic.error)
+        starts = [TopicPartition(args.prediction_topic, partition,
+                  consumer.get_watermark_offsets(TopicPartition(args.prediction_topic, partition), timeout=10)[1])
+                  for partition in topic.partitions]
+        consumer.assign(starts)
+        existing = client.get('/v1/replay').json()
+        if existing['status'] in ('running', 'paused', 'stopping'):
+            consumer.close()
+            raise RuntimeError('Another replay is active; acceptance refused')
         predictions = []
         history = []
         with (Path(args.raw_dir)/(row['case']+'.csv')).open(encoding='utf-8-sig', newline='') as stream:
@@ -85,6 +98,7 @@ def verify(args):
                       source='real_raw_csv', sensors=final['sent'], predictions=len(predictions),
                       first_timestamp=predictions[0]['timestamp_hours'], last_timestamp=predictions[-1]['timestamp_hours'],
                       synchronous_matches_first_kafka_prediction=True, replay_pause_resume_conflict=True,
+                      prediction_start_offsets={str(item.partition): item.offset for item in starts},
                       web_http=True, monitoring_event=True, retraining_requested=False,
                       latest=latest.json(), received_at=latest.headers['x-prediction-received-at'],
                       elapsed_seconds=round(time.monotonic()-started, 3))

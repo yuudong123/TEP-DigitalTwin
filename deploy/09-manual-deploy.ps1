@@ -82,6 +82,19 @@ try {
         } finally { Pop-Location }
     } else { Write-Host '[TEST] No pytest test files yet; no tests were run.' }
 
+    $stage = 'unity-webgl-build'
+    $unityScript = Join-Path $SourceDir 'deploy\build-unity.ps1'
+    if (Test-Path -LiteralPath $unityScript) {
+        $unityEditor = $null
+        $allowCompatible = $false
+        foreach ($line in Get-Content -LiteralPath $envFile) {
+            if ($line -match '^UNITY_EDITOR_PATH=(.*)$') { $unityEditor = $Matches[1].Trim().Trim('"') }
+            if ($line -match '^UNITY_ALLOW_COMPATIBLE=(.*)$') { $allowCompatible = $Matches[1].Trim() -eq 'true' }
+        }
+        & $unityScript -SourceDir $SourceDir -UnityEditor $unityEditor -AllowCompatibleEditor:$allowCompatible
+        if ($LASTEXITCODE -ne 0) { throw 'Unity WebGL build failed.' }
+    }
+
     $stage = 'web-validation'
     $webDir = Join-Path $SourceDir 'web'
     if (Test-Path -LiteralPath (Join-Path $webDir 'package.json')) {

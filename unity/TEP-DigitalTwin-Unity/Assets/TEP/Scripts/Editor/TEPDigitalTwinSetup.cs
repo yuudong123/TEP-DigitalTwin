@@ -44,7 +44,9 @@ namespace TEP.Editor
         [MenuItem("TEP Digital Twin/Build WebGL for Web Dashboard")]
         public static void BuildWebGL()
         {
-            var scenePath = $"{Scenes}/TEPDigitalTwinDemo.unity";
+            var scenePath = File.Exists(ProcessOverviewSetup.ScenePath)
+                ? ProcessOverviewSetup.ScenePath
+                : $"{Scenes}/TEPDigitalTwinDemo.unity";
             if (!File.Exists(scenePath))
                 throw new FileNotFoundException("Generate the demo scene before building WebGL.", scenePath);
 

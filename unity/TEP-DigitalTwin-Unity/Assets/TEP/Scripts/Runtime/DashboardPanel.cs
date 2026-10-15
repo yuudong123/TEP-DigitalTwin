@@ -13,14 +13,31 @@ namespace TEP.DigitalTwin
         [SerializeField] private Text oneHourText;
         [SerializeField] private Image statusIndicator;
 
+        private void Awake()
+        {
+            var koreanFont = Resources.Load<Font>("NanumGothic-Regular");
+            foreach (var text in GetComponentsInChildren<Text>()) text.font = koreanFont;
+            statusText.text = "대기 중";
+            rulText.text = "잔여수명  -- 시간";
+            trajectoryText.text = "데이터 수신 대기";
+            foreach (var entry in new[] { ("Title", "TEP 공정 디지털트윈"), ("RiskTitle", "고장 위험"), ("Source", "예측 데이터") })
+            {
+                var child = transform.Find(entry.Item1);
+                if (child != null) child.GetComponent<Text>().text = entry.Item2;
+            }
+            SetRisk(fourHourText, "4시간 이내", null);
+            SetRisk(twoHourText, "2시간 이내", null);
+            SetRisk(oneHourText, "1시간 이내", null);
+        }
+
         public void Apply(PredictionSnapshot prediction)
         {
-            statusText.text = prediction.status;
-            rulText.text = $"RUL  {prediction.rul?.hours ?? 0f:0.00} h";
-            trajectoryText.text = $"{prediction.trajectory_key}  |  t={prediction.timestamp_hours:0.00} h";
-            SetRisk(fourHourText, "4 HOUR", prediction.risk?.failure_within_4h);
-            SetRisk(twoHourText, "2 HOUR", prediction.risk?.failure_within_2h);
-            SetRisk(oneHourText, "1 HOUR", prediction.risk?.failure_within_1h);
+            statusText.text = KoreanUi.Status(prediction.Status);
+            rulText.text = $"잔여수명  {prediction.rul?.hours ?? 0f:0.00} 시간";
+            trajectoryText.text = $"{KoreanUi.Trajectory(prediction.trajectory_key)}  |  {prediction.timestamp_hours:0.00} 시간";
+            SetRisk(fourHourText, "4시간 이내", prediction.risk?.failure_within_4h);
+            SetRisk(twoHourText, "2시간 이내", prediction.risk?.failure_within_2h);
+            SetRisk(oneHourText, "1시간 이내", prediction.risk?.failure_within_1h);
             statusIndicator.color = StatusColor(prediction.Status);
         }
 
@@ -28,7 +45,7 @@ namespace TEP.DigitalTwin
         {
             target.text = risk == null
                 ? $"{label}  --"
-                : $"{label}  {risk.score:P1}  {(risk.alert ? "ALERT" : "SAFE")}";
+                : $"{label}  {risk.score:P1}  {(risk.alert ? "위험" : "기준 미만")}";
         }
 
         private static Color StatusColor(ProcessStatus status) => status switch

@@ -1,0 +1,197 @@
+{
+  "source": "actual_compiled_unity_webgl_and_live_api",
+  "base": "http://127.0.0.1:8000",
+  "errors": [],
+  "passed": true,
+  "initial": {
+    "prediction": {
+      "schema_version": "1.0",
+      "model_version": "v1.0.0",
+      "trajectory_key": "case1::1",
+      "timestamp_hours": 20.950000762939453,
+      "rul": {
+        "hours": 121.22837829589844
+      },
+      "risk": {
+        "failure_within_4h": {
+          "score": 3.7957869380988996e-7,
+          "threshold": 0.6227655410766602,
+          "alert": false
+        },
+        "failure_within_2h": {
+          "score": 4.005924267858063e-7,
+          "threshold": 0.6104410290718079,
+          "alert": false
+        },
+        "failure_within_1h": {
+          "score": 4.3815955308446064e-8,
+          "threshold": 0.7830277681350708,
+          "alert": false
+        }
+      },
+      "status": "NORMAL",
+      "explanation_model": "failure_within_4h",
+      "top_risk_factors": [
+        {
+          "rank": 1,
+          "feature": "msv E Feed__min_30m",
+          "source_feature": "msv E Feed",
+          "transform": "min",
+          "shap_value": 0.15482529997825623
+        },
+        {
+          "rank": 2,
+          "feature": "Component B to Reactor__delta_15m",
+          "source_feature": "Component B to Reactor",
+          "transform": "delta",
+          "shap_value": 0.0732630044221878
+        },
+        {
+          "rank": 3,
+          "feature": "msv D Feed__delta_60m",
+          "source_feature": "msv D Feed",
+          "transform": "delta",
+          "shap_value": 0.07269667088985443
+        },
+        {
+          "rank": 4,
+          "feature": "Component E to Product__delta_60m",
+          "source_feature": "Component E to Product",
+          "transform": "delta",
+          "shap_value": 0.06508070975542068
+        },
+        {
+          "rank": 5,
+          "feature": "Separator__max_30m",
+          "source_feature": "Separator",
+          "transform": "max",
+          "shap_value": 0.04801039770245552
+        }
+      ]
+    },
+    "received_at_unix_ms": 1792020860008,
+    "source_mode": "api",
+    "connection_state": "connected"
+  },
+  "pause_propagates_to_unity": true,
+  "connection_error_propagates_to_unity": true,
+  "connection_restored": true,
+  "final": {
+    "prediction": {
+      "schema_version": "1.0",
+      "model_version": "v1.0.0",
+      "trajectory_key": "case1::1",
+      "timestamp_hours": 73.05000305175781,
+      "rul": {
+        "hours": 78.15827941894531
+      },
+      "risk": {
+        "failure_within_4h": {
+          "score": 8.447998993688088e-7,
+          "threshold": 0.6227655410766602,
+          "alert": false
+        },
+        "failure_within_2h": {
+          "score": 0.0000013918640888732625,
+          "threshold": 0.6104410290718079,
+          "alert": false
+        },
+        "failure_within_1h": {
+          "score": 9.732273298368455e-8,
+          "threshold": 0.7830277681350708,
+          "alert": false
+        }
+      },
+      "status": "NORMAL",
+      "explanation_model": "failure_within_4h",
+      "top_risk_factors": [
+        {
+          "rank": 1,
+          "feature": "Stripper Steam Flow__max_30m",
+          "source_feature": "Stripper Steam Flow",
+          "transform": "max",
+          "shap_value": 0.17049841582775116
+        },
+        {
+          "rank": 2,
+          "feature": "Component B to Reactor__slope_60m_per_h",
+          "source_feature": "Component B to Reactor",
+          "transform": "slope",
+          "shap_value": 0.13938520848751068
+        },
+        {
+          "rank": 3,
+          "feature": "Component C to Reactor__std_30m",
+          "source_feature": "Component C to Reactor",
+          "transform": "std",
+          "shap_value": 0.07924210280179977
+        },
+        {
+          "rank": 4,
+          "feature": "Stripper Level__std_30m",
+          "source_feature": "Stripper Level",
+          "transform": "std",
+          "shap_value": 0.07612250745296478
+        },
+        {
+          "rank": 5,
+          "feature": "Component B to Reactor__std_30m",
+          "source_feature": "Component B to Reactor",
+          "transform": "std",
+          "shap_value": 0.0672571137547493
+        }
+      ]
+    },
+    "received_at_unix_ms": 1792020955341,
+    "source_mode": "api",
+    "connection_state": "connected"
+  },
+  "matching_samples": 8,
+  "fresh_samples": 8,
+  "stale_samples": 0,
+  "samples": [
+    {
+      "elapsed_seconds": 5,
+      "trajectory": "case1::1",
+      "timestamp": 24.049999237060547,
+      "state": "connected",
+      "js_heap_bytes": 20290390
+    },
+    {
+      "elapsed_seconds": 21,
+      "trajectory": "case1::1",
+      "timestamp": 31.299999237060547,
+      "state": "connected",
+      "js_heap_bytes": 18558698
+    },
+    {
+      "elapsed_seconds": 36,
+      "trajectory": "case1::1",
+      "timestamp": 39.54999923706055,
+      "state": "connected",
+      "js_heap_bytes": 18384515
+    },
+    {
+      "elapsed_seconds": 51,
+      "trajectory": "case1::1",
+      "timestamp": 47.20000076293945,
+      "state": "connected",
+      "js_heap_bytes": 18623796
+    },
+    {
+      "elapsed_seconds": 66,
+      "trajectory": "case1::1",
+      "timestamp": 56.54999923706055,
+      "state": "connected",
+      "js_heap_bytes": 18709883
+    },
+    {
+      "elapsed_seconds": 81,
+      "trajectory": "case1::1",
+      "timestamp": 64.5999984741211,
+      "state": "connected",
+      "js_heap_bytes": 18827048
+    }
+  ],
+  "elapsed_seconds": 95
+}

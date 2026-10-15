@@ -15,7 +15,7 @@ interface StatusBadgeProps {
 export function StatusBadge({ status }: StatusBadgeProps) {
   return (
     <span className={`status-badge status-badge--${status.toLowerCase()}`}>
-      {LABEL[status]} · {status}
+      {LABEL[status]}
     </span>
   )
 }

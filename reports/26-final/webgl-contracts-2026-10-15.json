@@ -1,0 +1,199 @@
+{
+  "source": "actual_compiled_unity_webgl_and_live_api",
+  "base": "http://127.0.0.1:8000",
+  "errors": [],
+  "passed": true,
+  "initial": {
+    "prediction": {
+      "schema_version": "1.0",
+      "model_version": "v1.0.0",
+      "trajectory_key": "case3::2",
+      "timestamp_hours": 138.3000030517578,
+      "rul": {
+        "hours": 1.5559982061386108
+      },
+      "risk": {
+        "failure_within_4h": {
+          "score": 0.9999505281448364,
+          "threshold": 0.6227655410766602,
+          "alert": true
+        },
+        "failure_within_2h": {
+          "score": 0.23299384117126465,
+          "threshold": 0.6104410290718079,
+          "alert": false
+        },
+        "failure_within_1h": {
+          "score": 0.2681773602962494,
+          "threshold": 0.7830277681350708,
+          "alert": false
+        }
+      },
+      "status": "CAUTION",
+      "explanation_model": "failure_within_4h",
+      "top_risk_factors": [
+        {
+          "rank": 1,
+          "feature": "Stripper Level__max_30m",
+          "source_feature": "Stripper Level",
+          "transform": "max",
+          "shap_value": 3.5882811546325684
+        },
+        {
+          "rank": 2,
+          "feature": "Stripper Level__min_30m",
+          "source_feature": "Stripper Level",
+          "transform": "min",
+          "shap_value": 2.4562923908233643
+        },
+        {
+          "rank": 3,
+          "feature": "Stripper Level__mean_30m",
+          "source_feature": "Stripper Level",
+          "transform": "mean",
+          "shap_value": 2.197415828704834
+        },
+        {
+          "rank": 4,
+          "feature": "Stripper Level",
+          "source_feature": "Stripper Level",
+          "transform": "current",
+          "shap_value": 1.7806721925735474
+        },
+        {
+          "rank": 5,
+          "feature": "Product Sep Level__max_30m",
+          "source_feature": "Product Sep Level",
+          "transform": "max",
+          "shap_value": 1.3118103742599487
+        }
+      ]
+    },
+    "received_at_unix_ms": 1792058434540,
+    "source_mode": "api",
+    "connection_state": "connected"
+  },
+  "pause_propagates_to_unity": true,
+  "invalid_predictions_rejected_by_compiled_unity": true,
+  "connection_error_propagates_to_unity": true,
+  "connection_restored": true,
+  "resized_canvas_matches_viewport": true,
+  "final": {
+    "prediction": {
+      "schema_version": "1.0",
+      "model_version": "v1.0.0",
+      "trajectory_key": "case4::4",
+      "timestamp_hours": 40.400001525878906,
+      "rul": {
+        "hours": 82.96295928955078
+      },
+      "risk": {
+        "failure_within_4h": {
+          "score": 2.3196921006274351e-7,
+          "threshold": 0.6227655410766602,
+          "alert": false
+        },
+        "failure_within_2h": {
+          "score": 2.095649165312352e-7,
+          "threshold": 0.6104410290718079,
+          "alert": false
+        },
+        "failure_within_1h": {
+          "score": 2.3676896887536714e-7,
+          "threshold": 0.7830277681350708,
+          "alert": false
+        }
+      },
+      "status": "NORMAL",
+      "explanation_model": "failure_within_4h",
+      "top_risk_factors": [
+        {
+          "rank": 1,
+          "feature": "Stripper__mean_30m",
+          "source_feature": "Stripper",
+          "transform": "mean",
+          "shap_value": 0.16987888514995575
+        },
+        {
+          "rank": 2,
+          "feature": "Stripper__max_30m",
+          "source_feature": "Stripper",
+          "transform": "max",
+          "shap_value": 0.14603620767593384
+        },
+        {
+          "rank": 3,
+          "feature": "Component D to Reactor__min_30m",
+          "source_feature": "Component D to Reactor",
+          "transform": "min",
+          "shap_value": 0.10074355453252792
+        },
+        {
+          "rank": 4,
+          "feature": "Condenser Coolant__min_30m",
+          "source_feature": "Condenser Coolant",
+          "transform": "min",
+          "shap_value": 0.09150087833404541
+        },
+        {
+          "rank": 5,
+          "feature": "Stripper Steam Flow__slope_60m_per_h",
+          "source_feature": "Stripper Steam Flow",
+          "transform": "slope",
+          "shap_value": 0.07230744510889053
+        }
+      ]
+    },
+    "received_at_unix_ms": 1792058531475,
+    "source_mode": "api",
+    "connection_state": "connected"
+  },
+  "matching_samples": 8,
+  "fresh_samples": 8,
+  "stale_samples": 0,
+  "samples": [
+    {
+      "elapsed_seconds": 7,
+      "trajectory": "case3::2",
+      "timestamp": 140.8000030517578,
+      "state": "connected",
+      "js_heap_bytes": 19241171
+    },
+    {
+      "elapsed_seconds": 22,
+      "trajectory": "case4::4",
+      "timestamp": 2.799999952316284,
+      "state": "connected",
+      "js_heap_bytes": 18846892
+    },
+    {
+      "elapsed_seconds": 37,
+      "trajectory": "case4::4",
+      "timestamp": 10.699999809265137,
+      "state": "connected",
+      "js_heap_bytes": 18139259
+    },
+    {
+      "elapsed_seconds": 52,
+      "trajectory": "case4::4",
+      "timestamp": 17.649999618530273,
+      "state": "connected",
+      "js_heap_bytes": 18665702
+    },
+    {
+      "elapsed_seconds": 67,
+      "trajectory": "case4::4",
+      "timestamp": 25.549999237060547,
+      "state": "connected",
+      "js_heap_bytes": 18570800
+    },
+    {
+      "elapsed_seconds": 82,
+      "trajectory": "case4::4",
+      "timestamp": 32.5,
+      "state": "connected",
+      "js_heap_bytes": 19095365
+    }
+  ],
+  "elapsed_seconds": 97
+}
