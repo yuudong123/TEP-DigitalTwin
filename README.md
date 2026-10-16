@@ -361,38 +361,34 @@ docs/
 
 완료:
 
-```text
-01. 프로젝트 기획
-02. TEP 데이터 분석
-03. 모델 검증 데이터셋
-04. Baseline 모델
-05. Temporal Feature 모델
-06. 최종 모델 및 설명 기능
-07. 프로젝트 기본 구조
-```
+- 01. 프로젝트 기획
+- 02. TEP 데이터 분석
+- 03. 모델 검증 데이터셋
+- 04. Baseline 모델
+- 05. Temporal Feature 모델
+- 06. 최종 모델 및 설명 기능
+- 07. 프로젝트 기본 구조
 
 준비 완료:
 
-```text
-08. Docker 개발환경 구성 (완료)
-09. 집 Windows PC 수동 배포 도구 및 기반 환경 검증
-10. Windows Jenkins dev Poll SCM 및 실제 빌드·기반 환경 배포 검증
-```
+- 08. Docker 개발환경 구성 (완료)
+- 09. 집 Windows PC 수동 배포 도구 및 기반 환경 검증
+- 10. Windows Jenkins dev Poll SCM 및 실제 빌드·기반 환경 배포 검증
 
-개발서버는 Oracle 대신 집 Windows PC의 `D:\TEP_DigitalTwin`을 사용한다.
-운영 당시 Jenkins는 별도 작업 폴더에서 GitHub `dev`를 받아 2분마다 변경을 확인했다. 종료 후 서비스는 수동 시작으로 전환하고 실행을 중지했다.
-Kafka·Inference·Monitor·API/Web 전체 운영 기동과 Jenkins #25/#26 SUCCESS를 확인했다.
-PR #27–30은 dev 병합 완료. 실제 CSV 센서2,929건 → 예측2,909건,
-동기 예측 일치·재생 제어·API snapshot 재시작 보존까지 실증했다.
-실제 validation 전체238,872행에서 후보 평가와 승격·hot application·rollback 경로를 검증했다.
-동등 모델 복사 control 및 악화 후보로 검증한 것이며 새 개선 모델을 운영 적용한 것은 아니다.
-Kafka 데이터는 외부 볼륨 `tep-kafka-data`에 보존한다. 기존 브로커의 최초 이전은
-`docs/08-kafka-persistence.md`를 따른다.
-2026-10-15 한글 Unity 공정 개요와 실제 WebGL/API 연동을 추가했다.
-Unity는 6.1 격리 호환 빌드만 검증했으며 원본6.3/URP 검증과 구분한다.
-운전상태 보정 기준을 명시적으로 선택했고 추론 스레드를 제한했다. 자동 재학습은 계속 비활성이다.
-2026-10-16 프로젝트 종료에 따라 Jenkins 자동시작·TEP 에이전트 예약 작업·Docker Desktop 로그인 실행을 해제했다. Compose의 재시작 정책도 `no`로 변경했다. Tailscale·sshd와 프로젝트 데이터는 보존했다.
-사용자 합의30분 연속 기준 완료 및 미실행 복구/원본 버전 경계는 `docs/26-final-acceptance.md`에서 확인한다.
-상세 진행표는 [docs/00-progress-status.md](docs/00-progress-status.md),
-집 PC 재개/Unity 인계는 [docs/25-home-pc-handoff.md](docs/25-home-pc-handoff.md)를 따른다.
- 
+운영·검증:
+
+- 개발서버는 Oracle 대신 집 Windows PC의 `D:\TEP_DigitalTwin`을 사용했다.
+- Jenkins는 별도 작업 폴더에서 GitHub `dev`를 받아 2분마다 변경을 확인했다.
+- Kafka·Inference·Monitor·API/Web 전체 운영 기동과 Jenkins #25/#26 SUCCESS를 확인했다.
+- PR #27–30을 `dev`에 병합하고, 실제 CSV 센서 2,929건 → 예측 2,909건, 동기 예측 일치·재생 제어·API snapshot 재시작 보존을 실증했다.
+- Validation 전체 238,872행에서 후보 평가·승격·hot application·rollback을 검증했다. 동등 모델 복사 control과 악화 후보를 사용했으며, 새 개선 모델을 운영 적용한 것은 아니다.
+- Kafka 데이터는 외부 볼륨 `tep-kafka-data`에 보존한다. 기존 브로커의 최초 이전은 [Kafka 영구 저장 문서](docs/08-kafka-persistence.md)를 따른다.
+- 2026-10-15 한글 Unity 공정 개요와 실제 WebGL/API 연동을 추가했다. Unity 6.1 격리 호환 빌드만 검증했으며, 원본 6.3/URP 검증과 구분한다.
+- 운전상태 보정 기준을 명시적으로 선택하고 추론 스레드를 제한했다. 자동 재학습은 계속 비활성이다.
+
+프로젝트 종료·관련 문서:
+
+- 2026-10-16 Jenkins 자동시작·TEP 에이전트 예약 작업·Docker Desktop 로그인 실행을 해제했다. Jenkins는 수동 시작으로 전환하고 실행을 중지했다.
+- Compose 재시작 정책은 `no`로 변경했다. Tailscale·sshd와 프로젝트 데이터는 보존했다.
+- 합의한 30분 연속 검증 완료와 미실행 복구·원본 버전 경계는 [최종 검증 기록](docs/26-final-acceptance.md)에서 확인한다.
+- 상세 진행표는 [작업 진행표](docs/00-progress-status.md), 집 PC 재개·Unity 인계는 [인계 문서](docs/25-home-pc-handoff.md)를 따른다.
